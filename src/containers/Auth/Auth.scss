@@ -1,0 +1,20 @@
+.auth {
+  &__btn {
+    // border: 1px solid black;
+    padding: 4px 10px;
+    width: max-content;
+    margin: 10px auto;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #0084ff;
+    path {
+      fill: white;
+    }
+    & > p {
+      margin-left: 5px;
+      color: white;
+    }
+  }
+}

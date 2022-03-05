@@ -1,0 +1,23 @@
+.sidebar-layout {
+  width: 100%;
+  // max-width: $screen-width;
+
+  &__header {
+    height: 100px;
+    width: 100%;
+  }
+
+  &__left {
+    z-index: 2;
+  }
+
+  &__container {
+    display: flex;
+    width: 100%;
+    margin-top: 100px;
+  }
+  &__center {
+    flex: 1;
+    margin-left: 24px;
+  }
+}
