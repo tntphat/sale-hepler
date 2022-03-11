@@ -11,6 +11,6 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
       <Component />
     </Layout>
   ) : (
-    <Navigate to='/login' />
+    <Navigate to="/login" />
   );
 };

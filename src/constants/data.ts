@@ -18,7 +18,7 @@ export const dataSidebar = [
   },
   {
     title: 'Tương tác',
-    link: '/sell',
+    link: '/interact',
     icon: SvgInteract,
     children: [
       {
