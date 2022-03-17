@@ -1,0 +1,32 @@
+.select-network {
+}
+.network {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      font-weight: 500;
+      font-size: 36px;
+      color: #0a69e1;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__item {
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+  }
+
+  &__select-all {
+    cursor: pointer;
+    font-weight: 500;
+    align-items: center;
+    display: flex;
+    & > span {
+      margin-left: 10px;
+      color: #0a69e1;
+    }
+  }
+}

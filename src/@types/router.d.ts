@@ -12,4 +12,5 @@ interface IPrivateRouter {
   isHasGradiant?: boolean;
   backPath?: string;
   withoutAvatar?: boolean;
+  title?: string;
 }

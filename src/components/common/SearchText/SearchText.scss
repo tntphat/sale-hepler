@@ -1,0 +1,14 @@
+.search-text {
+  display: flex;
+  max-width: 340px;
+  border-bottom: 1px solid #e6eaf0;
+  width: 100%;
+  padding: 8px 0;
+  input {
+    flex: 1;
+    border: none;
+    height: 100%;
+    outline: none;
+    background-color: transparent;
+  }
+}

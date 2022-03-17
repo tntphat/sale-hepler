@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Auth, Home } from '../containers';
+import { Auth, CreateProduct, Home } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
 import { BlankLayout, SidebarLayout } from '../layouts';
@@ -17,7 +17,7 @@ export const Routers = () => {
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
         <Route
           path="sell"
-          element={<PrivateRouter component={Sell} layout={SidebarLayout} />}
+          element={<PrivateRouter title="Bán hàng" component={Sell} layout={SidebarLayout} />}
         ></Route>
         <Route
           path="/sell/fb"
@@ -28,6 +28,16 @@ export const Routers = () => {
           element={<PrivateRouter component={Home} layout={SidebarLayout} />}
         />
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
+        <Route
+          path="/create-product"
+          element={
+            <PrivateRouter
+              title="Thêm mới sản phẩm"
+              component={CreateProduct}
+              layout={SidebarLayout}
+            />
+          }
+        />
         <Route path="/auth" element={<PublicRouter component={Auth} layout={BlankLayout} />} />
       </Routes>
     </Router>

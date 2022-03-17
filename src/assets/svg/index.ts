@@ -9,3 +9,8 @@ export * from './SvgAngle';
 export * from './SvgEx';
 export * from './SvgPlus';
 export * from './SvgList';
+export * from './SvgClose';
+export * from './SvgCheck';
+export * from './SvgImg';
+export * from './SvgDate';
+export * from './SvgEmoji';

@@ -1,0 +1,21 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  //   border-style: hidden;
+  thead {
+    th {
+      color: #1f4173;
+      text-align: left;
+    }
+  }
+  tbody {
+    tr {
+      color: #003ad2;
+      &:not(:first-child) {
+        td {
+          border-top: 1px solid rgba($color: #0a69e1, $alpha: 0.4) !important;
+        }
+      }
+    }
+  }
+}

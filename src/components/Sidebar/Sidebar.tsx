@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SvgAngle } from '../../assets/svg';
 import { dataSidebar } from '../../constants';
@@ -52,22 +52,10 @@ const ItemSidebar: React.FC<{ item: any; handleNavToLink: any }> = ({ item, hand
 
 export const Sidebar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const handleNavToLink = (link: string, sublink?: string) => {
     navigate((sublink || '') + link);
   };
 
-  const handleExtend = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.checked);
-
-    if (e.target.checked)
-      e.target.closest('.sidebar__link')?.classList.add('sidebar__link--extend');
-    else e.target.closest('.sidebar__link')?.classList.remove('sidebar__link--extend');
-  };
-
-  useEffect(() => {
-    console.log('DIDMOUNT SIDEBAR');
-  }, []);
   return (
     <div className="sidebar">
       {dataSidebar.map((item, ind) => (

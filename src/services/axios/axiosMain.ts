@@ -2,14 +2,14 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { LOCAL_TOKEN } from '../../constants';
 import { readCookie } from '../../helpers';
 
-const baseURL = process.env.URL_API;
+const baseURL = process.env.URL_API + 'api/';
 const token = readCookie(LOCAL_TOKEN);
 
 const axiosMain = axios.create({
   baseURL: baseURL,
   headers: {
     'content-type': 'application/json',
-    Authorization: token || 'a',
+    // Authorization: token || 'a',
   },
 });
 axiosMain.interceptors.response.use(
@@ -22,6 +22,6 @@ axiosMain.interceptors.response.use(
     if (err.response?.status === 401) {
     }
     throw err;
-  }
+  },
 );
 export { axiosMain };
