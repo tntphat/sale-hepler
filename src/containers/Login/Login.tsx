@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-// import TextField from '@mui/material/TextField';
-import { Box, InputText } from '../../components/common';
 
 import './Login.scss';
 import background from '../../assets/img/bg-01.jpg';
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { login } from '../../redux/slice/authSlice';
 import { clearMessage } from '../../redux/slice/messageSlice';
+import { SvgFacebook, SvgGoogle } from '../../assets/svg';
+import { InputText } from '../../components/common';
 
 export const Login = (props: any) => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ export const Login = (props: any) => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log(data);
     const { email, password } = data;
     setLoading(true);
 
@@ -49,41 +48,40 @@ export const Login = (props: any) => {
   return (
     <div className="limiter">
       <div className="container" style={{ backgroundImage: `url(${background})` }}>
-        <div className="wrap p-l-55 p-r-55 p-t-65 p-b-54">
+        <div className="login">
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <span className="form-title p-b-49">Đăng nhập</span>
-            <TextField
-              error={errors.email?.type === 'required'}
+            <span className="form__title">Đăng nhập</span>
+            <InputText
+              error={errors.email?.type === 'required' && errors.email.message}
               id="email"
               label="Email"
-              helperText={errors.email?.type === 'required' && 'Nhập email'}
-              variant="standard"
               {...register('email', {
-                required: true,
+                required: {
+                  value: true,
+                  message: 'Nhập Email',
+                },
               })}
-              fullWidth
             />
 
-            <TextField
-              error={errors.password?.type === 'required'}
+            <InputText
+              error={errors.password?.type === 'required' && errors.password?.message}
               id="password"
               type="password"
               label="Mật khẩu"
-              helperText={errors.password?.type === 'required' && 'Nhập mật khẩu'}
-              variant="standard"
               {...register('password', {
-                required: true,
-                minLength: 6,
+                required: {
+                  value: true,
+                  message: 'Nhập mật khẩu',
+                },
               })}
-              fullWidth
             />
-            <div className="text-right p-t-8 p-b-31">
+            <div className="form__forgot-password">
               <a href="#">Quên mật khẩu?</a>
             </div>
 
             {message && <span className="warning">{error}</span>}
 
-            <div className="container-form-btn p-t-31">
+            <div className="form__button">
               <div className="wrap-form-btn">
                 <div className="form-bgbtn"></div>
                 <button type="submit" disabled={loading} className="form-btn">
@@ -92,6 +90,19 @@ export const Login = (props: any) => {
               </div>
             </div>
           </form>
+
+          <div className="form__selection">
+            <span>Hoặc đăng nhập bằng</span>
+          </div>
+
+          <div className="form__social-login">
+            <div className="form__social-login__item">
+              <SvgFacebook />
+            </div>
+            <div className="form__social-login__item">
+              <SvgGoogle />
+            </div>
+          </div>
         </div>
       </div>
     </div>

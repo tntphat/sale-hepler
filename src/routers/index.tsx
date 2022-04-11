@@ -15,10 +15,10 @@ export const Routers = () => {
     <Router>
       <Routes>
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
-        <Route path="/login" element={<PrivateRouter component={Login} layout={BlankLayout} />} />
+        <Route path="/login" element={<PublicRouter component={Login} layout={BlankLayout} />} />
         <Route
           path="/register"
-          element={<PrivateRouter component={Register} layout={BlankLayout} />}
+          element={<PublicRouter component={Register} layout={BlankLayout} />}
         />
         <Route
           path="sell"
