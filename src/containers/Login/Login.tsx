@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import './Login.scss';
 import background from '../../assets/img/bg-01.jpg';
 import { useAppDispatch, useAppSelector } from '../../redux';
-import { login } from '../../redux/slice/authSlice';
-import { clearMessage } from '../../redux/slice/messageSlice';
+import { login } from '../../redux/slice/apiSlice/authSlice';
+import { clearMessage } from '../../redux/slice';
 import { SvgFacebook, SvgGoogle } from '../../assets/svg';
 import { InputText } from '../../components/common';
 
