@@ -14,3 +14,5 @@ export * from './SvgCheck';
 export * from './SvgImg';
 export * from './SvgDate';
 export * from './SvgEmoji';
+export * from './SvgFacebook';
+export * from './SvgGoogle';

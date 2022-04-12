@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Auth, CreateProduct, Home } from '../containers';
+import { Auth, CreateProduct, Home, Login, Register } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
 import { BlankLayout, SidebarLayout } from '../layouts';
@@ -15,6 +15,11 @@ export const Routers = () => {
     <Router>
       <Routes>
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
+        <Route path="/login" element={<PublicRouter component={Login} layout={BlankLayout} />} />
+        <Route
+          path="/register"
+          element={<PublicRouter component={Register} layout={BlankLayout} />}
+        />
         <Route
           path="sell"
           element={<PrivateRouter title="Bán hàng" component={Sell} layout={SidebarLayout} />}
