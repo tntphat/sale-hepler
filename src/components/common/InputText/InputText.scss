@@ -39,9 +39,9 @@
     display: block;
   }
 
-  &-container {
-    &:not(:first-child) {
-      margin-top: 15px;
-    }
+}
+.form-field {
+  &:not(:first-child) {
+    margin-top: 15px;
   }
 }

@@ -1,34 +1,28 @@
 import { LOCAL_TOKEN } from '../constants';
 
-export const setCookie = (
-  day: number,
-  value?: string,
-  key?: string,
-  domain?: string
-) => {
-  let now = new Date();
-  let time = now.getTime();
-  let expireTime = time + day * 86400 * 1000;
+export const setCookie = (day: number, value?: string, key?: string, domain?: string) => {
+  const now = new Date();
+  const time = now.getTime();
+  const expireTime = time + day * 86400 * 1000;
   now.setTime(expireTime);
 
   let domainString;
   if (domain) {
     domainString = `;domain=${domain}`;
   } else {
-    domainString = ``;
+    domainString = '';
   }
   document.cookie = `${key}=${value};expires=${now.toUTCString()}${domainString};path=/`;
 };
 
 export const deteletAllCookie = () => {
-  let cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++)
-    setCookie(1, '', cookies[i].split('=')[0]);
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) setCookie(1, '', cookies[i].split('=')[0]);
 };
 
 export const readCookie = (name: any) => {
-  let nameEQ = name + '=';
-  let ca = document.cookie.split(';');
+  const nameEQ = name + '=';
+  const ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) == ' ') c = c.substring(1, c.length);
@@ -37,9 +31,9 @@ export const readCookie = (name: any) => {
   return null;
 };
 export function deleteAllCookies() {
-  var allCookies = document.cookie.split(';');
+  const allCookies = document.cookie.split(';');
 
-  for (var i = 0; i < allCookies.length; i++) {
+  for (let i = 0; i < allCookies.length; i++) {
     document.cookie = allCookies[i] + '=;expires=' + new Date(0).toUTCString();
   }
 }
@@ -52,10 +46,13 @@ export const logout = () => {
 };
 
 export const loadScript = () => {
-  const appId =
-    process.env.NODE_ENV === 'development'
-      ? process.env.REACT_APP_FB_APP_TEST_ID
-      : process.env.REACT_APP_FB_APP_ID;
+  // const appId =
+  //   process.env.NODE_ENV === 'development'
+  //     ? process.env.REACT_APP_FB_APP_TEST_ID
+  //     : process.env.REACT_APP_FB_APP_ID;
+  const appId = process.env.REACT_APP_FB_APP_TEST_ID;
+  console.log(appId);
+
   // Fb
   window.fbAsyncInit = function () {
     window.FB.init({
@@ -67,7 +64,7 @@ export const loadScript = () => {
   };
 
   (function (d, s, id) {
-    var js,
+    let js,
       fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {
       return;
@@ -84,14 +81,11 @@ export async function loginFb(callback: any) {
     window.FB.login(function (response) {
       console.log(response, 'res');
       if (response.status === 'connected') {
-        FB.api(
-          '/me?fields=id,email,name,picture.width(720).height(720)',
-          function (data) {
-            resolve({ data, accessToken: response.authResponse.accessToken });
-          }
-        );
+        FB.api('/me?fields=id,email,name,picture.width(720).height(720)', function (data) {
+          resolve({ data, accessToken: response.authResponse.accessToken });
+        });
       }
-    })
+    }),
   );
   callback(authResponse);
   // console.log(authResponse);

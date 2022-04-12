@@ -1,4 +1,5 @@
 import { axiosMain } from '..';
+import { objToFormData } from '../../helpers/api';
 
 const baseUrl = 'posts/';
 export const apiPosts = {
@@ -10,8 +11,14 @@ export const apiPosts = {
     const url = baseUrl + 'post';
     return axiosMain.post(url, params);
   },
-  postMultiple: (params: IParamsPostReq[]) => {
+  postMultiple: (params: IParamsPostMultiple) => {
     const url = baseUrl + 'post/multiple';
-    return axiosMain.post(url, { postReqList: params });
+    return axiosMain.post(url, objToFormData(params));
+  },
+  postTest: (params: any) => {
+    const url = baseUrl + 'test';
+    const fd = objToFormData(params);
+
+    return axiosMain.post(url, fd);
   },
 };

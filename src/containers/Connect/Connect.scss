@@ -1,0 +1,14 @@
+.connect {
+  &__statistics {
+    display: flex;
+    // grid-template-columns: max-content max-content;
+    & > div {
+      margin-right: 10px;
+    }
+  }
+  &__grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}

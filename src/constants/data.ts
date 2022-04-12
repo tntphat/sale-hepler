@@ -48,7 +48,7 @@ export const dataSidebar = [
   },
   {
     title: 'Kênh bán hàng',
-    link: '/channel',
+    link: '/connect',
     icon: SvgMedia,
   },
 ];

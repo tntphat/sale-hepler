@@ -1,0 +1,21 @@
+.box-statistics {
+    color: #017DF6;
+    width: 200px;
+    p {
+        font-size: 18px;
+        font-weight: 600;
+        &:nth-child(2) {
+
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 32px;
+        }
+    }
+    &__add {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor:pointer;
+    }
+    position: relative;
+}

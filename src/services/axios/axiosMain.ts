@@ -9,7 +9,7 @@ const axiosMain = axios.create({
   baseURL: baseURL,
   headers: {
     'content-type': 'application/json',
-    // Authorization: token || 'a',
+    Authorization: 'Bearer' + token ,
   },
 });
 axiosMain.interceptors.response.use(

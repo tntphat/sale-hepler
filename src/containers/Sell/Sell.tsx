@@ -26,19 +26,61 @@ export const Sell = () => {
     dispatch(doGetAllGroups());
   }, []);
 
-  const handlePost = (value: string) => {
-    handleOpenModalLoading();
+  const handlePost = ({ content, images }: { content: string; images: File[] }) => {
+    // handleOpenModalLoading();
+    console.log(images);
+
     apiPosts
-      .postMultiple(
-        dataListGroup.map((gr) => ({
-          groupId: +gr.id,
-          content: value,
-        })),
-      )
+      .postMultiple({
+        groupsId: dataListGroup.map((gr) => +gr.id),
+        content,
+        images,
+      })
       .finally(() => {
         handleCloseModalLoading();
         navigate('/');
       });
+  };
+
+  const handleTest = ({ text: content, image }: { text: string; image: any }) => {
+    handleOpenModalLoading();
+
+    apiPosts
+      .postTest({
+        content,
+        image,
+      })
+      .finally(() => {
+        handleCloseModalLoading();
+        navigate('/');
+      });
+    // fetch(value.image)
+    //   .then((res) => res.blob())
+    //   .then((blob) => {
+    //     apiPosts.postTest({
+    //       content: value.text,
+    //       image: blob,
+    //     });
+    //   });
+    //   .then((res) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(res);
+    //     reader.onload = function () {
+    //       apiPosts
+    //         .postTest({
+    //           content: value.text,
+    //           image: this.result,
+    //         })
+    //         .finally(() => {
+    //           handleCloseModalLoading();
+    //           navigate('/');
+    //         });
+    //       return this.result;
+    //     }; // <--- `this.result` contains a base64 data URI
+    //   });
+    // .then((res) => {
+
+    // });
   };
 
   return (
@@ -67,6 +109,7 @@ export const Sell = () => {
           handlePost={handlePost}
           selectedGroups={selectedGroups}
           setSelectedGroups={setSelectedGroups}
+          handleTest={handleTest}
         />
       )}
 

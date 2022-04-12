@@ -21,11 +21,12 @@ const ComponentInputText = (
     subLabel,
     className,
     error,
+    marginTop,
   }: IInput,
   ref: any,
 ) => {
   return (
-    <div className={`inputs-container ${className || ''}`}>
+    <div className={`inputs-container form-field ${className || ''}`} style={{ marginTop }}>
       {label ? (
         <label htmlFor={HTMLFor} className={`inputs__label ${classNameLabel}`}>
           {label}

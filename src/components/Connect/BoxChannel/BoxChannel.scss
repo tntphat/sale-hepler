@@ -1,0 +1,110 @@
+.box-channel {
+  padding: 0;
+  border-radius: 20px;
+  background-color: #0a69e1;
+  margin-top: 10px;
+  &__header {
+    text-align: center;
+    font-size: 40px;
+    padding: 20px 0;
+    font-weight: 600;
+    color: white;
+  }
+  &__body {
+    background-color: white;
+    padding: 20px;
+    &--center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        color: #0a69e1;
+        font-weight: 500;
+        margin: 10px 0;
+      }
+      img {
+        width: 100px;
+      }
+    }
+  }
+  &__btn-connect {
+    width: 300px;
+    height: 40px;
+    text-transform: uppercase;
+    background-color: #0a69e1;
+  }
+  &__item {
+    display: flex;
+    align-items: flex-start;
+
+    &:not(:first-child) {
+      position: relative;
+      margin-top: 20px;
+      &::before {
+        content: '';
+        top: -10px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: rgba($color: #000000, $alpha: 0.3);
+      }
+    }
+
+    &--ecommerce {
+      position: relative;
+      flex-direction: column;
+    }
+  }
+  &__item-info {
+    p {
+      font-size: 16px;
+      &:first-child {
+        font-size: 12px;
+      }
+    }
+  }
+  &__item-detail {
+    flex: 1;
+    margin-left: 10px;
+    & > div {
+      display: grid;
+      // justify-content: space-between;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 10px;
+      & > div {
+        display: grid;
+        // align-items: center;
+        grid-template-columns: 26px auto 1fr;
+        align-items: center;
+        b {
+          color: #0a69e1;
+          margin: 0 5px;
+        }
+        p {
+          font-weight: 500;
+        }
+      }
+    }
+    &--ecommerce {
+      margin-left: 0;
+      & > div {
+        display: block;
+        & > div {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  &__item-arrow {
+    transform: scale(1.5) rotate(-90deg);
+    &--ecommerce {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+  }
+  &__footer {
+    height: 15px;
+  }
+}

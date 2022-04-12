@@ -7,6 +7,9 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   layout: Layout,
   title,
 }) => {
+  useEffect(() => {
+    console.log('didmoutn private');
+  }, []);
   return true ? (
     <Layout>
       {title ? <h2 className="title">{title}</h2> : null}

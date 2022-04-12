@@ -1,0 +1,35 @@
+@import '../../assets/scss/variables';
+.create-product {
+  &__row {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+  }
+
+  &__image {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    & > p {
+      font-weight: 600;
+    }
+    & > svg {
+      align-self: center;
+      margin-top: 20px;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    & > p {
+      &:last-child {
+        font-weight: 600;
+        color: $primary-color;
+        cursor: pointer;
+      }
+    }
+  }
+}

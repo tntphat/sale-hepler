@@ -21,7 +21,7 @@ interface IProgressBar {
 
 interface IModal {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface IAvatar {
@@ -41,7 +41,7 @@ interface IItem extends IAvatar {
   isSecondType?: boolean;
 }
 
-interface IButton {
+interface IButton extends React.CSSProperties {
   width?: string | number;
   height?: string | number;
   size?: 's' | 'm' | 'l';
@@ -50,6 +50,7 @@ interface IButton {
   borderRadius?: string;
   fontSize?: string | number;
   onClick?: (e?: React.MouseEvent) => void;
+  className?: string;
 }
 
 interface ISearchText {
@@ -90,4 +91,48 @@ interface IInput {
   subLabel?: string;
   className?: string;
   error?: string;
+  marginTop?: number;
+}
+
+interface IDropdownSelect {
+  titleProp?: string;
+  data: Array<{ id: number } & any>;
+  label?: string;
+  placeholder: string;
+  onChange?: any;
+  value?: any;
+  error?: string;
+  className?: string;
+  classNameInput?: string;
+  classNamePlaceholder?: string;
+  isNotAllowedEdit?: boolean;
+}
+
+interface IHorizontalMedias {
+  className?: string;
+  setImages: React.Dispatch<React.SetStateAction<any>>;
+  images: Array<any>;
+}
+
+interface IFileDropzone {
+  setImages: React.Dispatch<React.SetStateAction<any>>;
+  onClick?: (e: React.MouseEvent) => void;
+  images: Array<any>;
+}
+
+interface ICheckBox {
+  isActive?: boolean;
+  handleClick?: (e: React.MouseEvent) => void;
+}
+
+interface ITextArea {
+  onChange?: ((event: React.ChangeEvent<HTMLInputElement, React.ChangeEvent>) => void) | undefined;
+  value?: string;
+  className?: string;
+}
+
+interface ISvg {
+  className?: string;
+  onClick?: (e: React.MouseEvent) => void;
+  color?: string;
 }

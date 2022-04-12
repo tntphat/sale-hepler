@@ -1,0 +1,36 @@
+.datetime-picker {
+    display: flex;
+    // align-items: center;
+    & > div {
+        display: flex;
+        align-items: center;
+        border: 1px solid #828282;
+        border-radius: 5px;
+        padding: 5px;
+        max-width: 50%;
+        position: relative;
+        & > svg {
+            flex-shrink: 0;
+        }
+        &:first-child {
+            margin-right: 5px;
+            flex: 3;
+        }
+        &:nth-child(2) {
+            flex: 2;
+        }
+        & > input {
+            width: calc(100% - 50px)
+        }
+    }
+    input {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        padding-left: 10px;
+        // width: min-content;
+        flex: 1;
+        justify-content: space-between;
+    }
+   
+}

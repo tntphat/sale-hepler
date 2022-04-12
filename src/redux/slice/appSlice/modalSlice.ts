@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type TTnitialState = {
-  isOpen: boolean;
+  isOpenModalLoading: boolean;
+  isOpenModalMedia: boolean;
+  media?: any;
 };
 
 const initialState = {
-  isOpen: false,
+  isOpenModalMedia: false,
+  isOpenModalLoading: false,
+  media: null,
 } as TTnitialState;
 
 export const modalSlice = createSlice({
@@ -13,14 +17,25 @@ export const modalSlice = createSlice({
   initialState: initialState,
   reducers: {
     doOpenModal(state) {
-      state.isOpen = true;
+      state.isOpenModalLoading = true;
     },
     doCloseModal(state) {
-      state.isOpen = false;
+      state.isOpenModalLoading = false;
+    },
+    doOpenModalMedia(state) {
+      state.isOpenModalMedia = true;
+    },
+    doCloseModalMedia(state) {
+      state.isOpenModalMedia = false;
+    },
+    doSetModalMedia(state, action) {
+      state.isOpenModalMedia = true;
+      state.media = action.payload;
     },
   },
 });
 
 const { actions, reducer } = modalSlice;
-export const { doOpenModal, doCloseModal } = actions;
+export const { doOpenModal, doCloseModal, doOpenModalMedia, doCloseModalMedia, doSetModalMedia } =
+  actions;
 export default reducer;

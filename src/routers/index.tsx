@@ -1,6 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Auth, CreateProduct, Home } from '../containers';
+import {
+  Auth,
+  AuthTiki,
+  Connect,
+  CreateProduct,
+  DetailPost,
+  Home,
+  SellECommerce,
+} from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
 import { BlankLayout, SidebarLayout } from '../layouts';
@@ -18,16 +26,20 @@ export const Routers = () => {
         <Route
           path="sell"
           element={<PrivateRouter title="Bán hàng" component={Sell} layout={SidebarLayout} />}
-        ></Route>
+        />
         <Route
           path="/sell/fb"
           element={<PrivateRouter component={Home} layout={SidebarLayout} />}
         />
         <Route
           path="/sell/ecommerce"
-          element={<PrivateRouter component={Home} layout={SidebarLayout} />}
+          element={<PrivateRouter component={SellECommerce} layout={SidebarLayout} />}
         />
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
+        <Route
+          path="/connect"
+          element={<PrivateRouter component={Connect} layout={SidebarLayout} />}
+        />
         <Route
           path="/create-product"
           element={
@@ -39,6 +51,14 @@ export const Routers = () => {
           }
         />
         <Route path="/auth" element={<PublicRouter component={Auth} layout={BlankLayout} />} />
+        <Route
+          path="/post"
+          element={<PublicRouter component={DetailPost} layout={BlankLayout} />}
+        />
+        <Route
+          path="/auth-tiki"
+          element={<PublicRouter component={AuthTiki} layout={BlankLayout} />}
+        />
       </Routes>
     </Router>
   );
