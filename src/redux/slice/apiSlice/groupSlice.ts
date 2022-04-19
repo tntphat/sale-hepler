@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { apiGroups } from '../../../services/api';
+import { apiFbGroups, apiGroups } from '../../../services/api';
 
 export const doGetAllGroups = createAsyncThunk('groups@get/GetAll', async () => {
-  const result: AxiosResponse = await apiGroups.getAll();
+  const result: AxiosResponse = await apiFbGroups.getAll();
   return result.data;
 });
 

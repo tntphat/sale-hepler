@@ -2,15 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { SvgFb } from '../../assets/svg';
 import { Button } from '../../components/common';
-import { checkStt, loadScript, loginFb, publishFeed } from '../../helpers';
+import { checkStt, loadScript, login, loginFb, publishFeed, setCookie } from '../../helpers';
 import { objToQuery } from '../../helpers/api';
-import { apiAuth } from '../../services/api';
+import { apiAuth, apiFbAuth } from '../../services/api';
 import './Auth.scss';
 
 const ID_APP_TIKI = process.env.APP_ID_TIKI;
-// const redirectUri = 'https%3A%2F%2Ftool-helper-social.netlify.app%2Fauth';
-// const redirectUri = 'https://tool-helper-social.netlify.app';
-
 const redirectUri =
   process.env.NODE_ENV === 'development'
     ? process.env.URL_APP_LOCAL
@@ -22,8 +19,10 @@ export const Auth = () => {
   const [logged, setLogged] = useState<any>();
   const cb = (data: any) => {
     setData(data?.data);
-    apiAuth.facebook(data.accessToken).then(console.log);
-    // console.log(data.accessToken);
+    apiFbAuth.login(data.accessToken).then((res) => {
+      login(res.data.data.token);
+      window.location.reload();
+    });
 
     setLogged(true);
   };

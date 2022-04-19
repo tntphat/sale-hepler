@@ -10,6 +10,7 @@ import { ModalLoading } from '../../components/common/Modal';
 import { useModalLoading } from '../../hooks';
 import { apiPosts } from '../../services/api/apiPost';
 import { useNavigate } from 'react-router-dom';
+import { apiFbPosts } from '../../services/api';
 
 export const Sell = () => {
   const [step, setStep] = useState<number>(0);
@@ -30,7 +31,7 @@ export const Sell = () => {
     // handleOpenModalLoading();
     console.log(images);
 
-    apiPosts
+    apiFbPosts
       .postMultiple({
         groupsId: dataListGroup.map((gr) => +gr.id),
         content,
@@ -45,7 +46,7 @@ export const Sell = () => {
   const handleTest = ({ text: content, image }: { text: string; image: any }) => {
     handleOpenModalLoading();
 
-    apiPosts
+    apiFbPosts
       .postTest({
         content,
         image,

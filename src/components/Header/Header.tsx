@@ -1,5 +1,6 @@
 import React from 'react';
 import { SvgBell, SvgSearch } from '../../assets/svg';
+import { logout } from '../../helpers';
 import './Header.scss';
 
 export const Header = () => {
@@ -14,6 +15,7 @@ export const Header = () => {
         <div className="header__bell">
           <SvgBell />
         </div>
+        <div onClick={logout}>Log out</div>
         <div className="header__user">
           <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg" />
           <p>Phat To</p>

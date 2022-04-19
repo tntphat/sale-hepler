@@ -15,6 +15,11 @@ export const setCookie = (day: number, value?: string, key?: string, domain?: st
   document.cookie = `${key}=${value};expires=${now.toUTCString()}${domainString};path=/`;
 };
 
+export const login = (token: string) => {
+  setCookie(365, token, LOCAL_TOKEN, window.location.hostname);
+  window.location.reload();
+};
+
 export const deteletAllCookie = () => {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) setCookie(1, '', cookies[i].split('=')[0]);

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-// import { FileDropZone } from '../../components/common';
+import React, { useState } from 'react';
 
 export const Home = () => {
-  return <div>Home 3{/* <FileDropZone /> */}</div>;
+  return <div>Way back home</div>;
 };

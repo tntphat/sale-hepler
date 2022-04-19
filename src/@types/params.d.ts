@@ -12,3 +12,13 @@ interface IParamsPostMultiple {
   images: File[];
   content: string;
 }
+
+interface IParamsSignIn {
+  email: string;
+  password: string;
+}
+
+interface IParamsSignUp extends IParamsSignIn {
+  name?: string;
+  confirm_password?: string;
+}

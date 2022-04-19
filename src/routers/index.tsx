@@ -8,6 +8,8 @@ import {
   DetailPost,
   Home,
   SellECommerce,
+  Login,
+  Register,
 } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
@@ -23,6 +25,11 @@ export const Routers = () => {
     <Router>
       <Routes>
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
+        <Route path="/auth" element={<PublicRouter component={Login} layout={BlankLayout} />} />
+        <Route
+          path="/register"
+          element={<PublicRouter component={Register} layout={BlankLayout} />}
+        />
         <Route
           path="sell"
           element={<PrivateRouter title="Bán hàng" component={Sell} layout={SidebarLayout} />}
@@ -50,7 +57,7 @@ export const Routers = () => {
             />
           }
         />
-        <Route path="/auth" element={<PublicRouter component={Auth} layout={BlankLayout} />} />
+        {/* <Route path="/auth" element={<PublicRouter component={Auth} layout={BlankLayout} />} /> */}
         <Route
           path="/post"
           element={<PublicRouter component={DetailPost} layout={BlankLayout} />}

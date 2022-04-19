@@ -22,3 +22,5 @@ export * from './SvgMsg';
 export * from './SvgGroup';
 export * from './SvgFlag';
 export * from './SvgOrder';
+export * from './SvgFacebook';
+export * from './SvgGoogle';
