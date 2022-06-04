@@ -10,9 +10,7 @@ interface MessageProps {
 export const Message = ({ message, chatUserDetails, myInfo }: MessageProps) => {
   const isFromMe = message?.from?.id === myInfo?.id;
   const receiverAvatar = chatUserDetails.data.url;
-  // const receiverAvatar =
-  //   'https://png.pngtree.com/png-clipart/20190619/original/pngtree-cartoon-style-hand-drawing-hand-drawn-avatar-boy-with-glasses-png-image_3963092.jpg' ||
-  //   'chatUserDetails.data.url';
+
   return (
     <>
       {message.message && (
