@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { SvgClose } from '../../../assets/svg';
+import { SvgClose, SvgSmallClose } from '../../../assets/svg';
 import { useDraggable } from '../../../hooks';
 import { ScrollHorizontal } from '../ScrollHorizontal/ScrollHorizontal';
 import './HorizontalMedias.scss';
 
 const ComponentHorizontalMedias = (
-  { className, setImages, images }: IHorizontalMedias,
+  { className, setImages, images, isSmallSize }: IHorizontalMedias,
   ref: any,
 ) => {
   const refScroll = useDraggable();
@@ -17,6 +17,8 @@ const ComponentHorizontalMedias = (
       ref.current.value = '';
     }
   };
+
+  const smallSize = isSmallSize ? 'small' : '';
 
   const handleRemoveImage = (index: number) => {
     if (index > -1) {
@@ -42,11 +44,21 @@ const ComponentHorizontalMedias = (
             <div key={ind}>
               <img
                 src={URL.createObjectURL(img)}
+                className={isSmallSize ? 'small' : ''}
                 // style={{ maxWidth: '100%', maxHeight: '200px' }}
               />
-              <div className="close-wrapper" onClick={() => handleRemoveImage(ind)}>
-                <SvgClose />
-              </div>
+              {isSmallSize ? (
+                <div
+                  className="close-wrapper small-close-wrapper"
+                  onClick={() => handleRemoveImage(ind)}
+                >
+                  <SvgSmallClose />
+                </div>
+              ) : (
+                <div className="close-wrapper" onClick={() => handleRemoveImage(ind)}>
+                  <SvgClose />
+                </div>
+              )}
             </div>
           );
         })}

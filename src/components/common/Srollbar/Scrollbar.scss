@@ -1,0 +1,37 @@
+#bar {
+  width: 100%;
+  &:hover .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(219, 219, 219);
+  }
+}
+
+.scrollbar {
+  // height: calc(100vh - 34vh);
+  // height: calc(100vh - 302px);
+
+  overflow-y: scroll;
+  width: 100%;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // background-color: #f5f5f5;
+  }
+  &::-webkit-scrollbar {
+    border-radius: 12px;
+    width: 9px;
+  }
+
+  &__conversation {
+    height: calc(100vh - 31vh);
+  }
+
+  &__order-information {
+    max-height: 30vh;
+    // height: calc(100vh - 21vh);
+  }
+
+  &__chat-list {
+    height: 100%;
+  }
+}

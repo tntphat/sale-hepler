@@ -1,0 +1,21 @@
+.custom-text-area {
+  backdrop-filter: blur(54.3656px);
+  font-size: 18px;
+  line-height: 24px;
+  padding: 11px 16px;
+  outline: none;
+  border: 1px solid #d0d4d9;
+  border-radius: 12px;
+  width: 100%;
+  height: 100px;
+  margin-top: 8px;
+  font-size: 16px;
+  resize: none;
+
+  &::placeholder {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: rgba($color: #000000, $alpha: 0.5);
+  }
+}

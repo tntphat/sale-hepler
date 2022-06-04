@@ -10,7 +10,6 @@ export const useOnClickOutside = (
       const listener = (event: MouseEvent | TouchEvent) => {
         // Do nothing if clicking ref's element or descendent elements
         if (!ref.current || ref.current.contains(event.target)) {
-          console.log('hi', ref.current);
           return;
         }
         handler(event);

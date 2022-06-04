@@ -16,3 +16,5 @@ export * from './FileDropZone/FileDropZone';
 export * from './DateTimePicker/DateTimePicker';
 export * from './CheckBox/CheckBox';
 export * from './TextArea/TextArea';
+export * from './ToggleButton/ToggleButton';
+export * from './CustomTextArea/CustomTextArea';

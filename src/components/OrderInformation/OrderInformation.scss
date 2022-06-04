@@ -1,0 +1,32 @@
+.order-info {
+  // flex-grow: 3;
+  width: 45%;
+  padding-left: 18px;
+
+  &__two-column {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+
+  &__product {
+    margin-top: 16px;
+  }
+
+  &__note {
+    margin-top: 12px;
+  }
+
+  &__title {
+    display: flex;
+    h5 {
+      margin-right: 20px;
+    }
+  }
+
+  &__button {
+    margin-top: 20px;
+  }
+}

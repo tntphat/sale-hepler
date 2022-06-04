@@ -1,0 +1,23 @@
+.start-buttons {
+  margin-top: 8px;
+  display: flex;
+  &__picker-container {
+    margin-right: 10px;
+  }
+  &__attach {
+    margin-right: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__emoji {
+    position: fixed;
+    bottom: 120px;
+  }
+
+  .emoji {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

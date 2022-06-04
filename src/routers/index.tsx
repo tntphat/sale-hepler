@@ -10,6 +10,8 @@ import {
   SellECommerce,
   Login,
   Register,
+  Message,
+  MessageSetting,
 } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
@@ -65,6 +67,14 @@ export const Routers = () => {
         <Route
           path="/auth-tiki"
           element={<PublicRouter component={AuthTiki} layout={BlankLayout} />}
+        />
+        <Route
+          path="/messenger"
+          element={<PrivateRouter component={Message} layout={SidebarLayout} />}
+        />
+        <Route
+          path="/messenge-setting"
+          element={<PrivateRouter component={MessageSetting} layout={SidebarLayout} />}
         />
       </Routes>
     </Router>

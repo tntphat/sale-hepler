@@ -8,3 +8,5 @@ export * from './DetailPost/DetailPost';
 export * from './Login/Login';
 export * from './Register/Register';
 export * from './CreateProduct/CreateProduct';
+export * from './Message/Message';
+export * from './MessageSetting/MessageSetting';
