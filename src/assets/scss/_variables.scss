@@ -1,3 +1,78 @@
 $primary-color: #003ad2;
+$primary: #003ad2;
+$secondary: #003ad2;
+$success: #003ad2;
+$info: #003ad2;
+$warning: #003ad2;
+$danger: #003ad2;
+$purple: #003ad2;
+
+$pink: #003ad2;
+$light: #003ad2;
+$indigo: #003ad2;
+$dark: #003ad2;
+$primary-color-color: #003ad2;
+$purpsidebar-sub-bgle: #003ad2;
+$sidebar-sub-bg: #003ad2;
+$box-shadow: #003ad2;
+$primary: #003ad2;
+$purple: #003ad2;
+$purple: #003ad2;
+$purple: #003ad2;
+
 $fb-color: #0a69e1;
 $tiki-color: #1a94ff;
+$white: #ffffff;
+$card-bg: $white;
+
+// scss-docs-start theme-colors-map
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'purple': $purple,
+  'pink': $pink,
+  'light': $light,
+  'indigo': $indigo,
+  'dark': $dark,
+);
+//
+// Dark theme Layout
+//
+
+$gray-dark-100: #212529;
+$gray-dark-200: #262626;
+$gray-dark-300: #2e2e2e;
+$gray-dark-400: #757575;
+$gray-dark-500: #8f9198;
+$gray-dark-600: #adb5bd;
+$gray-dark-700: #e6ebf5;
+$gray-dark-800: #f9f9f9;
+$gray-dark-900: #f8f9fa;
+
+// scss-docs-start gray-color-variables
+$gray-100: #f8f9fa;
+$gray-200: #f9f9f9;
+$gray-300: #f6f6f9;
+$gray-400: #e6ebf5;
+$gray-500: #adb5bd;
+$gray-600: #797c8c;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+//main color
+$bg-danger: #dd434c;
+$bg-primary: #1b73fa;
+$bg-info: #3acbf0;
+$bg-secondary: #818990;
+$bg-dark: #2a2e32;
+
+// Font Weight
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+$light: $gray-300;
