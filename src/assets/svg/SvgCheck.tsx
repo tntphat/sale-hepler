@@ -34,16 +34,16 @@ export const SvgCheck: React.FC<Prop> = ({ onClick, isActive }) => {
       <path
         d="M22.5 1.5H7.5C4.18629 1.5 1.5 4.18629 1.5 7.5V22.5C1.5 25.8137 4.18629 28.5 7.5 28.5H22.5C25.8137 28.5 28.5 25.8137 28.5 22.5V7.5C28.5 4.18629 25.8137 1.5 22.5 1.5Z"
         stroke="#1A94FF"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.5 15L13.875 18L19.5 12"
         stroke="#1A94FF"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
