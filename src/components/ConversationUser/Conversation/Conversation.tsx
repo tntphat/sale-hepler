@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
-
 import { Message } from './Message/Message';
 import './Conversation.scss';
 import { Scrollbar } from '../../common/Srollbar/Scrollbar';
@@ -8,7 +7,7 @@ import { useAppSelector } from '../../../redux';
 import { getChatUserConversations } from '../../../redux/slice/apiSlice/messagesSlice';
 import { useDispatch } from 'react-redux';
 import { ModalLoading } from '../../common/Modal';
-
+import './Conversation.scss';
 interface ConversationProps {
   chatUserConversations: any;
   chatUserDetails: any;
@@ -45,24 +44,24 @@ export const Conversation = ({ chatUserConversations, chatUserDetails }: Convers
   }, [messages]);
 
   return (
-    <>
-      {loading ? (
+    <div className="conversation-wrapper">
+      {/* {loading ? (
         <Scrollbar classname="scrollbar__conversation">
-          <ModalLoading isSmall={true} isOpen={loading} isBlue={true} />
+          <ModalLoading isSmall={true} isOpen={false} isBlue={true} />
         </Scrollbar>
-      ) : (
-        <Scrollbar classname="scrollbar__conversation">
-          <ul className="conversation">
-            {(messages || []).map((message: MessageType, key: number) => {
-              return (
-                <div className="message" key={key} ref={scrollRef}>
-                  <Message message={message} chatUserDetails={chatUserDetails} myInfo={myInfo} />
-                </div>
-              );
-            })}
-          </ul>
-        </Scrollbar>
-      )}
-    </>
+      ) : ( */}
+      <Scrollbar classname="scrollbar__conversation">
+        <ul className="conversation">
+          {(messages || []).map((message: any, key: number) => {
+            return (
+              <div className="message" key={key} ref={scrollRef}>
+                <Message message={message} chatUserDetails={chatUserDetails} myInfo={myInfo} />
+              </div>
+            );
+          })}
+        </ul>
+      </Scrollbar>
+      {/* )} */}
+    </div>
   );
 };

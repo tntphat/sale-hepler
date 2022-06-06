@@ -70,6 +70,9 @@ const messagesSlice = createSlice({
     toggleLoading: (state) => {
       state.loadingSetting = !state.loadingSetting;
     },
+    toggleLoading2:(state) => {
+      state.loading = !state.loading;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getAllConversations.fulfilled, (state, action) => {
@@ -88,16 +91,16 @@ const messagesSlice = createSlice({
       state.chatUserConversations = action.payload?.data;
       state.loading = false;
     });
-    // builder.addCase(getChatUserConversations.pending, (state, action) => {
-    //   state.loading = true;
-    // });
+    builder.addCase(getChatUserConversations.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(sendMessage.fulfilled, (state, action) => {
       state.isMessageSent = true;
     });
-    // builder.addCase(sendMessage.pending, (state, action) => {
-    //   state.isMessageSent = false;
-    // });
+    builder.addCase(sendMessage.pending, (state, action) => {
+      state.isMessageSent = false;
+    });
   },
 });
-export const { changeSelectedChat, toggleLoading } = messagesSlice.actions;
+export const { changeSelectedChat, toggleLoading, toggleLoading2 } = messagesSlice.actions;
 export default messagesSlice.reducer;

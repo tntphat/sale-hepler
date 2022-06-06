@@ -15,7 +15,6 @@ export const ChatUser = ({ conversation, selectedChat, onSelectChat }: ChatUserP
   const avatar = userInfo.data?.url;
   const name = userInfo.name;
   const threadId = conversation.id;
-  console.log(selectedChat);
   const isSelectedChat: boolean = selectedChat && selectedChat === conversation.id ? true : false;
   const onClick = () => {
     onSelectChat(threadId);
