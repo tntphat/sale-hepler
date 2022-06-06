@@ -8,12 +8,9 @@ import { useAppSelector } from '../../redux';
 import './Message.scss';
 
 export const Message = () => {
-  useEffect(() => {
-    console.log('render infor');
-  }, []);
   const { selectedChat } = useAppSelector((state) => state.messagesSlice);
   return (
-    <Box classname="d-flex">
+    <Box classname="d-flex message-wrapper">
       <Leftbar />
       {selectedChat !== null ? <ConversationUser /> : <div className="item-2">Hello World</div>}
       <OrderInformation />

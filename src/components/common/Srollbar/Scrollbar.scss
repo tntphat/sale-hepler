@@ -19,19 +19,18 @@
   }
   &::-webkit-scrollbar {
     border-radius: 12px;
-    width: 9px;
+    width: 6px;
   }
 
   &__conversation {
-    height: calc(100vh - 31vh);
+    height: calc(100vh - 38vh);
   }
 
   &__order-information {
-    max-height: 30vh;
-    // height: calc(100vh - 21vh);
+    height: calc(100vh - 26vh);
   }
 
   &__chat-list {
-    height: 100%;
+    height: calc(100vh - 40vh);
   }
 }

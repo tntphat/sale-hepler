@@ -3,12 +3,10 @@
 $spacer: 1rem;
 
 .left-bar {
-  // width: 300px;
   border-right: 2px solid #e4e6eb;
   padding-right: 18px;
   flex-grow: 1;
-  width: 20%;
-
+  width: 16vw;
   .search-box {
     &__header {
       display: flex;
