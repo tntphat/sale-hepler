@@ -2,12 +2,13 @@
   // margin-top: 14px;
   width: 100%;
   &--open {
-    z-index: 100;
+    z-index: 1000;
     .dropdown-select__main {
       position: relative;
     }
     .dropdown-select__res {
       position: relative;
+      background-color: white;
     }
   }
   &__label {
@@ -31,6 +32,7 @@
     border-radius: 12px;
     z-index: 100;
     border: 1px solid #d0d4d9;
+    min-height: 44px;
     &--open {
       // background-color: #273360;
     }
@@ -131,5 +133,14 @@
   }
   .infinite-scroll-component {
     overflow: hidden !important;
+  }
+
+  &__input-search {
+    width: 100%;
+    margin-top: 44px;
+    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid #999;
   }
 }

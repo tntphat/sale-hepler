@@ -6,3 +6,8 @@ export const getParameterByName = (name: string, url = window.location.href) => 
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
+
+export const convertTime = (time: string) => {
+  const newTime = new Date(time);
+  return newTime.getDate() + '/' + (newTime.getMonth() + 1) + '/' + newTime.getFullYear();
+};

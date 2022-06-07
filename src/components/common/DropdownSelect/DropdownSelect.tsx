@@ -42,7 +42,7 @@ export const DropdownSelect: React.FC<IDropdownSelect> = ({
           }}
         >
           {value ? (
-            <p className="dropdown-select__selected-text">{value.title}</p>
+            <p className="dropdown-select__selected-text">{value[titleProp || 'title']}</p>
           ) : (
             <p
               className={`dropdown-select__place-holder ${

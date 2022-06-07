@@ -6,22 +6,29 @@ import {
   InputText,
   HorizontalMedias,
   FileDropzone,
+  CheckBoxControl,
+  InputTextArea,
 } from '../../components/common';
 import './CreateProduct.scss';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
 import { SvgImage } from '../../assets/svg';
+import { apiProducts } from '../../services/api';
+import { useNavigate, useParams } from 'react-router-dom';
+import { dataBranch, dataCategory, dataUnit, dataUnitDimension } from '../../constants';
+import { apiCommon } from '../../services/api/apiCommon';
 
 type TypeForm = {
   name: string;
-  code: string;
+  sku: string;
   weight: string;
-  unit: string;
-  priceIn: string;
-  priceOut: string;
-  desc: string;
+  weightUnit: string;
+  importPrice: string;
+  exportPrice: string;
+  description: string;
   type: string;
   branch: string;
+  isAllowSell: boolean;
 };
 
 export const CreateProduct = () => {
@@ -31,12 +38,64 @@ export const CreateProduct = () => {
     formState: { errors },
     watch,
     control,
+    reset,
+    resetField,
   } = useForm<TypeForm>();
   const refImage = useRef<HTMLInputElement | any>(null);
   const [images, setImages] = useState<any>([]);
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (!id) return;
+    apiProducts.getInfoProduct(id).then((res) => {
+      const { __v, updatedAt, createdAt, images, ...product } = res.data.data.product;
+      reset(product);
+      resetField('type', {
+        defaultValue: dataCategory[dataCategory.findIndex((cate) => cate.title === product.type)],
+      });
+      resetField('weightUnit', {
+        defaultValue: dataUnit[dataUnit.findIndex((cate) => cate.title === product.weightUnit)],
+      });
+      resetField('dimensionUnit', {
+        defaultValue:
+          dataUnitDimension[
+            dataUnitDimension.findIndex((cate) => cate.title === product.dimensionUnit)
+          ],
+      });
+      resetField('branch', {
+        defaultValue: dataBranch[dataBranch.findIndex((cate) => cate.title === product.branch)],
+      });
+      setImages(images);
+    });
+  }, [id]);
 
   const onSubmit = (data: TypeForm) => {
-    console.log(data);
+    // console.log(data);
+    const newForm = { ...data };
+    for (let key in newForm) {
+      if (typeof newForm[key] === 'object') {
+        newForm[key] = newForm[key].title;
+      }
+    }
+    const action = id ? apiProducts.updateProduct : apiProducts.createProduct;
+    // apiProducts.createProduct({...data,inventoryNumber:2,isAllowSell:true,images:['https://cdn.pixabay.com/photo/2022/04/23/20/51/nature-7152461__340.jpg','https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg']})
+
+    apiCommon
+      .getLinkImage({ images })
+      .then((res) => {
+        return action({
+          ...newForm,
+          inventoryNumber: 2,
+          // isAllowSell: true,
+          images: res.data,
+          image: res.data[0],
+        });
+      })
+      .then(() => {
+        navigate('/product');
+      });
   };
 
   const handleClickOpenInputImage = (e: React.MouseEvent) => {
@@ -68,7 +127,7 @@ export const CreateProduct = () => {
             label="Mã sản phẩm "
             placeholder="Nhập mã sản phẩm "
             className="create-product__field"
-            {...register('code', {
+            {...register('sku', {
               required: {
                 value: true,
                 message: 'Vui lòng nhập mã sản phẩm ',
@@ -78,7 +137,20 @@ export const CreateProduct = () => {
                 message: 'Vui lòng nhập không quá 10 kí tự',
               },
             })}
-            error={errors.code && errors.code.message}
+            error={errors.sku && errors.sku.message}
+          />
+          <InputText
+            label="Số lượng tồn kho "
+            placeholder="Nhập số lượng tồn kho "
+            className="create-product__field"
+            {...register('quantity', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập số lượng tồn kho ',
+              },
+            })}
+            type="number"
+            error={errors.quantity && errors.quantity.message}
           />
           <div className="create-product__row">
             <InputText
@@ -91,29 +163,83 @@ export const CreateProduct = () => {
                   message: 'Vui lòng nhập khối lượng ',
                 },
               })}
+              type="number"
               error={errors.weight && errors.weight.message}
             />
 
             <Controller
-              name="unit"
+              name="weightUnit"
               control={control}
               render={({ field: { onChange, value, ref } }) => (
                 <DropdownSelect
-                  label="tét"
-                  data={[
-                    {
-                      id: 1,
-                      title: 'ABC',
-                    },
-                    {
-                      id: 2,
-                      title: 'XYZ',
-                    },
-                  ]}
-                  placeholder="hixhix"
+                  label="Đơn vị tính khối lượng"
+                  data={dataUnit}
+                  placeholder="Chọn đơn vị tính khối lượng"
                   onChange={onChange}
                   value={value}
-                  error={errors.unit?.message}
+                  error={errors.weightUnit?.message}
+                  className="form-field--mt-0"
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Vui lòng chọn dơn vị',
+                },
+              }}
+            />
+
+            <InputText
+              label="Chiều cao"
+              placeholder="Nhập chiều cao "
+              className="create-product__field"
+              {...register('height', {
+                required: {
+                  value: true,
+                  message: 'Vui lòng nhập chiều  cao ',
+                },
+              })}
+              error={errors.height && errors.height.message}
+              type="number"
+            />
+            <InputText
+              label="Chiều dài"
+              placeholder="Nhập chiều dài "
+              className="create-product__field"
+              {...register('length', {
+                required: {
+                  value: true,
+                  message: 'Vui lòng nhập chiều dài ',
+                },
+              })}
+              error={errors.length && errors.length.message}
+              type="number"
+            />
+            <InputText
+              label="Chiều rộng"
+              placeholder="Nhập chiều rộng "
+              className="create-product__field"
+              {...register('width', {
+                required: {
+                  value: true,
+                  message: 'Vui lòng nhập chiều rộng ',
+                },
+              })}
+              error={errors.width && errors.width.message}
+              type="number"
+            />
+
+            <Controller
+              name="dimensionUnit"
+              control={control}
+              render={({ field: { onChange, value, ref } }) => (
+                <DropdownSelect
+                  label="Đơn vị tính kích thước"
+                  data={dataUnitDimension}
+                  placeholder="Chọn đơn vị tính kích thước"
+                  onChange={onChange}
+                  value={value}
+                  error={errors.dimensionUnit?.message}
                 />
               )}
               rules={{
@@ -127,43 +253,61 @@ export const CreateProduct = () => {
               label="Giá nhập"
               placeholder="Nhập giá "
               className="create-product__field"
-              {...register('priceIn', {
+              {...register('importPrice', {
                 required: {
                   value: true,
                   message: 'Vui lòng nhập giá ',
                 },
               })}
-              error={errors.priceIn && errors.priceIn.message}
+              error={errors.importPrice && errors.importPrice.message}
+              type="number"
             />
 
             <InputText
               label="Giá bán "
               placeholder="Nhập Giá bán "
               className="create-product__field"
-              {...register('priceOut', {
+              {...register('exportPrice', {
                 required: {
                   value: true,
                   message: 'Vui lòng nhập Giá bán ',
                 },
               })}
-              error={errors.priceOut && errors.priceOut.message}
+              error={errors.exportPrice && errors.exportPrice.message}
+              type="number"
             />
           </div>
 
-          <InputText
+          {/* <InputText
             label="Mô tả"
             placeholder="Nhập mô tả "
             className="create-product__field"
-            {...register('desc', {
+            {...register('description', {
               required: {
                 value: true,
                 message: 'Vui lòng nhập mô tả ',
               },
             })}
-            error={errors.desc && errors.desc.message}
+            error={errors.description && errors.description.message}
+          /> */}
+          <Controller
+            name={'description'}
+            control={control}
+            render={({ field: { onChange, value, ref } }) => (
+              <InputTextArea
+                onChange={onChange}
+                label={'Mô tả'}
+                error={errors['description']?.message}
+                value={value}
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: 'Vui lòng nhập mô tả',
+              },
+            }}
           />
-
-          <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
         </Box>
         <div>
           <Box>
@@ -173,16 +317,7 @@ export const CreateProduct = () => {
               render={({ field: { onChange, value, ref } }) => (
                 <DropdownSelect
                   label="Loại sản phẩm"
-                  data={[
-                    {
-                      id: 1,
-                      title: 'Điện tử',
-                    },
-                    {
-                      id: 2,
-                      title: 'Gia dụng',
-                    },
-                  ]}
+                  data={dataCategory}
                   placeholder="Chọn loại sản phẩm"
                   onChange={onChange}
                   value={value}
@@ -203,16 +338,7 @@ export const CreateProduct = () => {
               render={({ field: { onChange, value, ref } }) => (
                 <DropdownSelect
                   label="Nhãn hiệu"
-                  data={[
-                    {
-                      id: 1,
-                      title: 'Nike',
-                    },
-                    {
-                      id: 2,
-                      title: 'Adidaphat',
-                    },
-                  ]}
+                  data={dataBranch}
                   placeholder="Chọn nhãn hiệu"
                   onChange={onChange}
                   value={value}
@@ -225,6 +351,19 @@ export const CreateProduct = () => {
                   message: 'Vui lòng chọn dơn vị',
                 },
               }}
+            />
+
+            <Controller
+              name="isAllowSell"
+              control={control}
+              render={({ field: { onChange, value, ref } }) => (
+                <CheckBoxControl
+                  label="Bật bán"
+                  onChange={onChange}
+                  value={value}
+                  error={errors.isAllowSell?.message}
+                />
+              )}
             />
           </Box>
 
@@ -247,6 +386,7 @@ export const CreateProduct = () => {
           </Box>
         </div>
       </GridLayoutTwoCol>
+      <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
     </div>
   );
 };

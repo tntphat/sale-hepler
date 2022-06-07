@@ -23,7 +23,7 @@ const slice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(doGetAllGroups.fulfilled, (state, action: PayloadAction<IResGetAllGroup>) => {
-      state.dataListGroup = action.payload.groups;
+      state.dataListGroup = action.payload.data;
       state.isLoading = false;
     });
     builder.addCase(doGetAllGroups.rejected, (state, action) => {

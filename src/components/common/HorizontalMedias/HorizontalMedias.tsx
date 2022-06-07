@@ -41,7 +41,7 @@ const ComponentHorizontalMedias = (
           return (
             <div key={ind}>
               <img
-                src={URL.createObjectURL(img)}
+                src={typeof img !== 'string' ? URL.createObjectURL(img) : img}
                 // style={{ maxWidth: '100%', maxHeight: '200px' }}
               />
               <div className="close-wrapper" onClick={() => handleRemoveImage(ind)}>

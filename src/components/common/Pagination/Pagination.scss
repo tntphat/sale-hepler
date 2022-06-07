@@ -1,0 +1,33 @@
+@import '../../../assets/scss/variables';
+
+.pagination {
+  width: fit-content;
+  margin-left: auto;
+  & > span {
+    &:not(:first-child) {
+      margin-left: 15px;
+    }
+    &:first-child {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+    &:last-child {
+      svg {
+        transform: rotate(-90deg);
+      }
+    }
+    font-weight: bold;
+    color: #8fa0b9;
+    cursor: pointer;
+    path {
+      fill: #8fa0b9;
+    }
+  }
+  .active {
+    color: $primary-color;
+    path {
+      fill: $primary-color;
+    }
+  }
+}

@@ -17,6 +17,7 @@ interface IProgressBar {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   className?: string;
+  isDisabled?: boolean;
 }
 
 interface IModal {
@@ -129,10 +130,32 @@ interface ITextArea {
   onChange?: ((event: React.ChangeEvent<HTMLInputElement, React.ChangeEvent>) => void) | undefined;
   value?: string;
   className?: string;
+  onKeyPress?: any;
+  onKeyDown?: any;
 }
 
 interface ISvg {
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
   color?: string;
+}
+
+interface IDropdownSelectMultipleLevel {
+  options?: Array<IResOptionCategory>;
+  isFirstLevel?: boolean;
+  isLoading?: boolean;
+  onSelect: (opt: IResOptionCategory) => void;
+  apiGetSpecificCategory: any;
+}
+
+interface ITableHeaderCol {
+  title?: string;
+  width?: string;
+  minWidth?: string;
+  maxWidth?: string;
+}
+interface ITable {
+  dataHeader: ITableHeaderCol[];
+  dataTable: any[];
+  className?: string;
 }

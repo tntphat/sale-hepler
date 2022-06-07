@@ -24,3 +24,8 @@ export * from './SvgFlag';
 export * from './SvgOrder';
 export * from './SvgFacebook';
 export * from './SvgGoogle';
+export * from './SvgManagePost';
+export * from './SvgTemplate';
+export * from './SvgHome';
+export * from './SvgSetting';
+export * from './SvgGroups';

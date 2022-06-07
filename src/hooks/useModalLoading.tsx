@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux';
-import { doCloseModal, doOpenModal } from '../redux/slice';
+import { doCloseModal, doOpenModal, doSetModalMessage } from '../redux/slice';
 
 export const useModalLoading = () => {
   const dispatch = useDispatch();
@@ -13,6 +13,14 @@ export const useModalLoading = () => {
   const handleOpenModalLoading = () => {
     dispatch(doOpenModal());
   };
+  const handleOpenModalMessage = (msg) => {
+    dispatch(doSetModalMessage(msg));
+  };
 
-  return { handleCloseModalLoading, handleOpenModalLoading, isLoadingModal };
+  return {
+    handleCloseModalLoading,
+    handleOpenModalLoading,
+    isLoadingModal,
+    handleOpenModalMessage,
+  };
 };

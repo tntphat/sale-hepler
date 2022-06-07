@@ -1,10 +1,14 @@
 import { axiosMain } from '..';
-import { objToFormData } from '../../helpers/api';
+import { objToFormData, objToQuery } from '../../helpers/api';
 
 const baseUrl = 'posts/';
 export const apiPosts = {
-  getAll: (param: number) => {
-    const url = baseUrl + 'all/' + param;
+  getAll: (params: any) => {
+    const url = baseUrl;
+    return axiosMain.get(url + objToQuery(params));
+  },
+  getSpecificPost: (params: string) => {
+    const url = baseUrl + params;
     return axiosMain.get(url);
   },
   post: (params: IParamPost) => {

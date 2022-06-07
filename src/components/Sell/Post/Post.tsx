@@ -1,7 +1,8 @@
 import { IEmojiData } from 'emoji-picker-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { SvgDate, SvgImg } from '../../../assets/svg';
-import { useDraggable } from '../../../hooks';
+import { Template } from '../../../containers';
+import { useDraggable, useModalLoading } from '../../../hooks';
 import {
   Box,
   CheckBox,
@@ -16,6 +17,7 @@ import {
 } from '../../common';
 import { Button } from '../../common/Button/Button';
 import { ListNetWork } from '../SelectNetwork/SelectNetwork';
+import { Templates } from '../Templates/Templates';
 import './Post.scss';
 
 type TypePost = {
@@ -25,17 +27,19 @@ type TypePost = {
   handleTest: (value: { text: string; image: any }) => void;
 };
 
-export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTest }) => {
+export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTest, product }) => {
   const refArea = useRef<HTMLTextAreaElement | any>(null);
   const [value, setValue] = useState('');
   const refImage = useRef<HTMLInputElement | any>(null);
-  const [images, setImages] = useState<any>([]);
+  const [images, setImages] = useState<any>(product?.images || []);
+
   // const refScroll = useDraggable();
   // const [previewImages, setPreviewImages] = useState<any>([]);
   // const [currentPositionCursor, setCurrentPositionCursor] = useState(0);
   const [cursorPos, setCursorPos] = useState();
   const [schedule, setSchedule] = useState<string>('');
   const [openSchedule, setOpenSchedule] = useState<boolean>(false);
+  const [openTemplates, setOpenTemplates] = useState<boolean>(false);
 
   const handleClickEmoji = (event: React.MouseEvent, emojiObject: IEmojiData) => {
     event.stopPropagation();
@@ -57,9 +61,15 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
     refArea.current.selectionEnd = cursorPos;
   }, [cursorPos]);
 
-  return (
+  return openTemplates ? (
+    // <Templates setOpenTemplates={setOpenTemplates} product={product} setValue={setValue} />
+    <Template setOpenTemplates={setOpenTemplates} product={product} setValue={setValue} />
+  ) : (
     <GridLayoutTwoCol className="post">
       <Box classname="post__create" title="Tạo bài đăng">
+        <Button className="post__btn-template" onClick={() => setOpenTemplates(true)}>
+          Chọn bài đăng mẫu
+        </Button>
         <Item
           image="https://cdn.pixabay.com/photo/2022/02/14/02/39/animal-7012354__340.jpg"
           subName="Phat To"

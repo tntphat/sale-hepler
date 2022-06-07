@@ -1,17 +1,37 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { SvgImage } from '../../assets/svg';
 import {
   Box,
   Button,
   DropdownSelect,
+  DropdownSelectMultipleLevel,
+  DropdownSelectSearch,
   FileDropzone,
   HorizontalMedias,
   InputText,
   TextArea,
 } from '../../components/common';
+import { InventoryTypeSelect } from '../../components/InventoryTypeSelect/InventoryTypeSelect';
+import { FormFieldsTiki } from '../../components/SellECommerce/FormFieldsTiki/FormFieldsTiki';
+import { OptionsLabel } from '../../components/SellECommerce/OptionsLabel/OptionsLabel';
+import { Variants } from '../../components/SellECommerce/Variants/Variants';
+import { dataCategory } from '../../constants';
+import { useModalLoading, useOnClickOutside } from '../../hooks';
+import {
+  apiCategory,
+  apiProducts,
+  apiTikiInventory,
+  apiTikiProduct,
+  apiTikiSeller,
+} from '../../services/api';
+import { apiCommon } from '../../services/api/apiCommon';
 import './SellECommerce.scss';
-
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 type TypeForm = {
   name: string;
   code: string;
@@ -26,6 +46,7 @@ type TypeForm = {
   width: string;
   height: string;
   length: string;
+  category: IResOptionCategory;
 };
 
 export const SellECommerce = () => {
@@ -35,19 +56,151 @@ export const SellECommerce = () => {
     formState: { errors },
     watch,
     control,
+    setValue,
   } = useForm<TypeForm>();
   const refArea = useRef();
+  const navigate = useNavigate();
   const refImage = useRef<HTMLInputElement | any>(null);
   const [images, setImages] = useState<any>([]);
+  const [arrAttribute, setArrAttribute] = useState<IAttributeCategory[]>([]);
+  const [optionsCategory, setOptionsCategory] = useState<IResOptionCategory[]>([]);
+  const [openDropdownCategory, setOpenDropdownCategory] = useState(false);
+  const { handleOpenModalLoading, handleCloseModalLoading, handleOpenModalMessage } =
+    useModalLoading();
+  const refDropdownCategory = useRef();
+  useOnClickOutside(() => {
+    setOpenDropdownCategory(false);
+  }, refDropdownCategory);
   const handleClickOpenInputImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     refImage.current.click();
   };
-  const onSubmit = console.log;
+
+  const onSubmit = (data: any) => {
+    handleOpenModalLoading();
+    const {
+      name,
+      description,
+      price: market_price,
+      category,
+      option_attributes,
+      variants,
+      importPrice,
+      sku,
+      ...rest
+    } = data;
+
+    const { product_height, product_length, product_weight_kg, product_width } = rest;
+
+    const newForm = {
+      name,
+      description,
+      market_price,
+      category_id: category.id,
+      category_name: category.name,
+      attributes: [],
+      importPrice,
+      variants,
+      option_attributes,
+      sku,
+      height: product_height,
+      length: product_length,
+      width: product_width,
+      weight: product_weight_kg,
+    };
+
+    apiCommon
+      .getLinkImage({ images: [...images, ...variants.map((variant) => variant.image[0])] })
+      .then((res) => {
+        newForm.image = res.data[0];
+        newForm.images = res.data.slice(0, images.length);
+        newForm.variants = newForm.variants.map((variant, index) => ({
+          ...variant,
+          image: res.data[index + images.length],
+        }));
+        for (const key in rest) {
+          const item = arrAttribute.find((item) => item.code === key);
+          // newForm.attributes[key] = typeof rest[key] === 'string' ? rest[key] : rest[key].value;
+          newForm.attributes.push({
+            attribute_code: item?.code,
+            display_name: item?.display_name,
+            value: typeof rest[key] === 'string' ? rest[key] : rest[key].value,
+          });
+        }
+        newForm.option_attributes = newForm.option_attributes.map((item) => item.option_label);
+        newForm.certificate_files = [
+          {
+            url: 'https://i.pinimg.com/236x/16/83/c3/1683c385af85d756f8fab83a93d48063.jpg',
+            type: 'brand',
+          },
+          {
+            url: 'https://kenh14cdn.com/2020/7/15/legialinhmeo672472714514751590239205770621637245080975n-15948258251531626115845.jpg',
+            type: 'category',
+            document_id: 17,
+          },
+          {
+            url: 'https://kenh14cdn.com/2020/7/15/legialinhmeo672472714514751590239205770621637245080975n-15948258251531626115845.jpg',
+            type: 'category',
+            document_id: 4,
+          },
+          {
+            url: 'https://i.pinimg.com/236x/16/83/c3/1683c385af85d756f8fab83a93d48063.jpg',
+            type: 'category',
+            document_id: 18,
+          },
+        ];
+        newForm.meta_data = {
+          is_auto_turn_on: true,
+        };
+        return apiTikiProduct.requestProduct(newForm);
+      })
+      .then(() => {
+        navigate('/');
+      })
+      .catch((e) => {
+        handleOpenModalMessage(e.response.data.data.errors[0]);
+      })
+      .finally(() => {
+        handleCloseModalLoading();
+      });
+  };
+
+  useEffect(() => {
+    // apiTikiInventory.getAll().then(console.log);
+    // apiTikiSeller.getWareHouses({ limit: 10, page: 1 }).then(console.log);
+    apiProducts.getCategories().then(console.log);
+    apiCategory
+      .getAllCategory()
+      .then((res) => {
+        return apiCategory.getCategory();
+      })
+      .then((res) => setOptionsCategory(res.data));
+  }, []);
+
+  useEffect(() => {
+    if (!watch('category')?.id) return;
+    setValue('option_attributes', []);
+    apiCategory.getAttributesOfCategory(watch('category').id).then((res) => {
+      const arr = res.data.data;
+      setArrAttribute(arr.filter((item: IAttributeCategory) => item.is_required));
+
+      // const obj = {};
+      // arr.forEach((ele) => {
+      //   if (!obj[ele.input_type]) {
+      //     obj[ele.input_type] = [ele.data_type];
+      //   } else if (!obj[ele.input_type].includes(ele.data_type)) {
+      //     obj[ele.input_type].push(ele.data_type);
+      //   }
+      // });
+      // console.log(
+      //   arr.map(({ code, description, is_required }) => ({ code, description, is_required })),
+      // );
+    });
+  }, [watch('category')?.id]);
 
   return (
     <div className="sell-ecommerce">
-      <Box title="Thông tin cơ bản">
+      {/* <Box title="Thông tin cơ bản">
         <InputText
           label="Tên sản phẩm"
           placeholder="Nhập tên sản phẩm"
@@ -64,66 +217,7 @@ export const SellECommerce = () => {
           })}
           error={errors.name && errors.name.message}
         />
-        <Controller
-          name="type"
-          control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <DropdownSelect
-              label="Loại sản phẩm"
-              data={[
-                {
-                  id: 1,
-                  title: 'Điện tử',
-                },
-                {
-                  id: 2,
-                  title: 'Chin',
-                },
-              ]}
-              placeholder="Chọn loại sản phẩm"
-              onChange={onChange}
-              value={value}
-              error={errors.type?.message}
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: 'Vui lòng chọn loại sản phẩm',
-            },
-          }}
-        />
-        <Controller
-          name="branch"
-          control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <DropdownSelect
-              label="Loại thương hiệu"
-              data={[
-                {
-                  id: 1,
-                  title: 'Samsung',
-                },
-                {
-                  id: 2,
-                  title: 'Apple',
-                },
-              ]}
-              placeholder="Chọn loại thương hiệu"
-              onChange={onChange}
-              value={value}
-              error={errors.branch?.message}
-            />
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: 'Vui lòng chọn loại thương hiệu',
-            },
-          }}
-        />
-      </Box>
-      <Box title="Giá và tồn kho" marginTop={10}>
+
         <div className="sell-ecommerce__row">
           <InputText
             label="Tên SKU"
@@ -183,7 +277,69 @@ export const SellECommerce = () => {
             error={errors.priceOut && errors.priceOut.message}
           />
         </div>
-      </Box>
+   
+      </Box> */}
+      {/* <Box title="Giá và tồn kho" marginTop={10}>
+        <div className="sell-ecommerce__row">
+          <InputText
+            label="Tên SKU"
+            placeholder="Nhập tên SKU"
+            className="sell-ecommerce__field"
+            {...register('code', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập tên SKU',
+              },
+              maxLength: {
+                value: 100,
+                message: 'Vui lòng nhập không quá 100 kí tự',
+              },
+            })}
+            error={errors.code && errors.code.message}
+          />
+          <InputText
+            label="Giá gốc"
+            placeholder="Nhập Giá gốc"
+            className="sell-ecommerce__field"
+            {...register('priceIn', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập Giá gốc',
+              },
+            })}
+            error={errors.priceIn && errors.priceIn.message}
+            marginTop={0}
+          />
+          <InputText
+            label="Tồn kho"
+            placeholder="Nhập Tồn kho"
+            className="sell-ecommerce__field"
+            {...register('left', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập Tồn kho',
+              },
+              maxLength: {
+                value: 100,
+                message: 'Vui lòng nhập không quá 100 kí tự',
+              },
+            })}
+            error={errors.left && errors.left.message}
+          />
+          <InputText
+            label="Giá khuyến mãi"
+            placeholder="Nhập Giá khuyến mãi"
+            className="sell-ecommerce__field"
+            {...register('priceOut', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập Giá khuyến mãi',
+              },
+            })}
+            error={errors.priceOut && errors.priceOut.message}
+          />
+        </div>
+      </Box> */}
 
       <Box title="Quản lý hình ảnh" marginTop={10}>
         <FileDropzone images={images} setImages={setImages}>
@@ -203,23 +359,114 @@ export const SellECommerce = () => {
         </FileDropzone>
       </Box>
 
-      <Box title="Mô tả sản phẩm" marginTop={10}>
+      <Box marginTop={10} title="Loại sản phẩm" zIndex={3}>
         <Controller
-          name="desc"
+          name="type"
           control={control}
           render={({ field: { onChange, value, ref } }) => (
-            <TextArea ref={refArea} value={value} onChange={(e) => onChange(e.target.value)} />
+            <DropdownSelect
+              label="Loại sản phẩm"
+              data={dataCategory}
+              placeholder="Chọn loại sản phẩm"
+              onChange={onChange}
+              value={value}
+              error={errors.type?.message}
+            />
           )}
           rules={{
             required: {
               value: true,
-              message: 'Vui lòng chọn loại thương hiệu',
+              message: 'Vui lòng chọn loại sản phẩm',
+            },
+          }}
+        />
+        <div
+          style={{ marginTop: 10 }}
+          className="sell-ecommerce__pick-category"
+          onClick={() => setOpenDropdownCategory((pre) => !pre)}
+          ref={refDropdownCategory}
+        >
+          {watch('category.name') || ' Chọn loại'}
+
+          {openDropdownCategory ? (
+            <DropdownSelectMultipleLevel
+              options={optionsCategory}
+              isFirstLevel
+              onSelect={(opt) => setValue('category', opt)}
+              apiGetSpecificCategory={apiCategory.getCategoryChild}
+            ></DropdownSelectMultipleLevel>
+          ) : null}
+        </div>
+      </Box>
+
+      {watch('category.id') ? (
+        <Box marginTop={10} title="Thông tin Tiki">
+          <InputText
+            label="Mã sản phẩm"
+            placeholder="Nhập mã sản phẩm"
+            className="sell-ecommerce__field"
+            {...register('sku', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập mã sản phẩm',
+              },
+            })}
+            error={errors.sku && errors.sku.message}
+          />
+          <FormFieldsTiki
+            arrAttributes={arrAttribute}
+            register={register}
+            errors={errors}
+            control={control}
+          />
+          <InputText
+            label="Giá nhập"
+            placeholder="Nhập Giá nhập"
+            className="sell-ecommerce__field"
+            {...register('importPrice', {
+              required: {
+                value: true,
+                message: 'Vui lòng nhập Giá nhập',
+              },
+            })}
+            error={errors.importPrice && errors.importPrice.message}
+            type="number"
+          />
+        </Box>
+      ) : null}
+
+      <Box title="Chi tiết sản phẩm" marginTop={10} zIndex={2}>
+        {watch('category.id') ? (
+          <Controller
+            name="option_attributes"
+            control={control}
+            render={({ field: { onChange, value, ref } }) => (
+              <OptionsLabel onChange={onChange} value={value} categoryId={watch('category')?.id} />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: 'Vui lòng chọn loại ',
+              },
+            }}
+          />
+        ) : null}
+        <Controller
+          name="variants"
+          control={control}
+          render={({ field: { onChange, value, ref } }) => (
+            <Variants onChange={onChange} value={value} options={watch('option_attributes')} />
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: 'Vui lòng chọn loại ',
             },
           }}
         />
       </Box>
 
-      <Box marginTop={10} title="Thông tin khác">
+      {/* <Box marginTop={10} title="Thông tin khác">
         <InputText
           label=" Cân nặng"
           placeholder="Nhập  Cân nặng"
@@ -272,10 +519,13 @@ export const SellECommerce = () => {
             marginTop={0}
           />
         </div>
-      </Box>
+      </Box> */}
       <Button onClick={handleSubmit(onSubmit)} width={50} marginLeft="auto">
         Lưu
       </Button>
+      {/* <Button onClick={testSubmit} width={50} marginLeft="auto">
+        Test
+      </Button> */}
     </div>
   );
 };
