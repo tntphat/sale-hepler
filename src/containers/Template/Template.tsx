@@ -47,7 +47,7 @@ const TemplateItem = ({ template, title, id, setPage, product, setOpenTemplates,
   );
 };
 
-export const Template: React.FC<any> = ({ setOpenTemplates, setValue, product }) => {
+export const Template: React.FC<any> = ({ setOpenTemplates, setValue, product, isHideAdd }) => {
   const [templates, setTemplates] = useState([]);
   const { data, searchText, setSearchText, setPage } = usePagination({
     fetchData: apiFbPostTemplates.getListTemplate,
@@ -61,9 +61,11 @@ export const Template: React.FC<any> = ({ setOpenTemplates, setValue, product })
   // }, []);
   return (
     <Box title="Chọn bài đăng mẫu">
-      <div className="templates__add" onClick={() => navigate('create')}>
-        <SvgPlus />
-      </div>
+      {!isHideAdd && (
+        <div className="templates__add" onClick={() => navigate('create')}>
+          <SvgPlus />
+        </div>
+      )}
       <SearchText
         placeholder="Tìm kiếm bài đăng mẫu"
         value={searchText}

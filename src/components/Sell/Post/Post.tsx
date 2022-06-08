@@ -12,6 +12,7 @@ import {
   GridLayoutTwoCol,
   HorizontalMedias,
   Item,
+  Modal,
   ScrollHorizontal,
   TextArea,
 } from '../../common';
@@ -32,6 +33,7 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
   const [value, setValue] = useState('');
   const refImage = useRef<HTMLInputElement | any>(null);
   const [images, setImages] = useState<any>(product?.images || []);
+  const [time, setTime] = useState();
 
   // const refScroll = useDraggable();
   // const [previewImages, setPreviewImages] = useState<any>([]);
@@ -61,12 +63,22 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
     refArea.current.selectionEnd = cursorPos;
   }, [cursorPos]);
 
-  return openTemplates ? (
-    // <Templates setOpenTemplates={setOpenTemplates} product={product} setValue={setValue} />
-    <Template setOpenTemplates={setOpenTemplates} product={product} setValue={setValue} />
-  ) : (
+  return (
     <GridLayoutTwoCol className="post">
       <Box classname="post__create" title="Tạo bài đăng">
+        <Modal
+          isOpen={openTemplates}
+          setIsOpen={setOpenTemplates}
+          className="post__modal-templates"
+        >
+          {/* <TableProduct setProduct={setProduct} setIsOpen={setOpenTemplates} /> */}
+          <Template
+            isHideAdd
+            setOpenTemplates={setOpenTemplates}
+            product={product}
+            setValue={setValue}
+          />
+        </Modal>
         <Button className="post__btn-template" onClick={() => setOpenTemplates(true)}>
           Chọn bài đăng mẫu
         </Button>
@@ -111,7 +123,16 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
         <ListNetWork className="list-favorite-gr" title="Nhóm yêu thích" hideTickAll />
 
         <div className="post__row">
-          <Button onClick={() => handlePost({ content: value, images })} width="100%">
+          <Button
+            onClick={() =>
+              handlePost({
+                content: value,
+                images,
+                ...(schedule && { schedulePostTime: time.getTime() }),
+              })
+            }
+            width="100%"
+          >
             Đăng
           </Button>
           <Button
@@ -124,30 +145,28 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
             }}
           >
             <SvgDate />
-            {openSchedule ? (
-              <div className="post__schedule">
-                <div className="post__schedule-option" onClick={() => setSchedule('')}>
-                  <CheckBox isActive={!schedule} />
-                  <span>Đăng ngay bây giờ</span>
-                </div>
-                <div className="post__schedule-divider" />
-                <div className="post__schedule-option" onClick={() => setSchedule('1')}>
-                  <CheckBox isActive={!!schedule} />
-                  <span>Lịch trình</span>
-                </div>
-                {schedule ? <DateTimePicker /> : null}
-                <Button
-                  className="post__schedule-btn"
-                  width="100%"
-                  onClick={(e) => {
-                    e?.stopPropagation();
-                    setOpenSchedule(false);
-                  }}
-                >
-                  Xác nhận
-                </Button>
+            <div className="post__schedule" style={{ display: openSchedule ? 'block' : 'none' }}>
+              <div className="post__schedule-option" onClick={() => setSchedule('')}>
+                <CheckBox isActive={!schedule} />
+                <span>Đăng ngay bây giờ</span>
               </div>
-            ) : null}
+              <div className="post__schedule-divider" />
+              <div className="post__schedule-option" onClick={() => setSchedule('1')}>
+                <CheckBox isActive={!!schedule} />
+                <span>Lịch trình</span>
+              </div>
+              {schedule ? <DateTimePicker onChange={setTime} /> : null}
+              <Button
+                className="post__schedule-btn"
+                width="100%"
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  setOpenSchedule(false);
+                }}
+              >
+                Xác nhận
+              </Button>
+            </div>
           </Button>
         </div>
       </Box>

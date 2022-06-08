@@ -11,13 +11,16 @@ import {
   FileDropzone,
   HorizontalMedias,
   InputText,
+  Modal,
   TextArea,
 } from '../../components/common';
 import { InventoryTypeSelect } from '../../components/InventoryTypeSelect/InventoryTypeSelect';
+import { TableProduct } from '../../components/Sell';
 import { FormFieldsTiki } from '../../components/SellECommerce/FormFieldsTiki/FormFieldsTiki';
 import { OptionsLabel } from '../../components/SellECommerce/OptionsLabel/OptionsLabel';
 import { Variants } from '../../components/SellECommerce/Variants/Variants';
 import { dataCategory } from '../../constants';
+import { convertWeightByUnit } from '../../helpers';
 import { useModalLoading, useOnClickOutside } from '../../hooks';
 import {
   apiCategory,
@@ -65,6 +68,10 @@ export const SellECommerce = () => {
   const [arrAttribute, setArrAttribute] = useState<IAttributeCategory[]>([]);
   const [optionsCategory, setOptionsCategory] = useState<IResOptionCategory[]>([]);
   const [openDropdownCategory, setOpenDropdownCategory] = useState(false);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [product, setProduct] = useState();
+
   const { handleOpenModalLoading, handleCloseModalLoading, handleOpenModalMessage } =
     useModalLoading();
   const refDropdownCategory = useRef();
@@ -75,6 +82,37 @@ export const SellECommerce = () => {
     e.stopPropagation();
     refImage.current.click();
   };
+
+  useEffect(() => {
+    if (!(arrAttribute.length && product)) return;
+    const {
+      name,
+      description,
+      exportPrice,
+      importPrice,
+      type,
+      sku,
+      weight,
+      weightUnit,
+      width,
+      isAllowSell,
+      dimensionUnit,
+      height,
+      length,
+      images,
+    } = product;
+    setValue('name', name);
+    setValue('description', description);
+    setValue('price', exportPrice);
+    setValue('importPrice', importPrice);
+    setValue('sku', sku);
+    setValue('type', dataCategory[dataCategory.findIndex((cate) => cate.title === type)]);
+    setValue('product_height', height);
+    setValue('product_width', width);
+    setValue('product_length', length);
+    setValue('product_weight_kg', convertWeightByUnit(weight, weightUnit, 'kg'));
+    setImages(images);
+  }, [arrAttribute, product]);
 
   const onSubmit = (data: any) => {
     handleOpenModalLoading();
@@ -87,6 +125,7 @@ export const SellECommerce = () => {
       variants,
       importPrice,
       sku,
+      type,
       ...rest
     } = data;
 
@@ -107,6 +146,7 @@ export const SellECommerce = () => {
       length: product_length,
       width: product_width,
       weight: product_weight_kg,
+      type: type.title,
     };
 
     apiCommon
@@ -124,7 +164,10 @@ export const SellECommerce = () => {
           newForm.attributes.push({
             attribute_code: item?.code,
             display_name: item?.display_name,
-            value: typeof rest[key] === 'string' ? rest[key] : rest[key].value,
+            value:
+              typeof rest[key] === 'string' || typeof rest[key] === 'number'
+                ? rest[key]
+                : rest[key].value,
           });
         }
         newForm.option_attributes = newForm.option_attributes.map((item) => item.option_label);
@@ -200,6 +243,8 @@ export const SellECommerce = () => {
 
   return (
     <div className="sell-ecommerce">
+      <Button onClick={() => setIsOpen(true)}>Chọn sản phẩm</Button>
+      {product ? <p className="sell-ecommerce__name-product">{product.name}</p> : null}
       {/* <Box title="Thông tin cơ bản">
         <InputText
           label="Tên sản phẩm"
@@ -523,9 +568,10 @@ export const SellECommerce = () => {
       <Button onClick={handleSubmit(onSubmit)} width={50} marginLeft="auto">
         Lưu
       </Button>
-      {/* <Button onClick={testSubmit} width={50} marginLeft="auto">
-        Test
-      </Button> */}
+
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <TableProduct setProduct={setProduct} setIsOpen={setIsOpen} />
+      </Modal>
     </div>
   );
 };

@@ -54,7 +54,7 @@ export const Routers = () => {
           element={<PrivateRouter component={Home} layout={SidebarLayout} />}
         />
         <Route
-          path="/sell/ecommerce"
+          path="/sell/tiki"
           element={<PrivateRouter component={SellECommerce} layout={SidebarLayout} />}
         />
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />

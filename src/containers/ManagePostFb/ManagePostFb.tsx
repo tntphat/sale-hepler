@@ -90,7 +90,7 @@ export const ManagePostFb = () => {
       id,
       content,
       product?.name || 'Tên sản phẩm',
-      groups?.map((gr) => <p key={gr.id}>{gr.name}</p>),
+      groups?.map((gr) => <li key={gr.id}>{gr.name}</li>),
       convertTime(createdAt),
       <Dropdown
         key={id}

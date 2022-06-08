@@ -13,9 +13,12 @@ import {
   InputTextArea,
   FileDropzone,
   HorizontalMedias,
+  Modal,
 } from '../../components/common';
+import { TableProduct } from '../../components/Sell';
 import { FormAttributesSendo } from '../../components/SellSendo';
 import { dataCategory } from '../../constants';
+import { convertWeightByUnit } from '../../helpers';
 import { useModalLoading, useOnClickOutside } from '../../hooks';
 import { apiSendoCategory, apiSendoProduct } from '../../services/api';
 import { apiCommon } from '../../services/api/apiCommon';
@@ -30,6 +33,10 @@ export const SellSendo = () => {
   const [openDropdownCategory, setOpenDropdownCategory] = useState(false);
   const refImage = useRef<HTMLInputElement | any>(null);
   const refDropdownCategory = useRef();
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [product, setProduct] = useState();
+
   const { handleOpenModalLoading, handleCloseModalLoading, handleOpenModalMessage } =
     useModalLoading();
   const navigate = useNavigate();
@@ -63,6 +70,38 @@ export const SellSendo = () => {
   const memoizedOptionsType = useMemo(() => {
     return optionsType.map(({ code, ...rest }) => ({ id: code, ...rest }));
   }, [optionsType]);
+
+  useEffect(() => {
+    if (!product) return;
+    const {
+      name,
+      description,
+      exportPrice,
+      importPrice,
+      type,
+      sku,
+      weight,
+      weightUnit,
+      width,
+      isAllowSell,
+      dimensionUnit,
+      height,
+      length,
+      images,
+    } = product;
+    setValue('name', name);
+    setValue('description', description);
+    setValue('price', exportPrice);
+    setValue('importPrice', importPrice);
+    setValue('sku', sku);
+    setValue('type', dataCategory[dataCategory.findIndex((cate) => cate.title === type)]);
+    setValue('height', height);
+    setValue('width', width);
+    setValue('length', length);
+    setValue('weight', convertWeightByUnit(weight, weightUnit, 'gam'));
+    setValue('stock_availability', isAllowSell);
+    setImages(images);
+  }, [product]);
 
   const onSubmit = (data) => {
     handleOpenModalLoading();
@@ -141,6 +180,8 @@ export const SellSendo = () => {
 
   return (
     <div className="sell-sendo">
+      <Button onClick={() => setIsOpen(true)}>Chọn sản phẩm</Button>
+      {product ? <p className="sell-ecommerce__name-product">{product.name}</p> : null}
       <Box title="Quản lý hình ảnh" marginTop={10}>
         <FileDropzone images={images} setImages={setImages}>
           <div className="create-product__flex">
@@ -462,6 +503,10 @@ export const SellSendo = () => {
           }}
         />
       </Box>
+
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <TableProduct setProduct={setProduct} setIsOpen={setIsOpen} />
+      </Modal>
 
       <Button onClick={handleSubmit(onSubmit)}>Đăng bán</Button>
     </div>

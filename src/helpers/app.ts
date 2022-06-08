@@ -37,7 +37,5 @@ export const convertTemplateToText = (string: string, title?: string, isGenerate
     }
     if (start === -1) newString += string[i];
   }
-  console.log(string, newString);
-
   return newString;
 };

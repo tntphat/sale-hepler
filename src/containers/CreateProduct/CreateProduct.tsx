@@ -64,9 +64,9 @@ export const CreateProduct = () => {
             dataUnitDimension.findIndex((cate) => cate.title === product.dimensionUnit)
           ],
       });
-      resetField('branch', {
-        defaultValue: dataBranch[dataBranch.findIndex((cate) => cate.title === product.branch)],
-      });
+      // resetField('branch', {
+      //   defaultValue: dataBranch[dataBranch.findIndex((cate) => cate.title === product.branch)],
+      // });
       setImages(images);
     });
   }, [id]);
@@ -332,7 +332,7 @@ export const CreateProduct = () => {
               }}
             />
 
-            <Controller
+            {/* <Controller
               name="branch"
               control={control}
               render={({ field: { onChange, value, ref } }) => (
@@ -351,7 +351,7 @@ export const CreateProduct = () => {
                   message: 'Vui lòng chọn dơn vị',
                 },
               }}
-            />
+            /> */}
 
             <Controller
               name="isAllowSell"

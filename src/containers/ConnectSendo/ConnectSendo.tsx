@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, InputText } from '../../components/common';
+import { useModalLoading } from '../../hooks';
 import { apiSendoAuth } from '../../services/api';
 
 type TypeForm = {
@@ -9,6 +11,8 @@ type TypeForm = {
 };
 
 export const ConnectSendo = () => {
+  const navigate = useNavigate();
+  const { handleCloseModalLoading, handleOpenModalLoading } = useModalLoading();
   const {
     register,
     handleSubmit,
@@ -18,7 +22,11 @@ export const ConnectSendo = () => {
     setValue,
   } = useForm<TypeForm>();
   const onSubmit = (data) => {
-    apiSendoAuth.connection(data);
+    handleOpenModalLoading();
+    apiSendoAuth.connection(data).then(() => {
+      navigate('/');
+      handleCloseModalLoading();
+    });
   };
   return (
     <Box title="Thông tin">

@@ -16,8 +16,8 @@ export const dataSidebar = [
     icon: SvgPost,
     children: [
       {
-        title: 'Sàn TMDT',
-        link: '/ecommerce',
+        title: 'Tiki',
+        link: '/tiki',
       },
       {
         title: 'Facebook',

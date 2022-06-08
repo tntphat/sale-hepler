@@ -32,10 +32,8 @@ export const ManagePostTiki = () => {
 
   const handleFetchData = () => {
     apiTikiProduct.getProducts({ page, name: dbValue }).then((res) => {
-      console.log(res.data);
-
-      setTotalPages(res.data.pagination.totalDocs);
-      setProducts(res.data.products);
+      setTotalPages(res.data.data.pagination.totalPages);
+      setProducts(res.data.data.products);
     });
   };
   useEffect(() => {

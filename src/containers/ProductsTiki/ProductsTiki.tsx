@@ -27,6 +27,8 @@ export const ProductTiki = () => {
   const navigate = useNavigate();
   const handleFetchData = () => {
     apiProducts.getProducts({ page, name: dbValue }).then((res) => {
+      console.log('res.data.data.pagination.totalPages', res.data.data.pagination.totalPages);
+
       setTotalPages(res.data.data.pagination.totalPages);
       setProducts(res.data.data.products);
     });
@@ -67,11 +69,11 @@ export const ProductTiki = () => {
     }
   };
 
-  const handleDltItems = () => {
-    apiProducts.deleteProducts(selected).then(() => {
-      handleFetchData();
-    });
-  };
+  // const handleDltItems = () => {
+  //   apiProducts.deleteProducts(selected).then(() => {
+  //     handleFetchData();
+  //   });
+  // };
 
   const memoizedDataTable = useMemo(() => {
     return products.map(
@@ -98,7 +100,7 @@ export const ProductTiki = () => {
                 navigate(`/product/${id}`);
               },
             },
-            { text: 'Xoá', cb: handleDltItem(id) },
+            // { text: 'Xoá', cb: handleDltItem(id) },
             {
               text: 'Chi tiết',
               cb: () => {

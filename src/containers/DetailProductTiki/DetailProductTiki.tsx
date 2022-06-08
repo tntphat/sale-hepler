@@ -103,7 +103,7 @@ export const DetailProductTiki = () => {
   };
 
   useEffect(() => {
-    apiTikiProduct.getProductRequest(id).then((res) => setDetailRequest(res.data));
+    apiTikiProduct.getProductRequest(id).then((res) => setDetailRequest(res.data.data));
   }, []);
 
   return <Box title="Thông tin sản phẩm">{renderDetailProduct()}</Box>;

@@ -85,7 +85,7 @@ const dataHeader = [
     width: '80px',
   },
   {
-    title: 'Nhãn hiệu',
+    title: 'Giá',
     width: '80px',
   },
   {
@@ -94,7 +94,7 @@ const dataHeader = [
   },
 ];
 
-export const TableProduct = ({ setProduct, setIsOpen, setStep }) => {
+export const TableProduct: React.FC<any> = ({ setProduct, setIsOpen, setStep }) => {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [page, setPage] = useState(1);
@@ -123,12 +123,12 @@ export const TableProduct = ({ setProduct, setIsOpen, setStep }) => {
         sku,
         name,
         type,
-        branch,
+        exportPrice,
         <Button
           onClick={() => {
             setIsOpen(false);
             setProduct(product);
-            setStep(1);
+            setStep && setStep(1);
           }}
           key={_id}
         >

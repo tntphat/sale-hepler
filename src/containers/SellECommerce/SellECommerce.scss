@@ -1,4 +1,9 @@
 .sell-ecommerce {
+  &__name-product {
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 10px;
+  }
   &__row {
     display: grid;
     grid-template-columns: 1fr 1fr;

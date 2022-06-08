@@ -30,7 +30,15 @@ export const Sell = () => {
     dispatch(doGetAllGroups());
   }, []);
 
-  const handlePost = ({ content, images }: { content: string; images: File[] }) => {
+  const handlePost = ({
+    content,
+    images,
+    schedulePostTime,
+  }: {
+    content: string;
+    images: File[];
+    schedulePostTime: number;
+  }) => {
     handleOpenModalLoading();
     console.log(images);
     apiCommon
@@ -41,6 +49,7 @@ export const Sell = () => {
           content,
           images: res.data,
           productId: product.id,
+          schedulePostTime,
         });
       })
 
