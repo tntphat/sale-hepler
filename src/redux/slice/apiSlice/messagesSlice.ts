@@ -37,6 +37,8 @@ interface ChatState {
   isMessageSent: boolean;
   loading: boolean;
   loadingSetting: boolean;
+  loadingMessage: boolean;
+  loadingConversation: boolean;
 }
 
 const initialState: ChatState = {
@@ -51,6 +53,8 @@ const initialState: ChatState = {
   isMessageSent: false,
   loading: false,
   loadingSetting: false,
+  loadingMessage: false,
+  loadingConversation: false,
 };
 
 const messagesSlice = createSlice({
@@ -70,37 +74,63 @@ const messagesSlice = createSlice({
     toggleLoading: (state) => {
       state.loadingSetting = !state.loadingSetting;
     },
-    toggleLoading2:(state) => {
+    toggleLoading2: (state) => {
       state.loading = !state.loading;
-    }
+    },
+    toggleLoadingConversation: (state) => {
+      state.loadingConversation = !state.loadingConversation;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllConversations.fulfilled, (state, action) => {
+      console.log('getall done');
+
       state.directMessages = action.payload?.data;
       state.myInfo = state.directMessages?.data[0].participants?.data[1];
-      // state.loading = false;
+      if (!state.selectedChat) {
+        state.selectedChat = state.directMessages?.data[0].id;
+        const selectedConversation = state.directMessages?.data.find(
+          (conversation: any) => conversation.id === state.selectedChat,
+        );
+        const paticipants = selectedConversation.participants.data;
+        state.chatUserDetails = paticipants.find((paticipant: any) => {
+          return paticipant.id != state.myInfo.id;
+        });
+        getChatUserConversations(state.directMessages?.data[0].id);
+      }
+      state.loading = false;
     });
     // builder.addCase(getAllConversations.rejected, (state, action) => {
     //   const error = action.error;
     //   state.error = error;
     // });
-    // builder.addCase(getAllConversations.pending, (state, action) => {
-    //   // state.loading = true;
-    // });
-    builder.addCase(getChatUserConversations.fulfilled, (state, action) => {
-      state.chatUserConversations = action.payload?.data;
-      state.loading = false;
-    });
-    builder.addCase(getChatUserConversations.pending, (state, action) => {
+    builder.addCase(getAllConversations.pending, (state, action) => {
+      console.log('get all pending');
+
       state.loading = true;
     });
+    builder.addCase(getChatUserConversations.fulfilled, (state, action) => {
+      console.log('user conver done');
+
+      state.chatUserConversations = action.payload?.data;
+      // state.loadingConversation = false;
+    });
+    builder.addCase(getChatUserConversations.pending, (state, action) => {
+      console.log('user cnver pending done');
+
+      // state.loadingConversation = true;
+    });
     builder.addCase(sendMessage.fulfilled, (state, action) => {
+      console.log('send done');
       state.isMessageSent = true;
     });
     builder.addCase(sendMessage.pending, (state, action) => {
+      console.log('send pending');
+
       state.isMessageSent = false;
     });
   },
 });
-export const { changeSelectedChat, toggleLoading, toggleLoading2 } = messagesSlice.actions;
+export const { changeSelectedChat, toggleLoading, toggleLoading2, toggleLoadingConversation } =
+  messagesSlice.actions;
 export default messagesSlice.reducer;

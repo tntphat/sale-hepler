@@ -15,7 +15,9 @@ interface ConversationProps {
 
 export const Conversation = ({ chatUserConversations, chatUserDetails }: ConversationProps) => {
   const dispatch = useDispatch();
-  const { isMessageSent, selectedChat, loading } = useAppSelector((state) => state.messagesSlice);
+  const { isMessageSent, selectedChat, loadingConversation } = useAppSelector(
+    (state) => state.messagesSlice,
+  );
   const { myInfo } = useAppSelector((state) => state.messagesSlice);
   const [messages, setMessages] = useState<any>([]);
   const scrollRef = useRef<HTMLDivElement | any>(null);
@@ -45,23 +47,23 @@ export const Conversation = ({ chatUserConversations, chatUserDetails }: Convers
 
   return (
     <div className="conversation-wrapper">
-      {/* {loading ? (
+      {loadingConversation ? (
         <Scrollbar classname="scrollbar__conversation">
-          <ModalLoading isSmall={true} isOpen={false} isBlue={true} />
+          <ModalLoading isSmall={true} isOpen={loadingConversation} isBlue={true} />
         </Scrollbar>
-      ) : ( */}
-      <Scrollbar classname="scrollbar__conversation">
-        <ul className="conversation">
-          {(messages || []).map((message: any, key: number) => {
-            return (
-              <div className="message" key={key} ref={scrollRef}>
-                <Message message={message} chatUserDetails={chatUserDetails} myInfo={myInfo} />
-              </div>
-            );
-          })}
-        </ul>
-      </Scrollbar>
-      {/* )} */}
+      ) : (
+        <Scrollbar classname="scrollbar__conversation">
+          <ul className="conversation">
+            {(messages || []).map((message: any, key: number) => {
+              return (
+                <div className="message" key={key} ref={scrollRef}>
+                  <Message message={message} chatUserDetails={chatUserDetails} myInfo={myInfo} />
+                </div>
+              );
+            })}
+          </ul>
+        </Scrollbar>
+      )}
     </div>
   );
 };

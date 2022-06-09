@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../../redux';
 import { sendMessage } from '../../../../redux/slice/apiSlice/messagesSlice';
+import { apiMessages } from '../../../../services/api';
 
 import { EndButtons } from '../EndButton/EndButtons';
 import { InputSection } from '../InputSection/InputSection';
@@ -20,13 +21,10 @@ export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
   const [text, setText] = useState<string>('');
   const [images, setImages] = useState<any>([]);
   const [cursorPos, setCursorPos] = useState('');
-  const dispatch = useDispatch();
-  const { selectedChat } = useAppSelector((state) => state.messagesSlice);
 
   const handleClickEmoji = (event: React.MouseEvent, emojiObject: IEmojiData) => {
     event.stopPropagation();
     refText.current?.focus();
-
     const ref = refText.current;
     const start = ref.value.substring(0, ref.selectionStart);
     const end = ref.value.substring(ref.selectionStart);
@@ -36,15 +34,21 @@ export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
   };
 
   const handleSend = () => {
-    dispatch(
-      sendMessage({
-        receiverId: chatUserDetails.id,
-        messageText: text,
-        messageAttachment: images,
-      }),
-    );
+    // dispatch(
+    //   sendMessage({
+    //     receiverId: chatUserDetails.id,
+    //     messageText: text,
+    //     messageAttachment: images,
+    //   }),
+    // );
     setImages([]);
     setText('');
+    const payload = {
+      receiverId: chatUserDetails.id,
+      messageText: text,
+      messageAttachment: images,
+    };
+    apiMessages.sendMessage(payload);
   };
 
   useEffect(() => {

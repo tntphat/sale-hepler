@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './ChatUser.scss';
-import defaultAvatar from '../../../assets/images/default-user-image.png';
+import defaultAvatar from '../../../../assets/images/default-user-image.png';
 
 interface ChatUserProps {
   conversation: any;

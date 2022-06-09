@@ -31,7 +31,7 @@ export const OrderInformation = () => {
       <Scrollbar classname="scrollbar__order-information">
         <div className="order-info__information">
           <div className="order-info__title">
-            <h5>Địa chỉ</h5>
+            <h5>Thông tin</h5>
           </div>
           <div className="order-info__two-column">
             <Controller
@@ -106,6 +106,7 @@ export const OrderInformation = () => {
             })}
             error={errors.desc && errors.desc.message}
           />
+          <InputText placeholder="Ghi chú" className="create-product__field" />
         </div>
 
         <div className="order-info__product">
@@ -139,17 +140,7 @@ export const OrderInformation = () => {
           />
           {/* </Scrollbar> */}
           <div className="order-info__note">
-            <InputText
-              placeholder="Ghi chú"
-              className="create-product__field"
-              {...register('desc', {
-                required: {
-                  value: true,
-                  message: 'Vui lòng nhập mô tả ',
-                },
-              })}
-              // error={errors.desc && errors.desc.message}
-            />
+            <InputText placeholder="Ghi chú" className="create-product__field" />
           </div>
         </div>
         <div className="order-info__button">

@@ -21,7 +21,7 @@ export const Register = () => {
 
   useEffect(() => {
     dispatch(clearMessage());
-  }, [dispatch]);
+  }, []);
 
   const {
     register,

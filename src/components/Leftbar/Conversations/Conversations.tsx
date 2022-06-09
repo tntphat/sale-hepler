@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ChatUser } from '../ChatUser/ChatUser';
+import { ChatUser } from './ChatUser/ChatUser';
 
 interface ConversationsProp {
   conversations: any;
@@ -8,14 +8,6 @@ interface ConversationsProp {
 }
 
 export const Conversations = ({ conversations, selectedChat, onSelectChat }: ConversationsProp) => {
-  useEffect(() => {
-    if (conversations) {
-      const lastestConversation = conversations[0];
-      console.log(lastestConversation);
-    }
-    // dispatch(changeSelectedChat(lastestConversation));
-  }, []);
-
   return (
     <>
       <div className="">

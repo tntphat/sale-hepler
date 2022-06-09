@@ -27,7 +27,7 @@ export const Login = (props: any) => {
 
   useEffect(() => {
     dispatch(clearMessage());
-  }, [dispatch]);
+  }, []);
 
   const {
     register,

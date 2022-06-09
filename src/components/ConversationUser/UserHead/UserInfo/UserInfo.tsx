@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './UserInfo.scss';
+import defaultAvatar from '../../../../assets/images/default-user-image.png';
 
 interface ProfileImageProps {
   chatUserDetails: any;
@@ -13,12 +14,16 @@ export const UserInfo = ({ chatUserDetails }: ProfileImageProps) => {
 
   return (
     <div className="user-info">
-      <img src={avatar} className="user-info__avatar avatar" alt="" />
-      <span className="user-info__name">
-        <Link to="#" className="">
-          {name}
-        </Link>
-      </span>
+      {avatar ? (
+        <img src={avatar} className="user-info__avatar avatar" alt="" />
+      ) : (
+        <img src={defaultAvatar} className="avatar" />
+      )}
+      {/* <span className="user-info__name"> */}
+      <Link to="#" className="user-info__name">
+        {name}
+      </Link>
+      {/* </span> */}
     </div>
   );
 };

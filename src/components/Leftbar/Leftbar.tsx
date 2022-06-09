@@ -9,6 +9,7 @@ import {
   getAllConversations,
   getChatUserConversations,
   changeSelectedChat,
+  toggleLoadingConversation,
 } from '../../redux/slice/apiSlice/messagesSlice';
 import './Leftbar.scss';
 import { Scrollbar } from '../common/Srollbar/Scrollbar';
@@ -21,19 +22,18 @@ export const Leftbar = () => {
 
   useEffect(() => {
     dispatch(getAllConversations());
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (directMessages) {
-  //     const lastestConversation = directMessages[0];
-  //     console.log(lastestConversation);
-  //   }
-  //   // dispatch(changeSelectedChat(lastestConversation));
-  // }, []);
+  }, []);
 
   const onSelectChat = (id: string | number) => {
-    dispatch(getChatUserConversations(id));
-    dispatch(changeSelectedChat(id));
+    const selectChat = async () => {
+      dispatch(changeSelectedChat(id));
+      dispatch(toggleLoadingConversation());
+      await dispatch(getChatUserConversations(id));
+      console.log(directMessages);
+      dispatch(toggleLoadingConversation());
+    };
+
+    selectChat();
   };
 
   useEffect(() => {

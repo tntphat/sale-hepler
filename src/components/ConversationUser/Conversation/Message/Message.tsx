@@ -1,5 +1,6 @@
 import React from 'react';
 import './Message.scss';
+import defaultAvatar from '../../../../assets/images/default-user-image.png';
 
 interface MessageProps {
   message: any;
@@ -9,7 +10,7 @@ interface MessageProps {
 
 export const Message = ({ message, chatUserDetails, myInfo }: MessageProps) => {
   const isFromMe = message?.from?.id === myInfo?.id;
-  const receiverAvatar = chatUserDetails.data.url;
+  const receiverAvatar = chatUserDetails.data?.url;
 
   return (
     <>
@@ -17,7 +18,11 @@ export const Message = ({ message, chatUserDetails, myInfo }: MessageProps) => {
         <li className={`chat-item ${isFromMe ? 'chat-item--right' : ''}`}>
           <div className="wrapper">
             <div className={`chat-item__avatar ${isFromMe ? 'chat-item__my-avatar' : ''}`}>
-              <img src={receiverAvatar} alt="avatar" />
+              {receiverAvatar ? (
+                <img src={receiverAvatar} className="avatar" />
+              ) : (
+                <img src={defaultAvatar} className="avatar" />
+              )}
             </div>
 
             <div className="chat-item__content">
@@ -34,7 +39,12 @@ export const Message = ({ message, chatUserDetails, myInfo }: MessageProps) => {
         >
           <div className="wrapper">
             <div className={`chat-item__avatar ${isFromMe ? 'chat-item__my-avatar' : ''}`}>
-              <img src={receiverAvatar} alt="avatar" />
+              {/* {receiverAvatar ? (
+                <img src={receiverAvatar} className="avatar" />
+              ) : ( */}
+              <img src={defaultAvatar} className="avatar" />
+              {/* )} */}
+              {/* <img src={receiverAvatar} alt="avatar" /> */}
             </div>
 
             <div
