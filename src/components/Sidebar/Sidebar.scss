@@ -68,9 +68,16 @@
       bottom: 0;
       background-color: $primary-color;
     }
-
-    path {
-      fill: $primary-color !important;
+    svg {
+      path {
+        fill: $primary-color !important;
+      }
+    }
+    svg[isStroke='true'] {
+      path {
+        stroke: $primary-color !important;
+        fill: unset !important;
+      }
     }
   }
 }

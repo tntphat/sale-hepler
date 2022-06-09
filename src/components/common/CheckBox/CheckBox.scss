@@ -1,13 +1,25 @@
 .checkbox {
-    border: 1px rgba($color: #000000, $alpha: .5) solid;
-    width: 23px;
-    height: 23px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    &--active {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #0A69E1;
+  border: 1px rgba($color: #000000, $alpha: 0.5) solid;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  &--active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a69e1;
+  }
+}
+
+.checkbox-control {
+  &-row {
+    display: flex;
+    // grid-template-columns: 200px auto;
+    flex-direction: row-reverse;
+    margin-right: auto;
+    width: fit-content;
+    .checkbox {
     }
+  }
 }

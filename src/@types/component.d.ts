@@ -17,6 +17,7 @@ interface IProgressBar {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   className?: string;
+  isDisabled?: boolean;
 }
 
 interface IModal {
@@ -140,11 +141,16 @@ interface ITextArea {
   onChange?: ((event: React.ChangeEvent<HTMLInputElement, React.ChangeEvent>) => void) | undefined;
   value?: string;
   className?: string;
+<<<<<<< HEAD
   onKeyPress?: React.KeyboardEventHandler<HTMLTextAreaElement> | undefined;
   placeholder?: string;
   id?: string;
   readonly?: boolean;
   error?: string;
+=======
+  onKeyPress?: any;
+  onKeyDown?: any;
+>>>>>>> 4e8c53c5e1a4d4205b57d756e078a71c1791014c
 }
 
 interface ISvg {
@@ -153,6 +159,7 @@ interface ISvg {
   color?: string;
 }
 
+<<<<<<< HEAD
 interface IProductInfo {
   id: number;
   image: string;
@@ -172,4 +179,24 @@ interface ICustomTextArea {
   value?: string;
   error?: any;
   onChange?: ((event: any) => void) | undefined;
+=======
+interface IDropdownSelectMultipleLevel {
+  options?: Array<IResOptionCategory>;
+  isFirstLevel?: boolean;
+  isLoading?: boolean;
+  onSelect: (opt: IResOptionCategory) => void;
+  apiGetSpecificCategory: any;
+}
+
+interface ITableHeaderCol {
+  title?: string;
+  width?: string;
+  minWidth?: string;
+  maxWidth?: string;
+}
+interface ITable {
+  dataHeader: ITableHeaderCol[];
+  dataTable: any[];
+  className?: string;
+>>>>>>> 4e8c53c5e1a4d4205b57d756e078a71c1791014c
 }

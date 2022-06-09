@@ -2,7 +2,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { LOCAL_TOKEN } from '../../constants';
 import { readCookie } from '../../helpers';
 
-const baseURL = process.env.URL_API + 'api/';
+const baseURL =
+  (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) +
+  'api/';
 const token = readCookie(LOCAL_TOKEN);
 
 const axiosMain = axios.create({

@@ -13,7 +13,7 @@ export const apiFbPosts = {
   },
   postMultiple: (params: IParamsPostMultiple) => {
     const url = baseUrl + 'post/multiple';
-    return axiosMain.post(url, objToFormData(params));
+    return axiosMain.post(url, params);
   },
   postTest: (params: any) => {
     const url = baseUrl + 'test';

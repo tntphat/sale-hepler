@@ -14,20 +14,22 @@ const ItemSidebar: React.FC<{ item: any; handleNavToLink: any }> = ({ item, hand
           extended ? 'sidebar__link--extend' : ''
         }`}
         onClick={(e) => {
-          handleNavToLink(item.link);
           e.stopPropagation();
+          setExtended((pre) => !pre);
         }}
       >
-        <>{item.icon()}</>
-        <span>{item.title}</span>
+        <>{item.icon({ color: '#1f4173' })}</>
+        <span
+          onClick={(e) => {
+            handleNavToLink(item.link);
+            e.stopPropagation();
+          }}
+        >
+          {item.title}
+        </span>
         {item.children ? (
           <>
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                setExtended((pre) => !pre);
-              }}
-            >
+            <div>
               <SvgAngle />
             </div>
           </>
@@ -39,7 +41,10 @@ const ItemSidebar: React.FC<{ item: any; handleNavToLink: any }> = ({ item, hand
             <div
               className={`${item.link + child.link === location.pathname ? 'active' : ''}`}
               key={ind}
-              onClick={() => handleNavToLink(child.link, item.link)}
+              onClick={(e) => {
+                handleNavToLink(child.link, item.link);
+                e.stopPropagation();
+              }}
             >
               <span>{child.title}</span>
             </div>

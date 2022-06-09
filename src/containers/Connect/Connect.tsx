@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box } from '../../components/common';
 import { BoxChannel, BoxStatistics } from '../../components/Connect';
 import { loadScript, loginFb } from '../../helpers';
@@ -12,9 +13,12 @@ const redirectUri =
   (process.env.NODE_ENV === 'development'
     ? process.env.URL_APP_LOCAL
     : process.env.URL_APP_PRODUCTION) + 'auth-tiki';
-const LINK = `https://api.tiki.vn/sc/oauth2/auth?response_type=code&client_id=${ID_APP_TIKI}&redirect_uri=${redirectUri}&scope=product&state=AbCDeFgH`;
+
+const LINK = `https://api.tiki.vn/sc/oauth2/auth?response_type=code&client_id=${ID_APP_TIKI}&redirect_uri=${redirectUri}&scope=product order inventory offline&state=AbCDeFgH`;
+// const LINK = `https://api.tiki.vn/sc/oauth2/auth?response_type=code&client_id=${ID_APP_TIKI}&redirect_uri=${redirectUri}&scope=product&state=AbCDeFgH`;
 
 export const Connect = () => {
+  const navigate = useNavigate();
   const cb = (data: any) => {
     console.log(data.accessToken);
   };
@@ -29,11 +33,15 @@ export const Connect = () => {
   const handleLoginFb = () => {
     loginFb(cb);
   };
+  const handleLoginSendo = () => {
+    navigate('/connect/sendo');
+  };
   return (
     <div className="connect">
       <div className="connect__statistics">
         <BoxStatistics onClick={handleLoginFb} color="#017DF6" count={2} channel="Facebook" />
         <BoxStatistics onClick={handleLoginTiki} color="#1A94FF" count={3} channel="Tiki" />
+        <BoxStatistics onClick={handleLoginSendo} color="#d9292a" count={3} channel="Sendo" />
       </div>
 
       <BoxChannel onClickConnect={handleLoginFb} color="#0a69e1" channel="Facebook" />

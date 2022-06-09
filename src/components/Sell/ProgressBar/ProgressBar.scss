@@ -34,6 +34,9 @@
         color: #000;
       }
     }
+    &--disabled {
+      cursor: default;
+    }
 
     & > p {
       position: absolute;

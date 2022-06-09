@@ -1,0 +1,53 @@
+@import '../../../assets/scss/variables';
+
+.templates {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-auto-rows: 1fr;
+    grid-gap: 10px;
+  }
+  &__item {
+    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+    white-space: pre-line;
+    position: relative;
+    b {
+      color: #1a94ff;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: bold;
+      width: fit-content;
+    }
+    &-dropdown {
+      position: absolute;
+      cursor: pointer;
+      right: 10px;
+      top: 10px;
+      z-index: 10;
+    }
+  }
+
+  &__add {
+    position: absolute;
+    top: 20px;
+
+    right: 20px;
+    padding: 5px;
+    display: flex;
+    // align-items: center;
+    // justify-content: center;
+    border-radius: 50%;
+    background-color: $primary-color;
+    cursor: pointer;
+    svg {
+      width: 15px;
+      height: 15px;
+      path {
+        fill: white;
+      }
+    }
+  }
+}

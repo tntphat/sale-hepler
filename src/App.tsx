@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { ModalLoading, ModalMedia } from './components/common/Modal';
-import { doCloseModalMedia, useAppDispatch, useAppSelector } from './redux';
+import { ModalLoading, ModalMedia, ModalMessage } from './components/common/Modal';
+import { doCloseModalMedia, doCloseModalMessage, useAppDispatch, useAppSelector } from './redux';
 
 import { Routers } from './routers';
 
 function App() {
-  const { isOpenModalLoading, isOpenModalMedia, media } = useAppSelector(
-    (state) => state.modalSlice,
-  );
+  const { isOpenModalLoading, isOpenModalMedia, media, isOpenModalMessage, message } =
+    useAppSelector((state) => state.modalSlice);
   const dispatch = useAppDispatch();
   return (
     <div className="App">
@@ -18,6 +17,11 @@ function App() {
         isOpen={isOpenModalMedia}
         media={media}
         setIsOpen={() => dispatch(doCloseModalMedia())}
+      />
+      <ModalMessage
+        isOpen={isOpenModalMessage}
+        message={message}
+        setIsOpen={() => dispatch(doCloseModalMessage())}
       />
     </div>
   );

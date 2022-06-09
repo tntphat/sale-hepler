@@ -43,8 +43,8 @@ const ComponentHorizontalMedias = (
           return (
             <div key={ind}>
               <img
-                src={URL.createObjectURL(img)}
                 className={isSmallSize ? 'small' : ''}
+                src={typeof img !== 'string' ? URL.createObjectURL(img) : img}
                 // style={{ maxWidth: '100%', maxHeight: '200px' }}
               />
               {isSmallSize ? (

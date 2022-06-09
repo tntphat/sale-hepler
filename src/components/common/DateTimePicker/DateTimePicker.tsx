@@ -13,7 +13,13 @@ export const DateTimePicker: React.FC<TypeDateTimePicker> = ({ onChange }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [time, setTime] = useState('');
   useEffect(() => {
-    onChange && onChange(time + ' ' + startDate);
+    const date = new Date(startDate);
+    const splitTime = time.split(':');
+    if (time) {
+      date.setHours(splitTime[0]);
+      date.setMinutes(splitTime[1]);
+    }
+    onChange && onChange(date);
   }, [time, startDate]);
   return (
     <div className="datetime-picker">
@@ -25,9 +31,11 @@ export const DateTimePicker: React.FC<TypeDateTimePicker> = ({ onChange }) => {
         <SvgClock />
         <input
           value={time}
-          type="text"
+          type="time"
           className="datetime-picker__time-input"
-          onChange={(e) => setTime(e.target.value)}
+          onChange={(e) => {
+            setTime(e.target.value);
+          }}
           maxLength={5}
           placeholder="HH:MM"
         />

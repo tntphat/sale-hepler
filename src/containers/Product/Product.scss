@@ -1,0 +1,16 @@
+.products {
+  &__search-input {
+    border: 1px solid #1f4173;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  &__row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  &__btn-dlt {
+    margin-left: auto;
+    background-color: #ff4757;
+    width: 60px;
+  }
+}

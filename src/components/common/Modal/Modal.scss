@@ -19,6 +19,13 @@
     height: inherit;
     position: relative;
   }
+  
+  &--message {
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+  }
 
   &__container {
     min-width: 300px;

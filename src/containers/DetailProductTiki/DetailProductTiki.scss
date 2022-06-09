@@ -1,0 +1,29 @@
+.detail-product {
+  img {
+    max-width: 400px;
+  }
+  font-size: 20px;
+  &__grid {
+    display: grid;
+    grid-template-columns: 200px auto;
+    & > span {
+      &:nth-child(2n + 1) {
+        font-weight: 600;
+      }
+    }
+  }
+  p {
+    margin: 20px 0 10px;
+    font-weight: bold;
+    // font-size: 20px;
+  }
+  ul {
+    margin-left: 20px;
+  }
+  &__dropdown {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  position: relative;
+}

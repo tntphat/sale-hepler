@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { SvgEx, SvgList, SvgPlus } from '../../assets/svg';
-import { Modal, SearchText, Table } from '../../components/common';
+import { Button, Modal, SearchText, Table } from '../../components/common';
 import { Box } from '../../components/common/Box/Box';
-import { Post, Select, SelectNetwork } from '../../components/Sell';
+import { Post, Select, SelectNetwork, TableProduct, Templates } from '../../components/Sell';
 import { ProgressBar } from '../../components/Sell/ProgressBar/ProgressBar';
 import './Sell.scss';
 import { useAppDispatch, doGetAllGroups, useAppSelector } from '../../redux';
@@ -11,11 +11,14 @@ import { useModalLoading } from '../../hooks';
 import { apiPosts } from '../../services/api/apiPost';
 import { useNavigate } from 'react-router-dom';
 import { apiFbPosts } from '../../services/api';
+import { apiCommon } from '../../services/api/apiCommon';
 
 export const Sell = () => {
   const [step, setStep] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedGroups, setSelectedGroups] = useState<IResGroup[]>([]);
+
+  const [product, setProduct] = useState();
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -27,16 +30,29 @@ export const Sell = () => {
     dispatch(doGetAllGroups());
   }, []);
 
-  const handlePost = ({ content, images }: { content: string; images: File[] }) => {
-    // handleOpenModalLoading();
+  const handlePost = ({
+    content,
+    images,
+    schedulePostTime,
+  }: {
+    content: string;
+    images: File[];
+    schedulePostTime: number;
+  }) => {
+    handleOpenModalLoading();
     console.log(images);
-
-    apiFbPosts
-      .postMultiple({
-        groupsId: dataListGroup.map((gr) => +gr.id),
-        content,
-        images,
+    apiCommon
+      .getLinkImage({ images })
+      .then((res) => {
+        return apiFbPosts.postMultiple({
+          groupsId: selectedGroups.map((gr) => +gr.id),
+          content,
+          images: res.data,
+          productId: product.id,
+          schedulePostTime,
+        });
       })
+
       .finally(() => {
         handleCloseModalLoading();
         navigate('/');
@@ -55,39 +71,12 @@ export const Sell = () => {
         handleCloseModalLoading();
         navigate('/');
       });
-    // fetch(value.image)
-    //   .then((res) => res.blob())
-    //   .then((blob) => {
-    //     apiPosts.postTest({
-    //       content: value.text,
-    //       image: blob,
-    //     });
-    //   });
-    //   .then((res) => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(res);
-    //     reader.onload = function () {
-    //       apiPosts
-    //         .postTest({
-    //           content: value.text,
-    //           image: this.result,
-    //         })
-    //         .finally(() => {
-    //           handleCloseModalLoading();
-    //           navigate('/');
-    //         });
-    //       return this.result;
-    //     }; // <--- `this.result` contains a base64 data URI
-    //   });
-    // .then((res) => {
-
-    // });
   };
 
   return (
     <div className="sell">
       <div className="sell__progress-bar">
-        <ProgressBar setStep={setStep} step={step} />
+        <ProgressBar setStep={setStep} step={step} isDisabled={!product} />
       </div>
 
       {step === 0 && (
@@ -111,15 +100,12 @@ export const Sell = () => {
           selectedGroups={selectedGroups}
           setSelectedGroups={setSelectedGroups}
           handleTest={handleTest}
+          product={product}
         />
       )}
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <div className="sell__modal">
-          <h3>Chọn sản phẩm</h3>
-          <SearchText placeholder="Tìm kím sản phẩm" />
-          <Table />
-        </div>
+        <TableProduct setProduct={setProduct} setIsOpen={setIsOpen} setStep={setStep} />
       </Modal>
       {/* <ModalLoading isOpen={true} /> */}
     </div>
