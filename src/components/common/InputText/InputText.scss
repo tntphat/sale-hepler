@@ -51,4 +51,13 @@
       margin-top: 0;
     }
   }
+
+  .form-field {
+    &:not(:first-child) {
+      margin-top: 15px;
+    }
+    &--mt-0 {
+      margin-top: 0 !important;
+    }
+  }
 }

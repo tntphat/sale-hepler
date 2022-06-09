@@ -3,16 +3,17 @@ import './ProgressBar.scss';
 
 const data = ['Chọn sản phẩm', 'Chọn bài đăng', 'Viết bài đăng'];
 
-export const ProgressBar: React.FC<IProgressBar> = ({ step, setStep }) => {
+export const ProgressBar: React.FC<IProgressBar> = ({ step, setStep, isDisabled }) => {
   return (
     <div className="progress-bar">
       {data.map((item, index) => {
         let className = 'progress-bar__step';
         if (index === step) className += ' progress-bar__step--active';
         if (step > index) className += ' progress-bar__step--passed';
+        if (isDisabled) className += ' progress-bar__step--disabled';
         return (
           <React.Fragment key={index}>
-            <div className={className} onClick={() => setStep(index)}>
+            <div className={className} onClick={() => !isDisabled && setStep(index)}>
               {index + 1}
               <p>{item}</p>
             </div>

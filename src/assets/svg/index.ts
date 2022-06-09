@@ -40,3 +40,7 @@ export * from './SvgEdit';
 export * from './SvgSave';
 export * from './SvgDown';
 export * from './SvgRight';
+export * from './SvgManagePost';
+export * from './SvgTemplate';
+export * from './SvgHome';
+export * from './SvgGroups';

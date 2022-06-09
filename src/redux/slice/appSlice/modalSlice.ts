@@ -3,13 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 type TTnitialState = {
   isOpenModalLoading: boolean;
   isOpenModalMedia: boolean;
+  isOpenModalMessage: boolean;
   media?: any;
+  message?: string;
 };
 
 const initialState = {
   isOpenModalMedia: false,
   isOpenModalLoading: false,
   media: null,
+  message: '',
+  isOpenModalMessage: false,
 } as TTnitialState;
 
 export const modalSlice = createSlice({
@@ -28,14 +32,32 @@ export const modalSlice = createSlice({
     doCloseModalMedia(state) {
       state.isOpenModalMedia = false;
     },
+    doOpenModalMessage(state) {
+      state.isOpenModalMessage = true;
+    },
+    doCloseModalMessage(state) {
+      state.isOpenModalMessage = false;
+    },
     doSetModalMedia(state, action) {
       state.isOpenModalMedia = true;
       state.media = action.payload;
+    },
+    doSetModalMessage(state, action) {
+      state.isOpenModalMessage = true;
+      state.message = action.payload;
     },
   },
 });
 
 const { actions, reducer } = modalSlice;
-export const { doOpenModal, doCloseModal, doOpenModalMedia, doCloseModalMedia, doSetModalMedia } =
-  actions;
+export const {
+  doOpenModal,
+  doCloseModal,
+  doOpenModalMedia,
+  doCloseModalMedia,
+  doSetModalMedia,
+  doOpenModalMessage,
+  doCloseModalMessage,
+  doSetModalMessage,
+} = actions;
 export default reducer;

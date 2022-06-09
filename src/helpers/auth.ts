@@ -5,6 +5,7 @@ export const setCookie = (day: number, value?: string, key?: string, domain?: st
   const time = now.getTime();
   const expireTime = time + day * 86400 * 1000;
   now.setTime(expireTime);
+  console.log('domain: ', domain);
 
   let domainString;
   if (domain) {
@@ -12,11 +13,13 @@ export const setCookie = (day: number, value?: string, key?: string, domain?: st
   } else {
     domainString = '';
   }
-  document.cookie = `${key}=${value};expires=${now.toUTCString()}${domainString};path=/`;
+  console.log('domainString: ', domainString);
+  document.cookie = `${key}=${value};expires=${now.toUTCString()};path=/`;
 };
 
 export const login = (token: string) => {
-  setCookie(365, token, LOCAL_TOKEN, window.location.hostname);
+  const domain = process.env.COOKIE_DOMAIN || window.location.hostname;
+  setCookie(365, token, LOCAL_TOKEN, domain);
   window.location.reload();
 };
 
@@ -36,15 +39,18 @@ export const readCookie = (name: any) => {
   return null;
 };
 export function deleteAllCookies() {
-  const allCookies = document.cookie.split(';');
+  const cookies = document.cookie.split(';');
 
-  for (let i = 0; i < allCookies.length; i++) {
-    document.cookie = allCookies[i] + '=;expires=' + new Date(0).toUTCString();
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf('=');
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
   }
 }
 
 export const logout = () => {
-  const domain = process.env.COOKIE_DOMAIN || window.location.origin;
+  const domain = window.location.origin;
   localStorage.removeItem(LOCAL_TOKEN);
   deleteAllCookies();
   window.location.replace(domain);
@@ -64,7 +70,7 @@ export const loadScript = () => {
       appId,
       cookie: true,
       xfbml: true,
-      version: 'v8.0',
+      version: 'v13.0',
     });
   };
 
