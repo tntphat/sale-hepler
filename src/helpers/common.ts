@@ -37,3 +37,8 @@ export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: str
       return gamValue;
   }
 };
+
+export const formatCurrency = (num: number | string) => {
+  if (!num) return '0';
+  return num.toLocaleString('en-US');
+};

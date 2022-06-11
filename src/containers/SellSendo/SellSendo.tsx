@@ -199,7 +199,7 @@ export const SellSendo = () => {
           <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
         </FileDropzone>
       </Box>
-      <Box title="Chọn loại" zIndex={10}>
+      <Box title="Chọn loại" zIndex={10} marginTop={10}>
         <Controller
           name="type"
           control={control}
@@ -223,10 +223,11 @@ export const SellSendo = () => {
 
         <div
           className="sell-ecommerce__pick-category"
+          style={{ marginTop: 10 }}
           onClick={() => setOpenDropdownCategory((pre) => !pre)}
           ref={refDropdownCategory}
         >
-          {watch('category.name') || ' Chọn loại'}
+          {watch('category.name') || ' Chọn loại sản phẩm Sendo'}
           {openDropdownCategory ? (
             <DropdownSelectMultipleLevel
               options={optionsCategory}
@@ -269,14 +270,14 @@ export const SellSendo = () => {
                 onChange={onChange}
                 value={value}
                 titleProp="type_name"
-                placeholder="Chọn đơn vị"
-                label="Chọn đơn vị"
+                placeholder="Chọn kiểu sản phẩm"
+                label="Chọn kiểu sản phẩm"
               />
             )}
             rules={{
               required: {
                 value: true,
-                message: 'Vui lòng chọn đơn vị ',
+                message: 'Vui lòng chọn kiểu sản phẩm ',
               },
             }}
           />
@@ -338,7 +339,7 @@ export const SellSendo = () => {
           render={({ field: { onChange, value, ref } }) => (
             <InputTextArea
               onChange={onChange}
-              label={'Mô tả'}
+              label={'Mô tả( 100-1000 kí tự)'}
               error={errors['description']?.message}
               value={value}
             />
@@ -347,6 +348,14 @@ export const SellSendo = () => {
             required: {
               value: true,
               message: 'Vui lòng nhập mô tả',
+            },
+            maxLength: {
+              value: 1000,
+              message: 'Vui lòng nhập nhỏ hơn 1000 kí tự',
+            },
+            minLength: {
+              value: 100,
+              message: 'Vui lòng nhập ít nhất 100 kí tự',
             },
           }}
         />
@@ -365,7 +374,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Chiều cao"
+          label="Chiều cao(cm)"
           placeholder="Nhập chiều cao"
           {...register('height', {
             required: {
@@ -377,7 +386,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Chiều dài"
+          label="Chiều dài(cm)"
           placeholder="Nhập chiều dài"
           {...register('length', {
             required: {
@@ -389,7 +398,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Chiều rộng"
+          label="Chiều rộng(cm)"
           placeholder="Nhập chiều rộng"
           {...register('width', {
             required: {
@@ -401,7 +410,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Khối lượng"
+          label="Khối lượng(gam)"
           placeholder="Nhập Khối lượng"
           {...register('weight', {
             required: {

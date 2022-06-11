@@ -88,7 +88,9 @@ export const ManagePostFb = () => {
         onClick={handleSelectItem(id)}
       />,
       id,
-      content,
+      <p key={id} className="products__content">
+        {content}
+      </p>,
       product?.name || 'Tên sản phẩm',
       groups?.map((gr) => <li key={gr.id}>{gr.name}</li>),
       convertTime(createdAt),

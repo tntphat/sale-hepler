@@ -1,0 +1,24 @@
+.noti {
+  display: flex;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  &--active {
+    background-color: #bcd9ff;
+  }
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+  }
+  &__detail {
+    margin-left: 10px;
+    p,
+    span {
+      color: rgba($color: #000000, $alpha: 0.5);
+    }
+    b {
+      color: #000000;
+    }
+  }
+}

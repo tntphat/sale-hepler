@@ -23,6 +23,7 @@ import {
   SellSendo,
   ConnectSendo,
   ManagePostSendo,
+  SellCommon,
 } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
@@ -47,11 +48,11 @@ export const Routers = () => {
         />
         <Route
           path="sell"
-          element={<PrivateRouter title="Bán hàng" component={Sell} layout={SidebarLayout} />}
+          element={<PrivateRouter title="Bán hàng" component={SellCommon} layout={SidebarLayout} />}
         />
         <Route
           path="/sell/fb"
-          element={<PrivateRouter component={Home} layout={SidebarLayout} />}
+          element={<PrivateRouter component={Sell} layout={SidebarLayout} />}
         />
         <Route
           path="/sell/tiki"
@@ -130,6 +131,12 @@ export const Routers = () => {
           }
         />
         <Route
+          path="/manage"
+          element={
+            <PrivateRouter title="Quản lý bài đăng" component={SellCommon} layout={SidebarLayout} />
+          }
+        />
+        <Route
           path="/manage/fb"
           element={
             <PrivateRouter
@@ -191,13 +198,7 @@ export const Routers = () => {
           <Route
             key={item.link}
             path={'/buyer' + item.link}
-            element={
-              <PrivateRouter
-                title="Đơn hàng"
-                component={item.cpn || BuyerHome}
-                layout={BuyerLayout}
-              />
-            }
+            element={<PrivateRouter component={item.cpn || BuyerHome} layout={BuyerLayout} />}
           />
         ))}
       </Routes>

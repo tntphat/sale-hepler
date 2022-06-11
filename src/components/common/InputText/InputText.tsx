@@ -22,6 +22,7 @@ const ComponentInputText = (
     className,
     error,
     marginTop,
+    disabled,
   }: IInput,
   ref: any,
 ) => {
@@ -50,6 +51,7 @@ const ComponentInputText = (
         autoComplete={autoComplete}
         autoFocus={autoFocus}
         ref={ref}
+        disabled={disabled}
       />
       {error ? <span className="inputs__err">{error}</span> : null}
     </div>

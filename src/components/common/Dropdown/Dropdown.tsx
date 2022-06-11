@@ -16,7 +16,7 @@ export const Dropdown: React.FC<any> = ({ children, className, options }) => {
       ref={ref}
       className={`dropdown ${className || ''} ${open ? 'dropdown--open' : ''}`}
     >
-      {children}
+      <div className="dropdown__main">{children}</div>
       {open ? (
         <div className="dropdown__menu">
           {options.map((opt, ind) => (

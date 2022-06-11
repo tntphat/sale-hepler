@@ -125,11 +125,11 @@ export const dataHeaderTableProduct = [
   },
   {
     title: 'Giá',
-    width: '80px',
+    width: '100px',
   },
   {
     title: 'Ngày tạo',
-    width: '80px',
+    width: '100px',
   },
   {
     title: 'Trạng thái',

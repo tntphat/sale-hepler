@@ -17,6 +17,7 @@ import { apiProducts } from '../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { dataBranch, dataCategory, dataUnit, dataUnitDimension } from '../../constants';
 import { apiCommon } from '../../services/api/apiCommon';
+import { useModalLoading } from '../../hooks';
 
 type TypeForm = {
   name: string;
@@ -40,17 +41,21 @@ export const CreateProduct = () => {
     control,
     reset,
     resetField,
+    setValue,
   } = useForm<TypeForm>();
   const refImage = useRef<HTMLInputElement | any>(null);
   const [images, setImages] = useState<any>([]);
   const navigate = useNavigate();
+  const { handleOpenModalLoading, handleCloseModalLoading, handleOpenModalMessage } =
+    useModalLoading();
 
   const { id } = useParams();
 
   useEffect(() => {
     if (!id) return;
     apiProducts.getInfoProduct(id).then((res) => {
-      const { __v, updatedAt, createdAt, images, ...product } = res.data.data.product;
+      const { __v, updatedAt, createdAt, images, stockAvailable, ...product } =
+        res.data.data.product;
       reset(product);
       resetField('type', {
         defaultValue: dataCategory[dataCategory.findIndex((cate) => cate.title === product.type)],
@@ -64,6 +69,18 @@ export const CreateProduct = () => {
             dataUnitDimension.findIndex((cate) => cate.title === product.dimensionUnit)
           ],
       });
+      stockAvailable?.forEach((stock) => {
+        switch (stock.ecSite) {
+          case 'Tiki':
+            setValue('quantityTiki', stock.quantity);
+            break;
+          case 'Sendo':
+            setValue('quantitySendo', stock.quantity);
+            break;
+          default:
+            setValue('quantity', stock.quantity);
+        }
+      });
       // resetField('branch', {
       //   defaultValue: dataBranch[dataBranch.findIndex((cate) => cate.title === product.branch)],
       // });
@@ -72,12 +89,24 @@ export const CreateProduct = () => {
   }, [id]);
 
   const onSubmit = (data: TypeForm) => {
+    handleOpenModalLoading();
     // console.log(data);
-    const newForm = { ...data };
+    const { quantity, quantityTiki, quantitySendo, ...rest } = data;
+    const newForm = { ...rest };
     for (let key in newForm) {
       if (typeof newForm[key] === 'object') {
         newForm[key] = newForm[key].title;
       }
+    }
+    if (id) {
+      newForm.stockAvailable = [];
+      quantity >= 0 && newForm.stockAvailable.push({ ecSite: 'Facebook', quantity });
+      quantitySendo >= 0 &&
+        newForm.stockAvailable.push({ ecSite: 'Facebook', quantity: quantitySendo });
+      quantityTiki >= 0 &&
+        newForm.stockAvailable.push({ ecSite: 'Facebook', quantity: quantityTiki });
+    } else {
+      newForm.quantity = quantity;
     }
     const action = id ? apiProducts.updateProduct : apiProducts.createProduct;
     // apiProducts.createProduct({...data,inventoryNumber:2,isAllowSell:true,images:['https://cdn.pixabay.com/photo/2022/04/23/20/51/nature-7152461__340.jpg','https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg']})
@@ -93,8 +122,15 @@ export const CreateProduct = () => {
           image: res.data[0],
         });
       })
-      .then(() => {
-        navigate('/product');
+      .then((res) => {
+        if (res.data.meta.ok) {
+          navigate('/product');
+          return;
+        }
+        handleOpenModalMessage(res.data.message);
+      })
+      .finally(() => {
+        handleCloseModalLoading();
       });
   };
 
@@ -152,6 +188,40 @@ export const CreateProduct = () => {
             type="number"
             error={errors.quantity && errors.quantity.message}
           />
+          <div className="create-product__row">
+            {watch('quantitySendo') >= 0 ? (
+              <InputText
+                label="Tồn kho Sendo"
+                placeholder="Nhập tồn kho Sendo"
+                className="create-product__field"
+                type="number"
+                {...register('quantitySendo', {
+                  required: {
+                    value: true,
+                    message: 'Vui lòng nhập tồn kho Sendo ',
+                  },
+                })}
+                error={errors.quantitySendo && errors.quantitySendo.message}
+                disabled
+              />
+            ) : null}
+            {watch('quantityTiki') >= 0 ? (
+              <InputText
+                label="Tồn kho Tiki"
+                placeholder="Nhập tồn kho Tiki"
+                className="create-product__field"
+                type="number"
+                {...register('quantityTiki', {
+                  required: {
+                    value: true,
+                    message: 'Vui lòng nhập tồn kho Tiki ',
+                  },
+                })}
+                error={errors.quantityTiki && errors.quantityTiki.message}
+                disabled
+              />
+            ) : null}
+          </div>
           <div className="create-product__row">
             <InputText
               label="Khối lượng "

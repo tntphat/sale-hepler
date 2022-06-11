@@ -1,0 +1,16 @@
+@import '../../assets/scss/variables';
+.sell-common {
+  &__text {
+    font-weight: 700;
+    font-size: 24px;
+    &--fb {
+      color: $fb-color;
+    }
+    &--tiki {
+      color: $tiki-color;
+    }
+    &--sendo {
+      color: $sendo-color;
+    }
+  }
+}

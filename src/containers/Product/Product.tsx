@@ -12,7 +12,7 @@ import {
   Table,
 } from '../../components/common';
 import { dataHeaderTableProduct } from '../../constants';
-import { convertTime } from '../../helpers';
+import { convertTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
 import { apiCategory, apiProducts, apiTikiSeller } from '../../services/api';
 import './Product.scss';
@@ -75,7 +75,20 @@ export const Product = () => {
 
   const memoizedDataTable = useMemo(() => {
     return products.map(
-      ({ branch, sku, type, name, exportPrice, createdAt, isAllowSell, id }: IProduct, index) => [
+      (
+        {
+          branch,
+          sku,
+          type,
+          name,
+          exportPrice,
+          createdAt,
+          isAllowSell,
+          id,
+          stockAvailable,
+        }: IProduct,
+        index,
+      ) => [
         <SvgCheck
           isActive={selected.includes(id)}
           key={sku}
@@ -85,10 +98,10 @@ export const Product = () => {
         sku,
         name,
         type,
-        10,
-        exportPrice,
+        stockAvailable?.reduce((prev, cur) => prev + cur.quantity, 0),
+        formatCurrency(exportPrice),
         convertTime(createdAt),
-        isAllowSell ? 'Đang giao dịch' : 'Ngừng giao dịch',
+        isAllowSell ? 'Đang bán' : 'Ngừng bán',
         <Dropdown
           key={sku}
           options={[

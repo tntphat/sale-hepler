@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, InputText, TextArea } from '../../components/common';
+import { Box, Button, EmojiPicker, InputText, TextArea } from '../../components/common';
 import { dataFieldsTemplate, dataFieldsTemplateReverse } from '../../constants';
 import { convertTemplateToText, convertTextToTemplate } from '../../helpers';
 import { apiFbPostTemplates } from '../../services/api/facebook/apiPostTemplates';
@@ -24,6 +24,18 @@ export const CreateTemplate = () => {
     const finalText = start + newText + end;
     setValue(finalText);
     setCursorPos(start.length + newText.length);
+  };
+
+  const handleClickEmoji = (event: React.MouseEvent, emojiObject: IEmojiData) => {
+    event.stopPropagation();
+    refArea.current?.focus();
+
+    const ref = refArea.current;
+    const start = ref.value.substring(0, ref.selectionStart);
+    const end = ref.value.substring(ref.selectionStart);
+    const finalText = start + emojiObject.emoji + end;
+    setValue(finalText);
+    setCursorPos(start.length + emojiObject.emoji.length);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -79,8 +91,12 @@ export const CreateTemplate = () => {
         label="Tiêu đề"
       />
       <TextArea ref={refArea} value={value} onChange={handleChange} />
+      <EmojiPicker onClickEmoji={handleClickEmoji} refArea={refArea} />
+
       <div className="create-template__chips-container">{renderFieldsTemplate()}</div>
-      <Button onClick={handleSubmit}>Submit</Button>
+      <Button isDisabled={!(title && value)} onClick={handleSubmit}>
+        Submit
+      </Button>
     </Box>
   );
 };

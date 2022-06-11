@@ -11,4 +11,8 @@
   border-radius: 12px;
   justify-content: center;
   cursor: pointer;
+  &--disabled {
+    background-color: #b2bec3;
+    cursor: default;
+  }
 }

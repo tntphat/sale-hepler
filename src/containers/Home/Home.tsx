@@ -1,33 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChartBar } from '../../components/Bar/ChartBar';
-import { Button, FileDropzone } from '../../components/common';
+import { Box, Button, FileDropzone } from '../../components/common';
 import { apiCategory, apiTikiProduct, apiTikiSeller, apiTikiState } from '../../services/api';
 import { apiCommon } from '../../services/api/apiCommon';
 
 export const Home = () => {
-  useEffect(() => {
-    // apiCategory.getCategory().then(console.log);
-    // apiTikiSeller.getInfo();
-    // apiCategory.getCategorySpecified(6);
-    apiTikiProduct.getProducts({ page: 1, limit: 20, state: 'rejected' }).then(console.log);
-    apiTikiState.getAll().then(console.log);
-    apiTikiProduct.getTracking().then(console.log);
-  }, []);
-  const [images, setImages] = useState([]);
-  const handleClick = () => {
-    console.log(images);
-    // const fd = new FormData();
-    // fd.append('images[0]')
-    apiCommon.getLinkImage({ images });
+  const navigate = useNavigate();
+  const navigateRoute = (path: string) => {
+    return () => {
+      navigate(path);
+    };
   };
   return (
-    <div>
-      {/* Way back home
-      <FileDropzone setImages={setImages}>
-        <img src="https://cdn.pixabay.com/photo/2022/01/21/11/37/pandas-6954571__340.jpg" />
-      </FileDropzone>
-      <Button onClick={handleClick}>CLick</Button> */}
-      <ChartBar />
-    </div>
+    <Box title="Bạn là ?">
+      <div className="select">
+        <div className="sell-common__text sell-common__text--fb" onClick={navigateRoute('/sell')}>
+          Người bán
+        </div>
+        <div
+          className="sell-common__text sell-common__text--tiki"
+          onClick={navigateRoute('/buyer')}
+        >
+          Người mua
+        </div>
+      </div>
+    </Box>
   );
 };

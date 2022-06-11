@@ -1,0 +1,48 @@
+.card-post {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  cursor: pointer;
+  &__top {
+    display: flex;
+    align-items: center;
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    div {
+      margin-left: 10px;
+    }
+    p {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    span {
+      color: rgba($color: #000000, $alpha: 0.8);
+    }
+  }
+  &__content {
+    white-space: pre-wrap;
+    margin-top: 10px;
+  }
+  & > img {
+    border-radius: 40px;
+    margin: 10px auto;
+    display: block;
+    max-width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    border-top: 1px solid rgba($color: #000000, $alpha: 0.2);
+    padding-top: 10px;
+    & > p {
+      flex: 1;
+      font-weight: 600;
+      text-align: center;
+      &:not(:first-child) {
+        border-left: 1px solid rgba($color: #000000, $alpha: 0.1);
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ export const InventoryTypeSelect = ({ onChange, value }) => {
     <DropdownSelect
       data={inventories}
       value={value}
-      titleProp="customer"
+      titleProp="description"
       onChange={onChange}
       placeholder="Chọn loại"
       label="Chọn loại kiểm kê"
