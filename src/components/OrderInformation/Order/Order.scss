@@ -1,0 +1,27 @@
+.order {
+  &__product {
+    margin-top: 16px;
+  }
+
+  &__btb-add {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__note {
+    input {
+      padding: 4px 8px;
+      font-size: 14px;
+    }
+  }
+
+  &__button {
+    div {
+      height: 28px;
+      margin-top: 8px;
+      margin-left: auto;
+      font-weight: normal;
+    }
+  }
+}

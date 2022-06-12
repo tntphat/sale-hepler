@@ -1,0 +1,75 @@
+.auto-reply {
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-right: 2px solid #e4e6eb;
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__group {
+    background-color: #eaeaea;
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 6px;
+  }
+
+  &__selection {
+    display: flex;
+    margin-top: 8px;
+    justify-content: space-between;
+  }
+
+  &__add-question-modal {
+    width: 500px;
+    h5 {
+      color: #1f4173;
+    }
+    .auto-reply__button {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 16px;
+      margin-top: 20px;
+      &--cancel {
+        color: #5d5d5d;
+        margin-right: 10px;
+      }
+      &--ok {
+        color: #1f4173;
+      }
+      &--cancel,
+      &--ok {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__add {
+    margin-top: 8px;
+    text-align: center;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__action {
+    align-self: flex-start;
+    svg {
+      width: 22px;
+      height: 22px;
+      margin-left: 6px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.textarea[contentEditable]:empty::before {
+  content: 'Placeholder still possible';
+  color: gray;
+}

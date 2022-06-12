@@ -10,6 +10,8 @@ import {
   SellECommerce,
   Login,
   Register,
+  Message,
+  MessageSetting,
   AuthTikiToken,
   Product,
   Order,
@@ -177,10 +179,17 @@ export const Routers = () => {
           element={<PrivateRouter component={AuthTiki} layout={BlankLayout} />}
         />
         <Route
+          path="/interact/messenger"
+          element={<PrivateRouter component={Message} layout={SidebarLayout} />}
+        />
+        <Route
+          path="/interact/messenger-setting"
+          element={<PrivateRouter component={MessageSetting} layout={SidebarLayout} />}
+        />
+        <Route
           path="/auth-tiki-token"
           element={<PrivateRouter component={AuthTikiToken} layout={BlankLayout} />}
         />
-
         <Route
           path="/sell/sendo"
           element={

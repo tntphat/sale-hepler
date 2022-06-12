@@ -1,0 +1,28 @@
+.order-info {
+  width: 24vw;
+  padding-left: 18px;
+
+  &__note {
+    margin-top: 12px;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    h5 {
+      margin-right: 20px;
+    }
+  }
+
+  &__section-action {
+    color: rgba(10, 120, 190, 1);
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__button {
+    margin-top: 20px;
+  }
+}

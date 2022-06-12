@@ -24,8 +24,18 @@ interface IProgressBar {
 interface IModal {
   isOpen: boolean;
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  isSmall?: boolean;
+  isBlue?: boolean;
 }
 
+interface IModalForm {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSubmit?: () => void;
+  isSmall?: boolean;
+  isBlue?: boolean;
+  agreeText?: string;
+}
 interface IAvatar {
   className?: string;
   width?: number;
@@ -116,6 +126,7 @@ interface IHorizontalMedias {
   className?: string;
   setImages: React.Dispatch<React.SetStateAction<any>>;
   images: Array<any>;
+  isSmallSize?: boolean;
 }
 
 interface IFileDropzone {
@@ -133,6 +144,10 @@ interface ITextArea {
   onChange?: ((event: React.ChangeEvent<HTMLInputElement, React.ChangeEvent>) => void) | undefined;
   value?: string;
   className?: string;
+  placeholder?: string;
+  id?: string;
+  readonly?: boolean;
+  error?: string;
   onKeyPress?: any;
   onKeyDown?: any;
 }
@@ -141,6 +156,28 @@ interface ISvg {
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
   color?: string;
+}
+
+interface IProductInfo {
+  id: number;
+  image: string;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface IProduct {
+  item: IProductInfo;
+  onUpdateQuantity: (qty: number) => void;
+}
+
+interface ICustomTextArea {
+  id?: string;
+  placeholder?: string;
+  className?: string;
+  value?: string;
+  error?: any;
+  onChange?: ((event: any) => void) | undefined;
 }
 
 interface IDropdownSelectMultipleLevel {
@@ -158,6 +195,7 @@ interface ITableHeaderCol {
   minWidth?: string;
   maxWidth?: string;
 }
+
 interface ITable {
   dataHeader: ITableHeaderCol[];
   dataTable: any[];

@@ -1,0 +1,41 @@
+.tag-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &__color {
+    border-radius: 2px;
+    margin-right: 8px;
+    margin-left: 10px;
+
+    width: 8px;
+    height: 8px;
+    &-red {
+      background-color: red;
+    }
+    &-blue {
+      background-color: blue;
+    }
+    &-yellow {
+      background-color: yellow;
+    }
+    &-gray {
+      background-color: gray;
+    }
+    &-orange {
+      background-color: orange;
+    }
+    &-green {
+      background-color: green;
+    }
+  }
+
+  &__name {
+    font-size: 16px;
+  }
+}

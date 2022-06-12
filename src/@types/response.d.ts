@@ -60,4 +60,5 @@ interface IProduct {
   isAllowSell: boolean;
   id?: string;
   createdAt?: string;
+  isSelect?: boolean;
 }
