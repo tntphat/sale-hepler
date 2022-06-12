@@ -74,6 +74,7 @@ const VariantItem = ({
               key={variant.warehouse_stocks[index].warehouseId}
               label={item.name}
               placeholder={'Nhập số lượng'}
+              type="number"
               onChange={(e) =>
                 handleChangeProp('warehouse_stocks', (pre) => {
                   const clone = [...(pre || [])];

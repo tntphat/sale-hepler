@@ -2,6 +2,8 @@ export * from './apiTest';
 export * from './apiGroup';
 export * from './apiAuth';
 export * from './apiProducts';
+export * from './apiReport';
+export * from './apiOrder';
 
 // Fb
 export * from './facebook/apiAuth';

@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button } from '../../components/common';
+import { apiOrder } from '../../services/api';
 import './DetailOrder.scss';
 
 export const DetailOrder = () => {
+  useEffect(() => {
+    apiOrder.getAllOrders(1).then(console.log);
+  }, []);
   const [detailOrder, setDetailOrder] = useState({
     _id: '629b41505c1bf44494627a98',
     products: [

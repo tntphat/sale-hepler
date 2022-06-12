@@ -9,7 +9,9 @@ export const CheckBoxControl: React.FC<any> = ({ label, onChange, value, error, 
         onChange(!value);
       }}
     >
-      <label className="inputs__label">{label}</label>
+      <label className="inputs__label" style={{ cursor: 'pointer' }}>
+        {label}
+      </label>
 
       <CheckBox
         isActive={value}

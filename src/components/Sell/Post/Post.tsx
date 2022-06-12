@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SvgDate, SvgImg } from '../../../assets/svg';
 import { Template } from '../../../containers';
 import { useDraggable, useModalLoading } from '../../../hooks';
+import { useAppSelector } from '../../../redux';
 import {
   Box,
   CheckBox,
@@ -34,6 +35,7 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
   const refImage = useRef<HTMLInputElement | any>(null);
   const [images, setImages] = useState<any>(product?.images || []);
   const [time, setTime] = useState();
+  const { user } = useAppSelector((state) => state.authSlice);
 
   // const refScroll = useDraggable();
   // const [previewImages, setPreviewImages] = useState<any>([]);
@@ -82,11 +84,7 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
         <Button className="post__btn-template" onClick={() => setOpenTemplates(true)}>
           Chọn bài đăng mẫu
         </Button>
-        <Item
-          image="https://cdn.pixabay.com/photo/2022/02/14/02/39/animal-7012354__340.jpg"
-          subName="Phat To"
-          width={50}
-        />
+        <Item image={user.picture} subName={user.name} width={50} />
 
         <TextArea ref={refArea} value={value} onChange={handleChange} />
 

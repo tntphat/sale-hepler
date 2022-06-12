@@ -24,4 +24,9 @@
       margin: 0 -18px;
     }
   }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
 }

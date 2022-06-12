@@ -1,0 +1,40 @@
+.report {
+  &__grid-4 {
+    display: flex;
+    // grid-template-columns: repeat(4, 1fr);
+    justify-content: space-between;
+    & > div {
+      width: 390px;
+    }
+  }
+
+  .react-datepicker-wrapper {
+    width: fit-content;
+    margin-left: auto;
+    input {
+      border-radius: 10px;
+      padding: 10px;
+      outline: none;
+      margin-top: 5px;
+      border: 1px solid #d0d4d9;
+    }
+  }
+}
+
+.box-statistics-report {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  &__title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #1f4173;
+    opacity: 0.5;
+  }
+  &__count {
+    margin-top: auto;
+    color: #1f4173;
+    font-weight: 700;
+    font-size: 32px;
+  }
+}
