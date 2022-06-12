@@ -36,7 +36,7 @@ export const dataSidebar = [
     children: [
       {
         title: 'Tin nhắn',
-        link: '/mess',
+        link: '/messenger',
       },
       {
         title: 'Bình luận',

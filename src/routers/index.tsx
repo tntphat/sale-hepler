@@ -172,11 +172,11 @@ export const Routers = () => {
           element={<PrivateRouter component={AuthTiki} layout={BlankLayout} />}
         />
         <Route
-          path="/messenger"
+          path="/interact/messenger"
           element={<PrivateRouter component={Message} layout={SidebarLayout} />}
         />
         <Route
-          path="/messenge-setting"
+          path="/interact/messenger-setting"
           element={<PrivateRouter component={MessageSetting} layout={SidebarLayout} />}
         />
         <Route

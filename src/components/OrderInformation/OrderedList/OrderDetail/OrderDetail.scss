@@ -1,0 +1,43 @@
+.order-detail {
+  &__general-info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__time {
+    color: rgba(0, 0, 0, 0.55);
+    flex-grow: 1;
+  }
+
+  &__status {
+    background-color: #2dc258;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  &__total-price,
+  &__action-btn {
+    color: red;
+    margin-left: 8px;
+  }
+
+  &__cancel-btn {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  &__order {
+    margin-bottom: 10px;
+  }
+
+  &__action {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__action-btn {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -54,19 +54,27 @@ export const apiMessages = {
     return axiosMain.post(url, data);
   },
   updateGreeting: (data: any) => {
-    const url = 'facebook/messages/turnOnGreeting';
+    const url = baseUrl + 'turnOnGreeting';
     return axiosMain.post(url, data);
   },
   getGreeting: () => {
-    const url = 'facebook/messages/getGreeting';
+    const url = baseUrl + 'getGreeting';
     return axiosMain.get(url);
   },
   turnOnGreeting: (data: any) => {
-    const url = 'facebook/messages/turnOnGreeting';
+    const url = baseUrl + 'turnOnGreeting';
     return axiosMain.post(url, data);
   },
   turnOffGreeting: () => {
-    const url = 'facebook/messages/turnOffGreeting';
+    const url =  baseUrl + 'turnOffGreeting';
     return axiosMain.get(url);
+  },
+  getCustomerInfo: (threadId: number | string) => {
+    const url = 'facebook/customerInfo/' + threadId ;
+    return axiosMain.get(url);
+  },
+  updateCustomerInfo: (data: any, threadId: number | string) => {
+    const url = 'facebook/customerInfo/' + threadId;
+    return axiosMain.patch(url, data);
   },
 };

@@ -40,7 +40,8 @@
   &__qty-wrapper {
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
+    justify-content: space-between;
+    margin-left: auto;
     .product__qty {
       margin-top: 4px;
       margin-bottom: 4px;

@@ -69,11 +69,11 @@ const dataTable = [
 
 const dataHeader = [
   {
-    title: 'Stt',
-    width: '20px',
+    title: 'STT',
+    width: '50px',
   },
   {
-    title: '',
+    title: 'Mã SKU',
     width: '80px',
   },
   {
@@ -131,6 +131,7 @@ export const TableProduct: React.FC<any> = ({ setProduct, setIsOpen, setStep }) 
             setStep && setStep(1);
           }}
           key={_id}
+          className="sell__btn-select"
         >
           Chọn
         </Button>,
@@ -141,7 +142,7 @@ export const TableProduct: React.FC<any> = ({ setProduct, setIsOpen, setStep }) 
   return (
     <div className="sell__modal">
       <h3>Chọn sản phẩm</h3>
-      <SearchText placeholder="Tìm kím sản phẩm" />
+      <SearchText placeholder="Tìm kiếm sản phẩm" className="sell__modal-search" />
       <Table dataHeader={dataHeader} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>

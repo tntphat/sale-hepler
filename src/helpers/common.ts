@@ -12,6 +12,11 @@ export const convertTime = (time: string) => {
   return newTime.getDate() + '/' + (newTime.getMonth() + 1) + '/' + newTime.getFullYear();
 };
 
+export const convertFullTime = (time: string) => {
+  const newTime = new Date(time);
+  return newTime.getHours() +':' + newTime.getMinutes() + ':' + newTime.getSeconds() + " " +  newTime.getDate() + '/' + (newTime.getMonth() + 1) + '/' + newTime.getFullYear();
+};
+
 export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: string) => {
   console.log(value, unitFrom, unitTo);
 
@@ -37,3 +42,7 @@ export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: str
       return gamValue;
   }
 };
+
+export const formatCurrency =(number: any)=>{
+  return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+}

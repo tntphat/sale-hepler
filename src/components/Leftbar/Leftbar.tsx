@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { SvgSearch, SvgSetting } from '../../assets/svg';
 import { useAppSelector } from '../../redux';
@@ -47,7 +48,9 @@ export const Leftbar = () => {
       <div className="search-box">
         <div className="search-box__header">
           <h4 className="search-box__title ">Hộp thư</h4>
-          <SvgSetting />
+          <Link to="/interact/messenger-setting">
+            <SvgSetting />
+          </Link>
         </div>
         <form>
           <div className="search-box__input">

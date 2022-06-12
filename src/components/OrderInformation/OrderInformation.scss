@@ -2,26 +2,23 @@
   width: 24vw;
   padding-left: 18px;
 
-  &__two-column {
-    margin-top: 8px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-  }
-
-  &__product {
-    margin-top: 16px;
-  }
-
   &__note {
     margin-top: 12px;
   }
 
   &__title {
     display: flex;
+    justify-content: space-between;
     h5 {
       margin-right: 20px;
+    }
+  }
+
+  &__section-action {
+    color: rgba(10, 120, 190, 1);
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
     }
   }
 

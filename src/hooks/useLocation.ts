@@ -68,7 +68,6 @@ export const useLocation = () => {
       const options = await fetchLocationOptions(FETCH_TYPE.DISTRICTS, selectedCity.id);
       if (options) setState({ ...state, districtOptions: options });
     })();
-    // console.log(state.districtOptions);
   }, [selectedCity]);
 
   useEffect(() => {
@@ -82,7 +81,7 @@ export const useLocation = () => {
 
   function onSelectCity(option: any) {
     console.log(option);
-    if (option.id !== selectedCity?.id) {
+    if (option?.id !== selectedCity?.id) {
       setState({
         ...state,
         districtOptions: [],
