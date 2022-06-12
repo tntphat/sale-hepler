@@ -13,7 +13,7 @@ export const Order = ({
   isAddNewOrder: boolean;
   toggleIsAddNewOrder: any;
 }) => {
-  const { chatUserDetails } = useAppSelector((state) => state.messagesSlice);
+  const { chatUserDetails, selectedChat } = useAppSelector((state) => state.messagesSlice);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
   const [note, setNote] = useState<string>('');
@@ -40,6 +40,9 @@ export const Order = ({
       delivery_total: 0,
       total_payment: total_price,
       note: note,
+      ec_site: 1,
+      thread_id: selectedChat,
+      customer_name: chatUserDetails.name,
     };
     apiOrder.createOrder(payload).then((response) => {
       toggleIsAddNewOrder(!isAddNewOrder);

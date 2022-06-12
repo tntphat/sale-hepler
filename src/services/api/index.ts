@@ -10,7 +10,6 @@ export * from './facebook/apiAuth';
 export * from './facebook/apiGroups';
 export * from './facebook/apiPost';
 export * from './facebook/apiMessages';
-export * from './facebook/apiOrder';
 
 // Tiki
 export * from './tiki/apiCategory';

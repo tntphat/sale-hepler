@@ -115,7 +115,7 @@ export const TableProduct: React.FC<any> = ({
     <div className="sell__modal">
       <h3>Chọn sản phẩm</h3>
       <SearchText placeholder="Tìm kiếm sản phẩm" className="sell__modal-search" />
-      <Table dataHeader={dataHeader} dataTable={memoizedDataTable} />
+      <Table dataHeader={dataHeader} dataTable={memoizedDataTable} minWidth={0} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>
   );
