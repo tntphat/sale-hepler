@@ -335,7 +335,7 @@ export const CreateProduct = () => {
 
             <InputText
               label="Giá bán "
-              placeholder="Nhập Giá bán "
+              placeholder="Nhập giá bán "
               className="create-product__field"
               {...register('exportPrice', {
                 required: {
@@ -428,6 +428,7 @@ export const CreateProduct = () => {
               control={control}
               render={({ field: { onChange, value, ref } }) => (
                 <CheckBoxControl
+                  isRow
                   label="Bật bán"
                   onChange={onChange}
                   value={value}
@@ -456,7 +457,7 @@ export const CreateProduct = () => {
           </Box>
         </div>
       </GridLayoutTwoCol>
-      <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
+      <Button className="submit-button" onClick={handleSubmit(onSubmit)}>Lưu</Button>
     </div>
   );
 };

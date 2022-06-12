@@ -517,7 +517,7 @@ export const SellSendo = () => {
         <TableProduct setProduct={setProduct} setIsOpen={setIsOpen} />
       </Modal>
 
-      <Button onClick={handleSubmit(onSubmit)}>Đăng bán</Button>
+      <Button className="submit-button" onClick={handleSubmit(onSubmit)}>Đăng bán</Button>
     </div>
   );
 };
