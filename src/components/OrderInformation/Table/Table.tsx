@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Table.scss';
 
-export const Table: React.FC<ITable> = ({ dataHeader, dataTable, className }) => {
+export const Table: React.FC<ITable> = ({ dataHeader, dataTable, className, minWidth }) => {
   return (
-    <table className={className || ''}>
+    <table className={className || ''} style={{ minWidth: minWidth ?? '1400px' }}>
       <thead>
         <tr>
           {dataHeader?.map(({ title, minWidth, width }, ind) => (
