@@ -1,6 +1,6 @@
 @import '../../assets/scss/variables';
 .sidebar {
-  width: 200px;
+  width: 220px;
   color: rgba($color: #1f4173, $alpha: 0.5);
   font-weight: bold;
 
@@ -48,7 +48,7 @@
     overflow: hidden;
     transition: all 0.3s ease;
     & > div {
-      padding-left: 56px;
+      padding-left: 64px;
       margin-top: 5px;
       &:not(:first-child) {
       }

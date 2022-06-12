@@ -95,7 +95,7 @@ export const CreateTemplate = () => {
 
       <div className="create-template__chips-container">{renderFieldsTemplate()}</div>
       <Button isDisabled={!(title && value)} onClick={handleSubmit}>
-        Submit
+        Lưu
       </Button>
     </Box>
   );

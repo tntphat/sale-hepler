@@ -5,7 +5,7 @@ import { dataSidebar } from '../../constants';
 import './Sidebar.scss';
 
 const ItemSidebar: React.FC<{ item: any; handleNavToLink: any }> = ({ item, handleNavToLink }) => {
-  const [extended, setExtended] = useState(true);
+  const [extended, setExtended] = useState(false);
   const location = useLocation();
   return (
     <div className="sidebar__item">
