@@ -6,6 +6,7 @@ interface Test {
 interface IBox extends React.CSSProperties {
   classname?: string;
   title?: string;
+  onClick?: any;
 }
 
 interface ISelect {
@@ -62,6 +63,7 @@ interface IButton extends React.CSSProperties {
   fontSize?: string | number;
   onClick?: (e?: React.MouseEvent) => void;
   className?: string;
+  isDisabled?: boolean;
 }
 
 interface ISearchText {
@@ -103,6 +105,7 @@ interface IInput {
   className?: string;
   error?: string;
   marginTop?: number;
+  disabled?: boolean;
 }
 
 interface IDropdownSelect {
@@ -183,6 +186,7 @@ interface IDropdownSelectMultipleLevel {
   isLoading?: boolean;
   onSelect: (opt: IResOptionCategory) => void;
   apiGetSpecificCategory: any;
+  error?: any;
 }
 
 interface ITableHeaderCol {
@@ -196,4 +200,5 @@ interface ITable {
   dataHeader: ITableHeaderCol[];
   dataTable: any[];
   className?: string;
+  minWidth?: any;
 }

@@ -28,3 +28,4 @@ export * from './InputTextArea/InputTextArea';
 export * from './Pagination/Pagination';
 export * from './Dropdown/Dropdown';
 export * from './DatePickerControl/DatePickerControl';
+export * from './AvatarUser';

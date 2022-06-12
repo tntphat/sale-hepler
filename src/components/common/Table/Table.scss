@@ -4,16 +4,27 @@ table {
   //   border-style: hidden;
   width: 100%;
   // background-color: white;
+  min-width: 1400px;
   thead {
     th {
       color: #1f4173;
       text-align: left;
+      &:not(:first-child, :nth-child(2)) {
+        padding-left: 10px;
+      }
     }
   }
   tbody {
+    td {
+      // border-left: 10px solid transparent;
+      &:not(:first-child, :nth-child(2)) {
+        padding: 5px 0 5px 10px;
+      }
+      vertical-align: middle;
+    }
     tr {
       height: 40px;
-      color: #003ad2;
+      // color: #003ad2;
       &:not(:first-child) {
         td {
           border-top: 1px solid rgba($color: #0a69e1, $alpha: 0.4) !important;

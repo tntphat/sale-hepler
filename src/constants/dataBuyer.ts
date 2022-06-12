@@ -1,22 +1,24 @@
 import { SvgBell, SvgGroups, SvgHome, SvgPost, SvgSetting } from '../assets/svg';
-import { BuyerHome } from '../containers/Buyer';
+import { BuyerHome, BuyerNotification, BuyerSetting } from '../containers/Buyer';
 
 export const dataSidebarBuyer = [
   {
     title: 'Thông báo',
     link: '/notification',
     icon: SvgBell,
-    cpn: BuyerHome,
+    cpn: BuyerNotification,
   },
   {
     title: 'Trang chủ',
     link: '',
     icon: SvgHome,
+    cpn: BuyerHome,
   },
   {
     title: 'Cài đặt',
     link: '/setting',
     icon: SvgSetting,
+    cpn: BuyerSetting,
   },
   {
     title: 'Quản lý nhóm',

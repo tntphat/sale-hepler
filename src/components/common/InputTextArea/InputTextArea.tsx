@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './InputTextArea.scss';
 
 export const InputTextArea: React.FC<ITextArea> = ({ value, onChange, error, label }) => {
@@ -7,12 +7,15 @@ export const InputTextArea: React.FC<ITextArea> = ({ value, onChange, error, lab
     ref.current.style.height = '1px';
     ref.current.style.height = 25 + ref.current.scrollHeight + 'px';
   }
+  useEffect(() => {
+    textAreaAdjust();
+  }, [value]);
   return (
     <div className="form-field input-text-area">
       <label className="inputs__label">{label}</label>
 
       <textarea
-        onKeyUp={textAreaAdjust}
+        // onKeyUp={textAreaAdjust}
         name=""
         ref={ref}
         value={value}

@@ -1,11 +1,15 @@
 import { axiosMain } from '../../';
-import { objToFormData } from '../../../helpers/api';
+import { objToFormData, objToQuery } from '../../../helpers/api';
 
 const baseUrl = '/facebook/posts/';
 export const apiFbPosts = {
   getAll: (param: number) => {
     const url = baseUrl + 'all/' + param;
     return axiosMain.get(url);
+  },
+  getInterestedPosts: (params: { groupId: string; keyword: string }) => {
+    const url = baseUrl + 'interested-posts';
+    return axiosMain.get(url + objToQuery(params));
   },
   post: (params: IParamPost) => {
     const url = baseUrl + 'post';

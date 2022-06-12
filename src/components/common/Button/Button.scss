@@ -44,4 +44,12 @@
       font-size: 14px;
     }
   }
+  &--disabled {
+    background-color: #b2bec3;
+    cursor: default;
+  }
+}
+
+.submit-button {
+  margin-top: 16px;
 }

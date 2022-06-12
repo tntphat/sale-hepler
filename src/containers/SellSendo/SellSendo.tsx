@@ -29,9 +29,11 @@ export const SellSendo = () => {
   const [optionsCategory, setOptionsCategory] = useState([]);
   const [optionsUnit, setOptionsUnit] = useState([]);
   const [optionsType, setOptionsType] = useState([]);
-  const [images, setImages] = useState<any>([]);
+  // const [images, setImages] = useState<any>([]);
   const [openDropdownCategory, setOpenDropdownCategory] = useState(false);
   const refImage = useRef<HTMLInputElement | any>(null);
+  // const [avatar, setAvatar] = useState<any>();
+  const refImageAvatar = useRef<HTMLInputElement | any>(null);
   const refDropdownCategory = useRef();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -88,6 +90,7 @@ export const SellSendo = () => {
       height,
       length,
       images,
+      image,
     } = product;
     setValue('name', name);
     setValue('description', description);
@@ -98,9 +101,10 @@ export const SellSendo = () => {
     setValue('height', height);
     setValue('width', width);
     setValue('length', length);
+    setValue('image', image);
+    setValue('images', images);
     setValue('weight', convertWeightByUnit(weight, weightUnit, 'gam'));
     setValue('stock_availability', isAllowSell);
-    setImages(images);
   }, [product]);
 
   const onSubmit = (data) => {
@@ -125,6 +129,8 @@ export const SellSendo = () => {
       weight,
       importPrice,
       type,
+      image,
+      images,
     } = data;
     const obj = {
       id: 0,
@@ -156,9 +162,9 @@ export const SellSendo = () => {
       type: type.title,
       importPrice: +importPrice,
     };
-    apiCommon.getLinkImage({ images }).then((res) => {
+    apiCommon.getLinkImage({ images: [image, ...images] }).then((res) => {
       obj.avatar = { picture_url: res.data[0] };
-      obj.pictures = res.data.map((img) => ({ picture_url: img }));
+      obj.pictures = res.data.slice(1).map((img) => ({ picture_url: img }));
       apiSendoProduct
         .postProduct(obj)
         .then((res) => {
@@ -178,28 +184,161 @@ export const SellSendo = () => {
     refImage.current.click();
   };
 
+  const handleClickOpenInputImageAvatar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    refImageAvatar.current.click();
+  };
+
   return (
     <div className="sell-sendo">
       <Button onClick={() => setIsOpen(true)}>Chọn sản phẩm</Button>
       {product ? <p className="sell-ecommerce__name-product">{product.name}</p> : null}
       <Box title="Quản lý hình ảnh" marginTop={10}>
-        <FileDropzone images={images} setImages={setImages}>
+        <Controller
+          name="image"
+          control={control}
+          render={({ field: { onChange, value, ref } }) => (
+            <FileDropzone isNotMultiple images={value} setImages={onChange}>
+              <input
+                type="file"
+                hidden
+                ref={refImageAvatar}
+                multiple
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files.length) {
+                    onChange(e.target.files[0]);
+                  }
+                }}
+              />
+              <div className="create-product__flex">
+                <b>Ảnh đại diện sản phẩm</b>
+                <p onClick={handleClickOpenInputImageAvatar}>Thêm hình</p>
+              </div>
+              {value ? (
+                <img
+                  src={typeof value === 'string' ? value : URL.createObjectURL(value)}
+                  style={{
+                    maxHeight: 300,
+                    maxWidth: '100%',
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                />
+              ) : (
+                <div
+                  onClick={handleClickOpenInputImageAvatar}
+                  style={{ display: 'flex', justifyContent: 'center' }}
+                >
+                  <SvgImage />
+                </div>
+              )}
+              {errors?.image?.message ? (
+                <span className="inputs__err">{errors?.image?.message}</span>
+              ) : null}
+            </FileDropzone>
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: 'Vui lòng chọn ảnh đại diện',
+            },
+          }}
+        />
+
+        <Controller
+          name="images"
+          control={control}
+          render={({ field: { onChange, value, ref } }) => {
+            const setImages = (val) => {
+              const newVal = typeof val === 'function' ? val(value) : val;
+              onChange(newVal);
+            };
+            return (
+              <div style={{ marginTop: 20 }}>
+                <FileDropzone images={value || []} setImages={setImages}>
+                  <div className="create-product__flex">
+                    <p>Hình ảnh</p>
+                    <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+                  </div>
+                  {value?.length ? null : (
+                    <div
+                      onClick={handleClickOpenInputImage}
+                      style={{ display: 'flex', justifyContent: 'center' }}
+                    >
+                      <SvgImage />
+                    </div>
+                  )}
+                  <HorizontalMedias images={value || []} setImages={setImages} ref={refImage} />
+                </FileDropzone>
+                {errors?.images?.message ? (
+                  <span className="inputs__err">{errors?.images?.message}</span>
+                ) : null}
+              </div>
+            );
+          }}
+          rules={{
+            required: {
+              value: true,
+              message: 'Vui lòng chọn ảnh chi tiết',
+            },
+          }}
+        />
+        {/* <FileDropzone isNotMultiple images={avatar} setImages={setAvatar}>
+          <input
+            type="file"
+            hidden
+            ref={refImageAvatar}
+            multiple
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files.length) {
+                setAvatar(e.target.files[0]);
+              }
+            }}
+          />
           <div className="create-product__flex">
-            <p>Hình ảnh</p>
-            <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+            <b>Ảnh đại diện sản phẩm</b>
+            <p onClick={handleClickOpenInputImageAvatar}>Thêm hình</p>
           </div>
-          {images.length ? null : (
+          {avatar ? (
+            <img
+              src={typeof avatar === 'string' ? avatar : URL.createObjectURL(avatar)}
+              style={{
+                maxHeight: 300,
+                maxWidth: '100%',
+                display: 'block',
+                margin: '0 auto',
+              }}
+            />
+          ) : (
             <div
-              onClick={handleClickOpenInputImage}
+              onClick={handleClickOpenInputImageAvatar}
               style={{ display: 'flex', justifyContent: 'center' }}
             >
               <SvgImage />
             </div>
           )}
-          <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
         </FileDropzone>
+        <div style={{ marginTop: 20 }}>
+          <FileDropzone images={images} setImages={setImages}>
+            <div className="create-product__flex">
+              <b>Hình ảnh sản phẩm chi tiết</b>
+              <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+            </div>
+            {images.length ? null : (
+              <div
+                onClick={handleClickOpenInputImage}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <SvgImage />
+              </div>
+            )}
+            <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
+          </FileDropzone>
+        </div> */}
       </Box>
-      <Box title="Chọn loại" zIndex={10}>
+      <Box title="Chọn loại" zIndex={10} marginTop={10}>
         <Controller
           name="type"
           control={control}
@@ -220,13 +359,46 @@ export const SellSendo = () => {
             },
           }}
         />
-
-        <div
+        <Controller
+          name="category"
+          control={control}
+          render={({ field: { onChange, value, ref } }) => (
+            <>
+              <div
+                className="sell-ecommerce__pick-category"
+                style={{ marginTop: 10 }}
+                onClick={() => setOpenDropdownCategory((pre) => !pre)}
+                ref={refDropdownCategory}
+              >
+                {value?.name || ' Chọn loại sản phẩm Sendo'}
+                {openDropdownCategory ? (
+                  <DropdownSelectMultipleLevel
+                    options={optionsCategory}
+                    isFirstLevel
+                    onSelect={onChange}
+                    apiGetSpecificCategory={apiSendoCategory.getCategoryById}
+                  />
+                ) : null}
+              </div>
+              {errors?.category?.message ? (
+                <span className="inputs__err">{errors?.category?.message}</span>
+              ) : null}
+            </>
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: 'Vui lòng chọn loại sản phẩm Sendo ',
+            },
+          }}
+        />
+        {/* <div
           className="sell-ecommerce__pick-category"
+          style={{ marginTop: 10 }}
           onClick={() => setOpenDropdownCategory((pre) => !pre)}
           ref={refDropdownCategory}
         >
-          {watch('category.name') || ' Chọn loại'}
+          {watch('category.name') || ' Chọn loại sản phẩm Sendo'}
           {openDropdownCategory ? (
             <DropdownSelectMultipleLevel
               options={optionsCategory}
@@ -235,7 +407,7 @@ export const SellSendo = () => {
               apiGetSpecificCategory={apiSendoCategory.getCategoryById}
             />
           ) : null}
-        </div>
+        </div> */}
 
         {memoizedOptionsUnit?.length ? (
           <Controller
@@ -269,14 +441,14 @@ export const SellSendo = () => {
                 onChange={onChange}
                 value={value}
                 titleProp="type_name"
-                placeholder="Chọn đơn vị"
-                label="Chọn đơn vị"
+                placeholder="Chọn kiểu sản phẩm"
+                label="Chọn kiểu sản phẩm"
               />
             )}
             rules={{
               required: {
                 value: true,
-                message: 'Vui lòng chọn đơn vị ',
+                message: 'Vui lòng chọn kiểu sản phẩm ',
               },
             }}
           />
@@ -338,7 +510,7 @@ export const SellSendo = () => {
           render={({ field: { onChange, value, ref } }) => (
             <InputTextArea
               onChange={onChange}
-              label={'Mô tả'}
+              label={'Mô tả( 100-1000 kí tự)'}
               error={errors['description']?.message}
               value={value}
             />
@@ -347,6 +519,14 @@ export const SellSendo = () => {
             required: {
               value: true,
               message: 'Vui lòng nhập mô tả',
+            },
+            maxLength: {
+              value: 1000,
+              message: 'Vui lòng nhập nhỏ hơn 1000 kí tự',
+            },
+            minLength: {
+              value: 100,
+              message: 'Vui lòng nhập ít nhất 100 kí tự',
             },
           }}
         />
@@ -365,7 +545,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Chiều cao"
+          label="Chiều cao(cm)"
           placeholder="Nhập chiều cao"
           {...register('height', {
             required: {
@@ -377,7 +557,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Chiều dài"
+          label="Chiều dài(cm)"
           placeholder="Nhập chiều dài"
           {...register('length', {
             required: {
@@ -389,7 +569,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Chiều rộng"
+          label="Chiều rộng(cm)"
           placeholder="Nhập chiều rộng"
           {...register('width', {
             required: {
@@ -401,7 +581,7 @@ export const SellSendo = () => {
         />
         <InputText
           type="number"
-          label="Khối lượng"
+          label="Khối lượng(gam)"
           placeholder="Nhập Khối lượng"
           {...register('weight', {
             required: {
@@ -508,7 +688,9 @@ export const SellSendo = () => {
         <TableProduct setProduct={setProduct} setIsOpen={setIsOpen} />
       </Modal>
 
-      <Button onClick={handleSubmit(onSubmit)}>Đăng bán</Button>
+      <Button className="submit-button" onClick={handleSubmit(onSubmit)}>
+        Đăng bán
+      </Button>
     </div>
   );
 };

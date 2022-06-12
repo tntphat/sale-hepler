@@ -9,6 +9,17 @@ function App() {
   const { isOpenModalLoading, isOpenModalMedia, media, isOpenModalMessage, message } =
     useAppSelector((state) => state.modalSlice);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    document.addEventListener(
+      'wheel',
+      function (event) {
+        if (document.activeElement.type === 'number') {
+          document.activeElement.blur();
+        }
+      },
+      [],
+    );
+  });
   return (
     <div className="App">
       <Routers />

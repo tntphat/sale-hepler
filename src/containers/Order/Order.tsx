@@ -14,30 +14,30 @@ import {
 import { dataHeaderTableOrder, dataHeaderTableProduct } from '../../constants';
 import { convertTime } from '../../helpers';
 import { useDebounce } from '../../hooks';
-import { apiCategory, apiProducts, apiTikiSeller } from '../../services/api';
+import { apiCategory, apiOrder, apiProducts, apiTikiSeller } from '../../services/api';
 import './Order.scss';
 
 export const Order = () => {
   const [selected, setSelected] = useState<number[]>([]);
   const [products, setProducts] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  // const [searchText, setSearchText] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const dbValue = useDebounce(searchText, 400);
+  // const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
   const handleFetchData = () => {
-    apiProducts.getProducts({ page, name: dbValue }).then((res) => {
+    apiOrder.getAllOrders(page).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
-      setProducts(res.data.data.products);
+      setProducts(res.data.data.orders);
     });
   };
   useEffect(() => {
     handleFetchData();
-  }, [page, dbValue]);
+  }, [page]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [dbValue]);
+  // useEffect(() => {
+  //   setPage(1);
+  // }, [dbValue]);
 
   const handleSelectItem = (index: string) => {
     return () => {
@@ -76,12 +76,7 @@ export const Order = () => {
   const memoizedDataTable = useMemo(() => {
     return products.map(
       ({ branch, sku, type, name, exportPrice, createdAt, isAllowSell, id }: IProduct, index) => [
-        <SvgCheck
-          isActive={selected.includes(id)}
-          key={sku}
-          // onClick={() => {console.log('oh no')}}
-          onClick={handleSelectItem(id)}
-        />,
+        <SvgCheck isActive={selected.includes(id)} key={sku} onClick={handleSelectItem(id)} />,
         sku,
         name,
         type,
@@ -125,7 +120,7 @@ export const Order = () => {
   }, [selected, products]);
   return (
     <Box>
-      <div className="products__row">
+      {/* <div className="products__row">
         <SearchText
           placeholder="Tìm kiếm sản phẩm"
           onChange={(e) => setSearchText(e.target.value)}
@@ -138,7 +133,7 @@ export const Order = () => {
             Xoá
           </Button>
         ) : null}
-      </div>
+      </div> */}
       <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>

@@ -23,3 +23,4 @@ export * from './DetailOrder/DetailOrder';
 export * from './SellSendo/SellSendo';
 export * from './ConnectSendo/ConnectSendo';
 export * from './ManagePostSendo/ManagePostSendo';
+export * from './SellCommon';

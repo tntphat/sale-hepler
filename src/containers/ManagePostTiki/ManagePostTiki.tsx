@@ -12,7 +12,7 @@ import {
   Table,
 } from '../../components/common';
 import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
-import { convertTime } from '../../helpers';
+import { convertTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
 import { apiCategory, apiProducts, apiTikiProduct, apiTikiSeller } from '../../services/api';
 import './ManagePostTiki.scss';
@@ -108,7 +108,7 @@ export const ManagePostTiki = () => {
         name,
         category_name || 'Loại sản pẩm',
         10,
-        market_price,
+        formatCurrency(market_price),
         convertTime(createdAt),
         state_description,
         <Dropdown

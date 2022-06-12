@@ -1,5 +1,8 @@
 .dropdown {
   position: relative;
+  &__main {
+    cursor: pointer;
+  }
   &--open {
     z-index: 100;
   }

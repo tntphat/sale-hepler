@@ -1,15 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SvgBell, SvgSearch } from '../../assets/svg';
+import { ImageDefaultAvatar, ImageLogo } from '../../constants/images';
 import { logout } from '../../helpers';
 import { useAppSelector } from '../../redux';
-import { Dropdown } from '../common';
+import { AvatarUser, Dropdown } from '../common';
 import './Header.scss';
 
 export const Header = () => {
   const { user } = useAppSelector((state) => state.authSlice);
+  const navigate = useNavigate();
   return (
     <div className="header">
-      <div className="header__logo">LOGO</div>
+      <div className="header__logo" onClick={() => navigate('/')}>
+        <img src={ImageLogo} />
+      </div>
       <div className="header__right">
         <div className="header__search">
           <SvgSearch />
@@ -18,10 +23,10 @@ export const Header = () => {
         <div className="header__bell">
           <SvgBell />
         </div>
-        <div onClick={logout}>Log out</div>
+        {/* <div onClick={logout}>Log out</div> */}
         <div className="header__user">
-          <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554__340.jpg" />
-          <Dropdown options={[{ text: 'Đăng xuất' }, { text: 'Hồ sơ' }]}>
+          <AvatarUser img={user.picture} />
+          <Dropdown options={[{ text: 'Đăng xuất', cb: logout }, { text: 'Hồ sơ' }]}>
             <p>{user?.name}</p>
           </Dropdown>
         </div>

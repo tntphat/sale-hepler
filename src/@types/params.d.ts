@@ -79,3 +79,9 @@ interface IParamConnectionSendo {
   secret_key: string;
   shop_key: string;
 }
+
+interface IParamReportSales {
+  year?: number;
+  month?: number;
+  type?: string;
+}

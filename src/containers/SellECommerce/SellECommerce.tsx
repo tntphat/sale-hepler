@@ -565,7 +565,7 @@ export const SellECommerce = () => {
           />
         </div>
       </Box> */}
-      <Button onClick={handleSubmit(onSubmit)} width={50} marginLeft="auto">
+      <Button className="submit-button" onClick={handleSubmit(onSubmit)} width={50} marginLeft="auto">
         Lưu
       </Button>
 

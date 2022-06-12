@@ -11,4 +11,10 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
+  &__add {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+  }
 }

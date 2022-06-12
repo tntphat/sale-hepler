@@ -17,6 +17,7 @@ import { apiProducts } from '../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { dataBranch, dataCategory, dataUnit, dataUnitDimension } from '../../constants';
 import { apiCommon } from '../../services/api/apiCommon';
+import { useModalLoading } from '../../hooks';
 
 type TypeForm = {
   name: string;
@@ -40,17 +41,22 @@ export const CreateProduct = () => {
     control,
     reset,
     resetField,
+    setValue,
   } = useForm<TypeForm>();
   const refImage = useRef<HTMLInputElement | any>(null);
-  const [images, setImages] = useState<any>([]);
+  // const [images, setImages] = useState<any>([]);
+  // const [avatar, setAvatar] = useState<any>();
+  const refImageAvatar = useRef<HTMLInputElement | any>(null);
   const navigate = useNavigate();
+  const { handleOpenModalLoading, handleCloseModalLoading, handleOpenModalMessage } =
+    useModalLoading();
 
   const { id } = useParams();
 
   useEffect(() => {
     if (!id) return;
     apiProducts.getInfoProduct(id).then((res) => {
-      const { __v, updatedAt, createdAt, images, ...product } = res.data.data.product;
+      const { __v, updatedAt, createdAt, stockAvailable, ...product } = res.data.data.product;
       reset(product);
       resetField('type', {
         defaultValue: dataCategory[dataCategory.findIndex((cate) => cate.title === product.type)],
@@ -64,37 +70,72 @@ export const CreateProduct = () => {
             dataUnitDimension.findIndex((cate) => cate.title === product.dimensionUnit)
           ],
       });
+      stockAvailable?.forEach((stock) => {
+        switch (stock.ecSite) {
+          case 'Tiki':
+            setValue('quantityTiki', stock.quantity);
+            break;
+          case 'Sendo':
+            setValue('quantitySendo', stock.quantity);
+            break;
+          default:
+            setValue('quantity', stock.quantity);
+        }
+      });
       // resetField('branch', {
       //   defaultValue: dataBranch[dataBranch.findIndex((cate) => cate.title === product.branch)],
       // });
-      setImages(images);
+      // setImages(images);
+      // setAvatar(image);
     });
   }, [id]);
+  console.log(watch('quantitySendo'));
 
   const onSubmit = (data: TypeForm) => {
+    handleOpenModalLoading();
     // console.log(data);
-    const newForm = { ...data };
+    const { quantity, quantityTiki, quantitySendo, image, images, ...rest } = data;
+    const newForm = { ...rest };
     for (let key in newForm) {
       if (typeof newForm[key] === 'object') {
         newForm[key] = newForm[key].title;
       }
     }
+    if (id) {
+      newForm.stockAvailable = [];
+      quantity >= 0 && newForm.stockAvailable.push({ ecSite: 'Facebook', quantity });
+      quantitySendo >= 0 &&
+        newForm.stockAvailable.push({ ecSite: 'Sendo', quantity: quantitySendo });
+      quantityTiki >= 0 && newForm.stockAvailable.push({ ecSite: 'Tiki', quantity: quantityTiki });
+    } else {
+      newForm.quantity = quantity;
+    }
     const action = id ? apiProducts.updateProduct : apiProducts.createProduct;
     // apiProducts.createProduct({...data,inventoryNumber:2,isAllowSell:true,images:['https://cdn.pixabay.com/photo/2022/04/23/20/51/nature-7152461__340.jpg','https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg']})
 
     apiCommon
-      .getLinkImage({ images })
+      .getLinkImage({ images: [image, ...images] })
       .then((res) => {
         return action({
           ...newForm,
           inventoryNumber: 2,
           // isAllowSell: true,
-          images: res.data,
+          images: res.data.slice(1),
           image: res.data[0],
         });
       })
-      .then(() => {
-        navigate('/product');
+      .then((res) => {
+        if (res.data.meta.ok) {
+          navigate('/product');
+          return;
+        }
+        handleOpenModalMessage(res.data.message);
+      })
+      .catch((e) => {
+        handleOpenModalMessage('Sth went wrong');
+      })
+      .finally(() => {
+        handleCloseModalLoading();
       });
   };
 
@@ -102,6 +143,12 @@ export const CreateProduct = () => {
     e.stopPropagation();
     refImage.current.click();
   };
+
+  const handleClickOpenInputImageAvatar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    refImageAvatar.current.click();
+  };
+
   return (
     <div className="create-product">
       <GridLayoutTwoCol>
@@ -152,6 +199,40 @@ export const CreateProduct = () => {
             type="number"
             error={errors.quantity && errors.quantity.message}
           />
+          <div className="create-product__row">
+            {watch('quantitySendo') >= 0 ? (
+              <InputText
+                label="Tồn kho Sendo"
+                placeholder="Nhập tồn kho Sendo"
+                className="create-product__field"
+                type="number"
+                {...register('quantitySendo', {
+                  required: {
+                    value: true,
+                    message: 'Vui lòng nhập tồn kho Sendo ',
+                  },
+                })}
+                error={errors.quantitySendo && errors.quantitySendo.message}
+                disabled
+              />
+            ) : null}
+            {watch('quantityTiki') >= 0 ? (
+              <InputText
+                label="Tồn kho Tiki"
+                placeholder="Nhập tồn kho Tiki"
+                className="create-product__field"
+                type="number"
+                {...register('quantityTiki', {
+                  required: {
+                    value: true,
+                    message: 'Vui lòng nhập tồn kho Tiki ',
+                  },
+                })}
+                error={errors.quantityTiki && errors.quantityTiki.message}
+                disabled
+              />
+            ) : null}
+          </div>
           <div className="create-product__row">
             <InputText
               label="Khối lượng "
@@ -265,7 +346,7 @@ export const CreateProduct = () => {
 
             <InputText
               label="Giá bán "
-              placeholder="Nhập Giá bán "
+              placeholder="Nhập giá bán "
               className="create-product__field"
               {...register('exportPrice', {
                 required: {
@@ -358,6 +439,7 @@ export const CreateProduct = () => {
               control={control}
               render={({ field: { onChange, value, ref } }) => (
                 <CheckBoxControl
+                  isRow
                   label="Bật bán"
                   onChange={onChange}
                   value={value}
@@ -368,25 +450,102 @@ export const CreateProduct = () => {
           </Box>
 
           <Box classname="create-product__image">
-            <FileDropzone images={images} setImages={setImages}>
-              <div className="create-product__flex">
-                <p>Hình ảnh</p>
-                <p onClick={handleClickOpenInputImage}>Thêm hình</p>
-              </div>
-              {images.length ? null : (
-                <div
-                  onClick={handleClickOpenInputImage}
-                  style={{ display: 'flex', justifyContent: 'center' }}
-                >
-                  <SvgImage />
-                </div>
+            <Controller
+              name="image"
+              control={control}
+              render={({ field: { onChange, value, ref } }) => (
+                <FileDropzone isNotMultiple images={value} setImages={onChange}>
+                  <input
+                    type="file"
+                    hidden
+                    ref={refImageAvatar}
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files.length) {
+                        onChange(e.target.files[0]);
+                      }
+                    }}
+                  />
+                  <div className="create-product__flex">
+                    <b>Ảnh đại diện sản phẩm</b>
+                    <p onClick={handleClickOpenInputImageAvatar}>Thêm hình</p>
+                  </div>
+                  {value ? (
+                    <img
+                      src={typeof value === 'string' ? value : URL.createObjectURL(value)}
+                      style={{
+                        maxHeight: 300,
+                        maxWidth: '100%',
+                        display: 'block',
+                        margin: '0 auto',
+                      }}
+                    />
+                  ) : (
+                    <div
+                      onClick={handleClickOpenInputImageAvatar}
+                      style={{ display: 'flex', justifyContent: 'center' }}
+                    >
+                      <SvgImage />
+                    </div>
+                  )}
+                  {errors?.image?.message ? (
+                    <span className="inputs__err">{errors?.image?.message}</span>
+                  ) : null}
+                </FileDropzone>
               )}
-              <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
-            </FileDropzone>
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Vui lòng chọn ảnh đại diện',
+                },
+              }}
+            />
+
+            <Controller
+              name="images"
+              control={control}
+              render={({ field: { onChange, value, ref } }) => {
+                const setImages = (val) => {
+                  const newVal = typeof val === 'function' ? val(value) : val;
+                  onChange(newVal);
+                };
+                return (
+                  <div style={{ marginTop: 20 }}>
+                    <FileDropzone images={value || []} setImages={setImages}>
+                      <div className="create-product__flex">
+                        <p>Hình ảnh</p>
+                        <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+                      </div>
+                      {value?.length ? null : (
+                        <div
+                          onClick={handleClickOpenInputImage}
+                          style={{ display: 'flex', justifyContent: 'center' }}
+                        >
+                          <SvgImage />
+                        </div>
+                      )}
+                      <HorizontalMedias images={value || []} setImages={setImages} ref={refImage} />
+                    </FileDropzone>
+                    {errors?.images?.message ? (
+                      <span className="inputs__err">{errors?.images?.message}</span>
+                    ) : null}
+                  </div>
+                );
+              }}
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Vui lòng chọn ảnh chi tiết',
+                },
+              }}
+            />
           </Box>
         </div>
       </GridLayoutTwoCol>
-      <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
+      <Button className="submit-button" onClick={handleSubmit(onSubmit)}>
+        Lưu
+      </Button>
     </div>
   );
 };

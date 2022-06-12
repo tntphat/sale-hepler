@@ -1,0 +1,41 @@
+.chip {
+  min-width: 50px;
+  padding: 5px 6px;
+  background-color: #c4c4c4;
+  height: 26px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // margin-bottom: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  &__text {
+    font-size: 15px;
+    // color: white;
+    // max-width: calc(100% - 22px);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.296901);
+    cursor: pointer;
+    &-icon {
+      width: 6px;
+      height: 6px;
+    }
+    margin-left: 6px;
+  }
+}

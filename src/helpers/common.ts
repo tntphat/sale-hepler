@@ -44,5 +44,6 @@ export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: str
 };
 
 export const formatCurrency =(number: any)=>{
+  if (!number) return '0';
   return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 }
