@@ -1,0 +1,36 @@
+#bar {
+  width: 100%;
+  &:hover .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(219, 219, 219);
+  }
+}
+
+.scrollbar {
+  // height: calc(100vh - 34vh);
+  // height: calc(100vh - 302px);
+
+  overflow-y: scroll;
+  width: 100%;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // background-color: #f5f5f5;
+  }
+  &::-webkit-scrollbar {
+    border-radius: 12px;
+    width: 6px;
+  }
+
+  &__conversation {
+    height: calc(100vh - 38vh);
+  }
+
+  &__order-information {
+    height: calc(100vh - 26vh);
+  }
+
+  &__chat-list {
+    height: calc(100vh - 40vh);
+  }
+}

@@ -1,0 +1,24 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  //   border-style: hidden;
+  width: 100%;
+  // background-color: white;
+  thead {
+    th {
+      color: #1f4173;
+      text-align: left;
+    }
+  }
+  tbody {
+    tr {
+      height: 40px;
+      color: #003ad2;
+      &:not(:first-child) {
+        td {
+          border-top: 1px solid rgba($color: #0a69e1, $alpha: 0.4) !important;
+        }
+      }
+    }
+  }
+}

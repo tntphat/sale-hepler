@@ -69,11 +69,11 @@ const dataTable = [
 
 const dataHeader = [
   {
-    title: 'Stt',
-    width: '20px',
+    title: 'STT',
+    width: '50px',
   },
   {
-    title: '',
+    title: 'Mã SKU',
     width: '80px',
   },
   {
@@ -131,6 +131,7 @@ export const TableProduct: React.FC<any> = ({ setProduct, setIsOpen, setStep }) 
             setStep && setStep(1);
           }}
           key={_id}
+          className="sell__btn-select"
         >
           Chọn
         </Button>,

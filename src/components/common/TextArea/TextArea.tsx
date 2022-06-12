@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './TextArea.scss';
 const ComponentTextArea = (
-  { value, onChange, className, onKeyPress, onKeyDown }: ITextArea,
+  { value, onChange, className, onKeyPress, onKeyDown , placeholder, id, readonly }: ITextArea,
   ref: any,
 ) => {
   function textAreaAdjust() {
@@ -13,14 +13,16 @@ const ComponentTextArea = (
   }, [value]);
   return (
     <textarea
+      readOnly={readonly}
+      id={id}
+      onKeyPress={onKeyPress}
       // onKeyUp={textAreaAdjust}
       name=""
       ref={ref}
       value={value}
       onChange={onChange}
       className={`text-area ${className || ''}`}
-      placeholder="Hãy viết gì đó..."
-      onKeyPress={onKeyPress}
+      placeholder={placeholder || 'Hãy viết gì đó...'}
       onKeyDown={onKeyDown}
     />
   );

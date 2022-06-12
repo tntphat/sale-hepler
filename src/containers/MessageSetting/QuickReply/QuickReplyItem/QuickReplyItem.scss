@@ -1,0 +1,55 @@
+.quick-reply-item {
+  &__selection {
+    background-color: #eaeaea;
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: justify;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__reply {
+    flex-grow: 1;
+  }
+
+  &__text {
+    margin-top: 8px;
+    font-size: 18px;
+  }
+
+  &__choice-item {
+    display: flex;
+    background-color: #d1d1d1;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-right: 8px;
+    float: left;
+
+    span {
+      margin-right: 6px;
+      font-size: 16px;
+    }
+
+    svg {
+      margin-top: 4px;
+      width: 12px;
+      height: 12px;
+      & {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__choice {
+    margin-top: 4px;
+  }
+  // &__modal-choice {
+  //   font-size: 16px;
+  //   border: 1px solid #d0d4d9;
+  //   border-radius: 12px;
+  //   padding: 8px;
+  // }
+}

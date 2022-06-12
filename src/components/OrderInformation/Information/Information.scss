@@ -1,0 +1,51 @@
+.information {
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    h5 {
+      margin-right: 20px;
+    }
+  }
+
+  &__section-action {
+    color: rgba(10, 120, 190, 1);
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__two-column {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+
+  &__content {
+    margin-top: 8px;
+  }
+
+  &__detail {
+    display: flex;
+  }
+
+  &__detail--title,
+  &__detail--content {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  &__detail--title {
+    font-weight: 500;
+    text-align: left;
+    width: 30%;
+    margin-right: 10px;
+  }
+
+  &__detail--content {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
+}

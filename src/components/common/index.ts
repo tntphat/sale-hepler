@@ -18,6 +18,8 @@ export * from './DateTimePicker/DateTimePicker';
 export * from './CheckBox/CheckBox';
 export * from './CheckBox/CheckBoxControl';
 export * from './TextArea/TextArea';
+export * from './ToggleButton/ToggleButton';
+export * from './CustomTextArea/CustomTextArea';
 export * from './DropdownSelectMultipleLevel/DropdownSelectMultipleLevel';
 export * from './DropdownSelectMultiple/DropdownSelectMultiple';
 export * from './DropdownSelectMultiple/DropdownSelectMultipleSearch';

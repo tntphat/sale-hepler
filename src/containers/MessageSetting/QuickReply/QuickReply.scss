@@ -1,0 +1,35 @@
+.quick-reply {
+  width: 100%;
+  padding-left: 12px;
+
+  &__modal-choice {
+    font-size: 16px;
+    border: 1px solid #d0d4d9;
+    border-radius: 12px;
+    padding: 8px;
+  }
+
+  &__action {
+    display: flex;
+    align-self: flex-start;
+    svg {
+      width: 22px;
+      height: 22px;
+      margin-left: 6px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__btn-add {
+    margin-top: 8px;
+  }
+
+  .setting-selection__quick-text {
+    margin-bottom: 12px;
+  }
+
+  .setting-selection__btn-add {
+    margin-top: 8px;
+  }
+}
