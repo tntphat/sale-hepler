@@ -167,7 +167,7 @@ export const Routers = () => {
           }
         />
         <Route
-          path="/order/tiki"
+          path="/order/:id"
           element={
             <PrivateRouter title="Đơn hàng" component={DetailOrder} layout={SidebarLayout} />
           }

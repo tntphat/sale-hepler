@@ -155,34 +155,34 @@ export const dataHeaderTableOrder = [
   // },
   {
     title: 'Mã đơn hàng',
-    width: '13%',
+    width: '10%',
   },
   {
     title: 'Tên Khách hàng',
-    width: '15%',
+    width: '12%',
   },
   {
     title: 'Sản phẩm',
   },
   {
     title: 'Sàn',
-    width: '12%',
+    width: '10%',
   },
   {
     title: 'Tổng tiền',
-    width: '14%',
-  },
-  {
-    title: 'Ngày đặt',
     width: '12%',
   },
   {
+    title: 'Ngày đặt',
+    width: '11%',
+  },
+  {
     title: 'Trạng thái',
-    width: '13%',
+    width: '12%',
   },
   {
     title: 'Hành động',
-    width: '10%',
+    width: '8%',
   },
 ];
 
@@ -291,10 +291,10 @@ export const dataFieldsTemplate = {
   exportPrice: 'Giá bán',
   type: 'Loại sản phẩm',
   description: 'Mô tả sản phẩm',
-  branch: 'Thương hiệu',
-  inventoryNumber: 'Loại hàng',
-  images: 'Hình ảnh',
-  isAllowSell: 'Cho phép bán',
+  // branch: 'Thương hiệu',
+  // inventoryNumber: 'Loại hàng',
+  // images: 'Hình ảnh',
+  // isAllowSell: 'Cho phép bán',
 };
 
 const dataFieldsTemplateReverse2 = {};

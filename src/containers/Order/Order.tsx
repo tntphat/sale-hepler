@@ -75,29 +75,32 @@ export const Order = () => {
 
   const memoizedDataTable = useMemo(() => {
     return products.map(
-      ({ branch, sku, type, name, exportPrice, createdAt, isAllowSell, id }: IProduct, index) => [
-        <SvgCheck isActive={selected.includes(id)} key={sku} onClick={handleSelectItem(id)} />,
-        sku,
-        name,
-        type,
-        10,
-        exportPrice,
+      (
+        { products, state, type, name, exportPrice, createdAt, total_payment, id }: IProduct,
+        index,
+      ) => [
+        <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
+        id,
+        'Fat To',
+        products.map((prod) => <li key={prod._id}>{prod.product.name}</li>),
+        'Facebook',
+        total_payment,
         convertTime(createdAt),
-        isAllowSell ? 'Đang giao dịch' : 'Ngừng giao dịch',
+        state,
         <Dropdown
-          key={sku}
+          key={id}
           options={[
             {
               text: 'Chỉnh sửa',
               cb: () => {
-                navigate(`/product/${id}`);
+                navigate(`/order/${id}`);
               },
             },
             { text: 'Xoá', cb: handleDltItem(id) },
             {
               text: 'Chi tiết',
               cb: () => {
-                navigate(`/product/${id}`);
+                navigate(`/order/${id}`);
               },
             },
           ]}
