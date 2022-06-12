@@ -149,6 +149,7 @@ interface IDropdownSelectMultipleLevel {
   isLoading?: boolean;
   onSelect: (opt: IResOptionCategory) => void;
   apiGetSpecificCategory: any;
+  error?: any;
 }
 
 interface ITableHeaderCol {
@@ -161,4 +162,5 @@ interface ITable {
   dataHeader: ITableHeaderCol[];
   dataTable: any[];
   className?: string;
+  minWidth?: any;
 }

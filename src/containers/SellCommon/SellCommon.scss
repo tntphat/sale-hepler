@@ -12,5 +12,8 @@
     &--sendo {
       color: $sendo-color;
     }
+    &--disabled {
+      cursor: default !important;
+    }
   }
 }

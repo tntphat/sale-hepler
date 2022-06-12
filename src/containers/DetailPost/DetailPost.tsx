@@ -24,11 +24,7 @@ export const DetailPost = () => {
   }, [id]);
   return (
     <Box title="Bài viết" classname="detail-post">
-      <Item
-        image="https://cdn.pixabay.com/photo/2022/02/14/02/39/animal-7012354__340.jpg"
-        subName={user?.name}
-        width={50}
-      />
+      <Item image={user?.picture} subName={user?.name} width={50} />
 
       <p>{post?.content}</p>
       <ScrollHorizontal ref={refScroll} className={'horizontal-medias'}>

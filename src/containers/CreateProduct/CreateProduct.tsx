@@ -45,6 +45,8 @@ export const CreateProduct = () => {
   } = useForm<TypeForm>();
   const refImage = useRef<HTMLInputElement | any>(null);
   const [images, setImages] = useState<any>([]);
+  const [avatar, setAvatar] = useState<any>();
+  const refImageAvatar = useRef<HTMLInputElement | any>(null);
   const navigate = useNavigate();
   const { handleOpenModalLoading, handleCloseModalLoading, handleOpenModalMessage } =
     useModalLoading();
@@ -54,7 +56,7 @@ export const CreateProduct = () => {
   useEffect(() => {
     if (!id) return;
     apiProducts.getInfoProduct(id).then((res) => {
-      const { __v, updatedAt, createdAt, images, stockAvailable, ...product } =
+      const { __v, updatedAt, createdAt, images, stockAvailable, image, ...product } =
         res.data.data.product;
       reset(product);
       resetField('type', {
@@ -85,6 +87,7 @@ export const CreateProduct = () => {
       //   defaultValue: dataBranch[dataBranch.findIndex((cate) => cate.title === product.branch)],
       // });
       setImages(images);
+      setAvatar(image);
     });
   }, [id]);
 
@@ -112,13 +115,13 @@ export const CreateProduct = () => {
     // apiProducts.createProduct({...data,inventoryNumber:2,isAllowSell:true,images:['https://cdn.pixabay.com/photo/2022/04/23/20/51/nature-7152461__340.jpg','https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg']})
 
     apiCommon
-      .getLinkImage({ images })
+      .getLinkImage({ images: [avatar, ...images] })
       .then((res) => {
         return action({
           ...newForm,
           inventoryNumber: 2,
           // isAllowSell: true,
-          images: res.data,
+          images: res.data.slice(1),
           image: res.data[0],
         });
       })
@@ -138,6 +141,12 @@ export const CreateProduct = () => {
     e.stopPropagation();
     refImage.current.click();
   };
+
+  const handleClickOpenInputImageAvatar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    refImageAvatar.current.click();
+  };
+
   return (
     <div className="create-product">
       <GridLayoutTwoCol>
@@ -438,21 +447,59 @@ export const CreateProduct = () => {
           </Box>
 
           <Box classname="create-product__image">
-            <FileDropzone images={images} setImages={setImages}>
+            <FileDropzone isNotMultiple images={avatar} setImages={setAvatar}>
+              <input
+                type="file"
+                hidden
+                ref={refImageAvatar}
+                multiple
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files.length) {
+                    setAvatar(e.target.files[0]);
+                  }
+                }}
+              />
               <div className="create-product__flex">
-                <p>Hình ảnh</p>
-                <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+                <b>Ảnh đại diện sản phẩm</b>
+                <p onClick={handleClickOpenInputImageAvatar}>Thêm hình</p>
               </div>
-              {images.length ? null : (
+              {avatar ? (
+                <img
+                  src={typeof avatar === 'string' ? avatar : URL.createObjectURL(avatar)}
+                  style={{
+                    maxHeight: 300,
+                    maxWidth: '100%',
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                />
+              ) : (
                 <div
-                  onClick={handleClickOpenInputImage}
+                  onClick={handleClickOpenInputImageAvatar}
                   style={{ display: 'flex', justifyContent: 'center' }}
                 >
                   <SvgImage />
                 </div>
               )}
-              <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
             </FileDropzone>
+            <div style={{ marginTop: 20 }}>
+              <FileDropzone images={images} setImages={setImages}>
+                <div className="create-product__flex">
+                  <p>Hình ảnh</p>
+                  <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+                </div>
+                {images.length ? null : (
+                  <div
+                    onClick={handleClickOpenInputImage}
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                  >
+                    <SvgImage />
+                  </div>
+                )}
+                <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
+              </FileDropzone>
+            </div>
           </Box>
         </div>
       </GridLayoutTwoCol>

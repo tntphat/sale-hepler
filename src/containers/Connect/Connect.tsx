@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SvgPlusRound } from '../../assets/svg/SvgPlusRound';
 import { Box } from '../../components/common';
 import { BoxChannel, BoxStatistics } from '../../components/Connect';
 import { loadScript, loginFb } from '../../helpers';
+import { useAppSelector } from '../../redux';
 import './Connect.scss';
 
 const ID_APP_TIKI = process.env.APP_ID_TIKI;
@@ -19,6 +21,7 @@ const LINK = `https://api.tiki.vn/sc/oauth2/auth?response_type=code&client_id=${
 
 export const Connect = () => {
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.authSlice);
   const cb = (data: any) => {
     console.log(data.accessToken);
   };
@@ -38,18 +41,44 @@ export const Connect = () => {
   };
   return (
     <div className="connect">
-      <div className="connect__statistics">
+      <Box title="kết nối kênh bán hàng">
+        <div className="select">
+          <div
+            className={`sell-common__text sell-common__text--fb ${
+              user?.fbId ? 'sell-common__text--disabled' : ''
+            }`}
+            onClick={user?.fbId ? () => false : handleLoginFb}
+          >
+            Facebook
+            {user.fbId ? (
+              <>
+                <p>{user.name}</p>
+                <img src={user.picture} />
+              </>
+            ) : null}
+          </div>
+          <div className="sell-common__text sell-common__text--tiki" onClick={handleLoginTiki}>
+            <SvgPlusRound className="connect__add" />
+            Tiki
+          </div>
+          <div className="sell-common__text sell-common__text--sendo" onClick={handleLoginSendo}>
+            <SvgPlusRound className="connect__add" color="#d9292a" />
+            Sendo
+          </div>
+        </div>
+      </Box>
+      {/* <div className="connect__statistics">
         <BoxStatistics onClick={handleLoginFb} color="#017DF6" count={2} channel="Facebook" />
         <BoxStatistics onClick={handleLoginTiki} color="#1A94FF" count={3} channel="Tiki" />
         <BoxStatistics onClick={handleLoginSendo} color="#d9292a" count={3} channel="Sendo" />
-      </div>
+      </div> */}
 
-      <BoxChannel onClickConnect={handleLoginFb} color="#0a69e1" channel="Facebook" />
+      {/* <BoxChannel onClickConnect={handleLoginFb} color="#0a69e1" channel="Facebook" />
       <BoxChannel onClickConnect={handleLoginFb} color="#0a69e1" channel="Facebook" isEmpty />
       <div className="connect__grid-2">
         <BoxChannel color="#1A94FF" channel="Tiki" />
         <BoxChannel onClickConnect={handleLoginTiki} color="#FF6533" channel="Shopee" isEmpty />
-      </div>
+      </div> */}
     </div>
   );
 };

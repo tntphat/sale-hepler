@@ -138,6 +138,7 @@ export const Product = () => {
   }, [selected, products]);
   return (
     <Box>
+      <Button onClick={() => navigate('/create-product')}>Tạo sản phẩm</Button>
       <div className="products__row">
         <SearchText
           placeholder="Tìm kiếm sản phẩm"

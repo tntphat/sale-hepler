@@ -12,7 +12,7 @@ import {
   Table,
 } from '../../components/common';
 import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
-import { convertTime } from '../../helpers';
+import { convertTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
 import {
   apiCategory,
@@ -38,7 +38,7 @@ export const ManagePostSendo = () => {
 
   const handleFetchData = () => {
     apiSendoProduct.getProducts({ page, name: dbValue }).then((res) => {
-      setTotalPages(res.data.data.total_records);
+      setTotalPages(Math.ceil(res.data.data.total_records / 12));
       console.log(res.data.data, 'haha');
 
       setProducts(res.data.data.data);
@@ -106,8 +106,8 @@ export const ManagePostSendo = () => {
         id,
         name,
         category_4_name || 'Loại sản pẩm',
-        10,
-        price || final_price_min,
+        stock_quantity,
+        formatCurrency(price || final_price_min),
         convertTime(updated_at_timestamp * 1000),
         stock ? 'Đang bán' : 'Ngừng bán',
         <Dropdown

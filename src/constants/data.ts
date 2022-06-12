@@ -109,7 +109,8 @@ export const dataHeaderTableProduct = [
   // },
   {
     title: 'Mã sản phẩm',
-    width: '80px',
+    // width: '80px',
+    width: '13%',
   },
   {
     title: 'Tên Sản phẩm',
@@ -117,27 +118,33 @@ export const dataHeaderTableProduct = [
   },
   {
     title: 'Loại',
-    width: '140px',
+    // width: '140px',
+    width: '13%',
   },
   {
     title: 'Số lượng',
-    width: '60px',
+    // width: '60px',
+    width: '12%',
   },
   {
     title: 'Giá',
-    width: '100px',
+    // width: '100px',
+    width: '12%',
   },
   {
     title: 'Ngày tạo',
-    width: '100px',
+    // width: '100px',
+    width: '11%',
   },
   {
     title: 'Trạng thái',
-    width: '120px',
+    // width: '120px',
+    width: '11%',
   },
   {
     title: 'Hành động',
-    width: '80px',
+    // width: '80px',
+    width: '10%',
   },
 ];
 
@@ -148,34 +155,34 @@ export const dataHeaderTableOrder = [
   // },
   {
     title: 'Mã đơn hàng',
-    width: '120px',
+    width: '13%',
   },
   {
     title: 'Tên Khách hàng',
-    width: '250px',
+    width: '15%',
   },
   {
     title: 'Sản phẩm',
   },
   {
     title: 'Sàn',
-    width: '100px',
+    width: '12%',
   },
   {
     title: 'Tổng tiền',
-    width: '150px',
+    width: '14%',
   },
   {
     title: 'Ngày đặt',
-    width: '120px',
+    width: '12%',
   },
   {
     title: 'Trạng thái',
-    width: '160px',
+    width: '13%',
   },
   {
     title: 'Hành động',
-    width: '80px',
+    width: '10%',
   },
 ];
 
@@ -186,26 +193,26 @@ export const dataHeaderTableManagePost = [
   // },
   {
     title: 'Mã bài đăng',
-    width: '100px',
+    width: '10%',
   },
   {
     title: 'Bài đăng',
   },
   {
     title: 'Sản phẩm',
-    width: '250px',
+    width: '15%',
   },
   {
     title: 'Nhóm đăng',
-    width: '200px',
+    width: '13%',
   },
   {
     title: 'Ngày đăng',
-    width: '120px',
+    width: '10%',
   },
   {
     title: 'Hành động',
-    width: '80px',
+    width: '10%',
   },
 ];
 export const dataCategory = [
