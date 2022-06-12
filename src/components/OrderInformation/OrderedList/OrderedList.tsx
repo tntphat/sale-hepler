@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../redux';
-import { apiOrder } from '../../../services/api';
+import { apiOrders } from '../../../services/api';
 import { OrderDetail } from './OrderDetail/OrderDetail';
 import './OrderedList.scss';
 export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
@@ -11,7 +11,7 @@ export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
   const [stateList, setStateList] = useState<any[]>([]);
   const [isChanged, setIsChanged] = useState<boolean>(false);
   useEffect(() => {
-    apiOrder.getOrderStates().then((response) => {
+    apiOrders.getOrderStates().then((response) => {
       let states = response.data.data;
       let stateArray = Object.keys(states).map(function (key) {
         return states[key];
@@ -29,7 +29,7 @@ export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
 
   useEffect(() => {
     const fetchUserOrders = async () => {
-      apiOrder.getOrders().then((response) => {
+      apiOrders.getOrders().then((response) => {
         const data = response.data.data.pagination;
         let orders: any[] = [];
         for (let key in data) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { convertFullTime, formatCurrency } from '../../../../helpers';
-import { apiOrder } from '../../../../services/api';
+import { apiOrders } from '../../../../services/api';
 import { DropdownSelect } from '../../../common';
 import './OrderDetail.scss';
 interface IProduct {
@@ -30,7 +30,7 @@ export const OrderDetail = ({ order, stateList, isChanged, setIsChanged }: IProd
     const payload = {
       state: state.id,
     };
-    apiOrder.updateOrder(payload, order._id).then((response) => {
+    apiOrders.updateOrder(payload, order._id).then((response) => {
       setIsChanged(!isChanged);
     });
     setEditable(!editable);

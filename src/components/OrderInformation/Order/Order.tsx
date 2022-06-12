@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '../../../redux';
-import { apiOrder } from '../../../services/api';
+import { apiOrders } from '../../../services/api';
 import { Button, InputText } from '../../common';
 import { ModalForm } from '../../common/Modal';
 import { Product } from '../Product/Product';
@@ -41,7 +41,7 @@ export const Order = ({
       total_payment: total_price,
       note: note,
     };
-    apiOrder.createOrder(payload).then((response) => {
+    apiOrders.createOrder(payload).then((response) => {
       toggleIsAddNewOrder(!isAddNewOrder);
     });
     setSelectedProducts([]);

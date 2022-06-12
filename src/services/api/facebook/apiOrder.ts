@@ -2,7 +2,7 @@ import { axiosMain } from '../..';
 
 const baseUrl = 'orders/';
 
-export const apiOrder = {
+export const apiOrders = {
   createOrder: (data: any) => {
     return axiosMain.post(baseUrl, data);
   },
