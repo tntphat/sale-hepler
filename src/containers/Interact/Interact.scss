@@ -1,0 +1,10 @@
+@import '../../assets/scss/variables';
+.interact {
+  &__text {
+    font-weight: 700;
+    font-size: 24px;
+    &--disabled {
+      cursor: default !important;
+    }
+  }
+}

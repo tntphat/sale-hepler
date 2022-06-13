@@ -35,6 +35,7 @@ import { PublicRouter } from './PublicRouter';
 import { Sell } from '../containers/Sell/Sell';
 import { dataSidebarBuyer } from '../constants';
 import { BuyerHome } from '../containers/Buyer';
+import { Interact } from '../containers/Interact';
 
 export const Routers = () => {
   // const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -177,6 +178,10 @@ export const Routers = () => {
         <Route
           path="/auth-tiki"
           element={<PrivateRouter component={AuthTiki} layout={BlankLayout} />}
+        />
+        <Route
+          path="/interact"
+          element={<PrivateRouter component={Interact} layout={SidebarLayout} />}
         />
         <Route
           path="/interact/messenger"
