@@ -30,13 +30,10 @@ export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
   useEffect(() => {
     const fetchUserOrders = async () => {
       apiOrder.getOrders().then((response) => {
-        const data = response.data.data.pagination;
-        let orders: any[] = [];
-        for (let key in data) {
-          if (data[key].customer_fb_id === chatUserDetails.id) {
-            orders = [...orders, data[key]];
-          }
-        }
+        let orders = response.data.data;
+        orders = orders.filter((order: any) => {
+          return order.customer_fb_id === chatUserDetails.id;
+        });
         setOrderList(orders.reverse());
       });
     };

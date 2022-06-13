@@ -11,12 +11,12 @@ export const apiOrder = {
     const url = baseUrl + param;
     return axiosMain.get(url);
   },
-  
   createOrder: (data: any) => {
     return axiosMain.post(baseUrl, data);
   },
   getOrders:() => {
-    return axiosMain.get(baseUrl);
+    const url = baseUrl + 'all';
+    return axiosMain.get(url);
   },
   getOrderStates:() => {
     const url =baseUrl + 'enums/state'  ;
