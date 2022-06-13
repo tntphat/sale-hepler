@@ -8,12 +8,12 @@ export const Interact = () => {
     <Box title="Chọn loại tương tác">
       <div className="select">
         <div>
-          <Link className="interact__text" to="interact/messenger">
+          <Link className="interact__text" to="./messenger">
             Tin nhắn
           </Link>
         </div>
         <div>
-          <Link className="interact__text" to="interact/messenger-setting">
+          <Link className="interact__text" to="./messenger-setting">
             Bình luận
           </Link>
         </div>
