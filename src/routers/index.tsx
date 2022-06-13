@@ -26,6 +26,7 @@ import {
   ConnectSendo,
   ManagePostSendo,
   SellCommon,
+  ReportPost,
 } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
@@ -131,6 +132,18 @@ export const Routers = () => {
           path="/report"
           element={
             <PrivateRouter title="Báo cáo bán hàng" component={Report} layout={SidebarLayout} />
+          }
+        />
+        <Route
+          path="/report/sale"
+          element={
+            <PrivateRouter title="Báo cáo bán hàng" component={Report} layout={SidebarLayout} />
+          }
+        />
+        <Route
+          path="/report/post"
+          element={
+            <PrivateRouter title="Báo cáo bài đăng" component={ReportPost} layout={SidebarLayout} />
           }
         />
         <Route

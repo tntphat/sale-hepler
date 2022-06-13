@@ -39,7 +39,7 @@ const data = [
   },
 ];
 
-export const LineBar = () => {
+export const LineBar: React.FC<any> = ({ data, nameValue, nameValue2 }) => {
   return (
     <LineChart
       width={730}
@@ -51,8 +51,10 @@ export const LineBar = () => {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Line type="monotone" name="Facebook" dataKey="fb" stroke="#0A69E1" />
-      <Line type="monotone" name="Tiki" dataKey="tiki" stroke="#1A94FF" />
+      <Line type="monotone" name={nameValue} dataKey="value" stroke="#0A69E1" />
+      {nameValue2 ? (
+        <Line type="monotone" name={nameValue2} dataKey="value2" stroke="#1A94FF" />
+      ) : null}
     </LineChart>
   );
 };

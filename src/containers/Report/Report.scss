@@ -4,8 +4,14 @@
     // grid-template-columns: repeat(4, 1fr);
     justify-content: space-between;
     & > div {
-      width: 390px;
+      width: 300px;
     }
+  }
+
+  &__grid-2 {
+    margin-top: 20px;
+    display: flex;
+    gap: 50px;
   }
 
   .react-datepicker-wrapper {
@@ -13,16 +19,18 @@
     margin-left: auto;
     input {
       border-radius: 10px;
+      width: 100px;
       padding: 10px;
       outline: none;
       margin-top: 5px;
       border: 1px solid #d0d4d9;
+      text-align: center;
     }
   }
 }
 
 .box-statistics-report {
-  height: 150px;
+  height: 130px;
   display: flex;
   flex-direction: column;
   &__title {

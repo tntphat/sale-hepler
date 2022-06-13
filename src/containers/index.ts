@@ -14,6 +14,7 @@ export * from './MessageSetting/MessageSetting';
 export * from './Product/Product';
 export * from './Order/Order';
 export * from './Report/Report';
+export * from './Report/ReportPost';
 export * from './ManagePostFb/ManagePostFb';
 export * from './ManagePostTiki/ManagePostTiki';
 export * from './DetailProductTiki/DetailProductTiki';

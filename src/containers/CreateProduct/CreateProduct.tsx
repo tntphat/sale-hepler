@@ -89,8 +89,6 @@ export const CreateProduct = () => {
       // setAvatar(image);
     });
   }, [id]);
-  console.log(watch('quantitySendo'));
-
   const onSubmit = (data: TypeForm) => {
     handleOpenModalLoading();
     // console.log(data);

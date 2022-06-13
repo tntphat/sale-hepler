@@ -8,22 +8,7 @@ import DatePicker from 'react-datepicker';
 import { apiReport } from '../../services/api';
 import { Loader } from '../../components/common/Loader/Loader';
 
-const dataHeader = [
-  {
-    title: 'Sản phẩm',
-    width: '50%',
-  },
-  {
-    title: 'Loại',
-    width: '30%',
-  },
-  {
-    title: 'Tồn kho',
-    width: '20%',
-  },
-];
-
-export const Report = () => {
+export const ReportPost = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [hasMonth, setHasMonth] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,8 +17,8 @@ export const Report = () => {
     const month = startDate.getMonth() + 1;
     const year = startDate.getFullYear();
     setLoading(true);
-    apiReport.getReportPost({ year, ...(hasMonth && { month }) });
-    apiReport.getReportSales({ year, type: 'ARRIVED', ...(hasMonth && { month }) }).then((res) => {
+    // apiReport.getReportPost({ year, ...(hasMonth && { month }) });
+    apiReport.getReportPost({ year, ...(hasMonth && { month }) }).then((res) => {
       setDataReport(res.data.data);
       setLoading(false);
     });
@@ -45,23 +30,24 @@ export const Report = () => {
       .sort((a, b) => (hasMonth ? a._id - b._id : a._id.month - b._id.month))
       .map((data) => ({
         name: hasMonth ? 'Ngày' + new Date(data._id).getDate() : 'Tháng ' + data._id.month,
-        value: data.arrivedProducts,
+        value: data.interactions,
+        value2: data.noOfPosts,
       }));
   }, [dataReport]);
   return (
     <div className="report">
       <div className="report__grid-4">
         <BoxStatisticsReport
-          title="Sản phẩm hết hàng"
-          count={dataReport?.outOfStocks}
+          title="Số bài viết đã đăng"
+          count={dataReport?.publishedPosts}
           color="#FA582E"
         />
         <BoxStatisticsReport
-          title="Tất cả sản phẩm"
-          count={dataReport?.allStocks}
+          title="Số lượt tương tác"
+          count={dataReport?.interactions}
           color="#0163DE"
         />
-        <BoxStatisticsReport
+        {/* <BoxStatisticsReport
           title="Sản phẩm tồn kho"
           count={dataReport?.inventories}
           color="#0FBB59"
@@ -70,7 +56,7 @@ export const Report = () => {
           title="Sản phẩm đến tay người dùng"
           count={dataReport?.deliveries}
           color="#7828DC"
-        />
+        /> */}
       </div>
       <Box marginTop={20}>
         <div className="row">
@@ -105,38 +91,15 @@ export const Report = () => {
         {loading ? (
           <Loader />
         ) : (
-          memoizedChartData && <LineBar data={memoizedChartData} nameValue="Số sản phẩm" />
+          memoizedChartData && (
+            <LineBar
+              data={memoizedChartData}
+              nameValue="Số bài post"
+              nameValue2="Số lượt tương tác"
+            />
+          )
         )}
       </Box>
-
-      {dataReport ? (
-        <div className="report__grid-2">
-          <Box title="Sản phẩm tồn kho">
-            <Table
-              minWidth="50%"
-              dataHeader={dataHeader}
-              dataTable={dataReport.productsInStock.map(({ name, type, stockAvailable, sku }) => [
-                name,
-                type,
-                stockAvailable.reduce((prev, cur) => prev + cur.quantity, 0),
-              ])}
-            />
-          </Box>
-          <Box title="Sản phẩm hết hàng">
-            <Table
-              minWidth="50%"
-              dataHeader={dataHeader}
-              dataTable={dataReport.outOfStockProducts.map(
-                ({ name, type, stockAvailable, sku }) => [
-                  name,
-                  type,
-                  stockAvailable.reduce((prev, cur) => prev + cur.quantity, 0),
-                ],
-              )}
-            />
-          </Box>
-        </div>
-      ) : null}
     </div>
   );
 };
