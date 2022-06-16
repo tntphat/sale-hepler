@@ -1,14 +1,14 @@
 @import '../../../assets/scss/variables';
 .button {
-  width: 110px;
-  height: 40px;
+  width: fit-content;
+  padding: 6px 16px;
   background-color: $primary-color;
   color: white;
   font-size: 14px;
   font-weight: bold;
   display: flex;
   align-items: center;
-  border-radius: 12px;
+  border-radius: 10px;
   justify-content: center;
   cursor: pointer;
   &--right {

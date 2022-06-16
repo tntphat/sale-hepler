@@ -7,9 +7,12 @@ interface IParamMessageContent {
   messageAttachment?: any[];
 }
 
-export const getAllConversations = createAsyncThunk('chat/getAllConversations', async () => {
-  return apiMessages.getAllConversations(110681441599820);
-});
+export const getAllConversations = createAsyncThunk(
+  'chat/getAllConversations',
+  async (pageId: number) => {
+    return apiMessages.getAllConversations(pageId);
+  },
+);
 
 export const getChatUserConversations = createAsyncThunk(
   'chat/getChatUserConversations',

@@ -9,7 +9,7 @@ interface IParamMessageContent {
 
 const baseUrl = 'facebook/messages/';
 export const apiMessages = {
-  getAllConversations: (pageId: number | string) => {
+  getAllConversations: (pageId: number) => {
     const url = baseUrl + 'allConversations/' + pageId;
     return axiosMain.get(url);
   },
@@ -66,11 +66,11 @@ export const apiMessages = {
     return axiosMain.post(url, data);
   },
   turnOffGreeting: () => {
-    const url =  baseUrl + 'turnOffGreeting';
+    const url = baseUrl + 'turnOffGreeting';
     return axiosMain.get(url);
   },
   getCustomerInfo: (threadId: number | string) => {
-    const url = 'facebook/customerInfo/' + threadId ;
+    const url = 'facebook/customerInfo/' + threadId;
     return axiosMain.get(url);
   },
   updateCustomerInfo: (data: any, threadId: number | string) => {

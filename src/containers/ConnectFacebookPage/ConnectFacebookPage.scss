@@ -1,0 +1,37 @@
+.connect-page {
+  height: 100%;
+  &__wrapper {
+    margin-top: 12px;
+    width: fit-content;
+  }
+
+  &__page {
+    height: 60px;
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 10px;
+    img {
+      margin-right: 12px;
+    }
+  }
+
+  &__radio-btn {
+    margin-right: 10px;
+    align-self: center;
+  }
+
+  &__page-info {
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__page-id {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  &__btn-next {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

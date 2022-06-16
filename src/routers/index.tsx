@@ -37,6 +37,7 @@ import { Sell } from '../containers/Sell/Sell';
 import { dataSidebarBuyer } from '../constants';
 import { BuyerHome } from '../containers/Buyer';
 import { Interact } from '../containers/Interact';
+import { ConnectFacebookPage } from '../containers/ConnectFacebookPage/ConnectFacebookPage';
 
 export const Routers = () => {
   // const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -212,6 +213,16 @@ export const Routers = () => {
           path="/sell/sendo"
           element={
             <PrivateRouter component={SellSendo} layout={SidebarLayout} title="Đăng bán Sendo" />
+          }
+        />
+        <Route
+          path="/connect/facebook-page"
+          element={
+            <PrivateRouter
+              component={ConnectFacebookPage}
+              layout={SidebarLayout}
+              title="Kết nối Trang Facebook"
+            />
           }
         />
         <Route

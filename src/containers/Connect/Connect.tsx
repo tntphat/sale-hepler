@@ -39,23 +39,32 @@ export const Connect = () => {
   const handleLoginSendo = () => {
     navigate('/connect/sendo');
   };
+
+  const handleConnectPage = () => {
+    loginFb(cb);
+    if (user?.fbId) {
+      navigate('/connect/facebook-page');
+    }
+  };
+
   return (
     <div className="connect">
-      <Box title="kết nối kênh bán hàng">
+      <Box title="Kết nối kênh bán hàng">
         <div className="select">
           <div
-            className={`sell-common__text sell-common__text--fb ${
-              user?.fbId ? 'sell-common__text--disabled' : ''
-            }`}
-            onClick={user?.fbId ? () => false : handleLoginFb}
+            className={`sell-common__text sell-common__text--fb 
+
+            `}
+            onClick={handleConnectPage}
           >
+            <SvgPlusRound className="connect__add" />
             Facebook
-            {user.fbId ? (
+            {/* {user.fbId ? (
               <>
                 <p>{user.name}</p>
                 <img src={user.picture} />
               </>
-            ) : null}
+            ) : null} */}
           </div>
           <div className="sell-common__text sell-common__text--tiki" onClick={handleLoginTiki}>
             <SvgPlusRound className="connect__add" />

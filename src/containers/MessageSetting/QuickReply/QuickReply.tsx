@@ -19,6 +19,7 @@ export const QuickReply = () => {
   const [isHideAddButton, setIsHideAddButton] = useState<boolean>(false);
   const refArea = useRef<HTMLTextAreaElement | any>(null);
   const [quickReplies, setQuickReplies] = useState<any[]>([]);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
 
   const {
     register,
@@ -60,7 +61,7 @@ export const QuickReply = () => {
       };
     });
     const payload = {
-      pageId: '110681441599820',
+      pageId: pageId,
       name: name,
       text: text,
       samples: tagList,
@@ -79,7 +80,7 @@ export const QuickReply = () => {
 
   useEffect(() => {
     const fetchAutoReplies = async () => {
-      const quickReplies = await apiMessages.getQuickReply(110681441599820);
+      const quickReplies = await apiMessages.getQuickReply(pageId);
       setQuickReplies(quickReplies.data.data);
     };
     fetchAutoReplies();

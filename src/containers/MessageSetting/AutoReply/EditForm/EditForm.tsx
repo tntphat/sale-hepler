@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { SvgClose } from '../../../../assets/svg';
 import { InputText, TextArea } from '../../../../components/common';
 import { ModalForm } from '../../../../components/common/Modal';
+import { useAppSelector } from '../../../../redux';
 import { toggleLoading } from '../../../../redux/slice/apiSlice/messagesSlice';
 import { apiMessages } from '../../../../services/api';
 import '../../QuickReply/EditForm/EditForm.scss';
@@ -27,6 +28,7 @@ export const EditForm = ({
   const [inputTagValue, setInputTagValue] = useState<string>('');
   const [editKeyword, setEditKeyword] = useState<any[]>([]);
   const refArea = useRef<HTMLTextAreaElement | any>(null);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
 
   const {
     register,
@@ -67,7 +69,7 @@ export const EditForm = ({
 
     const payload = {
       _id: collectionAutoReply._id,
-      pageId: '110681441599820',
+      pageId: pageId,
       mappings: selectedAutoReplies,
     };
     console.log(payload);
