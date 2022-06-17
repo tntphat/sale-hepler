@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate, Outlet, Route } from 'react-router-dom';
 import { LOCAL_TOKEN } from '../constants';
 import { readCookie } from '../helpers';
-import { doGetUserInfo, useAppDispatch } from '../redux';
+import { doGetUserInfo, getConnectedPage, useAppDispatch } from '../redux';
 import { apiAuth } from '../services/api';
 // import { doGetCurrentUser } from '../redux';
 
@@ -17,6 +17,9 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
     if (token)
       // apiAuth.getUserInfo().then(console.log);
       dispatch(doGetUserInfo());
+  }, []);
+  useEffect(() => {
+    dispatch(getConnectedPage());
   }, []);
   return token ? (
     <Layout>

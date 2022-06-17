@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SvgClose, SvgDelete, SvgEdit } from '../../../../assets/svg';
 import { ModalForm } from '../../../../components/common/Modal';
+import { useAppSelector } from '../../../../redux';
 import { toggleLoading } from '../../../../redux/slice/apiSlice/messagesSlice';
 import { apiMessages } from '../../../../services/api';
 import { EditForm } from '../EditForm/EditForm';
@@ -12,12 +13,13 @@ export const QuickReplyItem = ({ quickReply }: { quickReply: any }) => {
   const [isHideAddButton, setIsHideAddButton] = useState<boolean>(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
 
   const handleSubmitDelete = async () => {
     setIsOpenDeleteModal(false);
     const payload = {
       data: {
-        pageId: '110681441599820',
+        pageId: pageId,
         ids: [quickReply._id],
       },
     };

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { SvgAdd, SvgClose, SvgDelete, SvgEdit } from '../../../../assets/svg';
 import { InputText, TextArea } from '../../../../components/common';
 import { ModalForm } from '../../../../components/common/Modal';
+import { useAppSelector } from '../../../../redux';
 import { toggleLoading } from '../../../../redux/slice/apiSlice/messagesSlice';
 import { apiMessages } from '../../../../services/api';
 import Accordion from '../Accordion/Accordion';
@@ -23,6 +24,7 @@ export const AutoReplyGroup = ({ autoReplies, autoReply }: IAutoReplyGroup) => {
   const [inputTagValue, setInputTagValue] = useState<string>('');
   const [error, setError] = useState<string>('');
   const refArea = useRef<HTMLTextAreaElement | any>(null);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
 
   const {
     register,
@@ -42,7 +44,7 @@ export const AutoReplyGroup = ({ autoReplies, autoReply }: IAutoReplyGroup) => {
     setIsOpenDeleteModal(false);
     const payload = {
       data: {
-        pageId: '110681441599820',
+        pageId: pageId,
         ids: [autoReplyId],
       },
     };
@@ -77,7 +79,7 @@ export const AutoReplyGroup = ({ autoReplies, autoReply }: IAutoReplyGroup) => {
     const { text } = data;
     const payload = {
       _id: autoReply._id,
-      pageId: '110681441599820',
+      pageId: pageId,
       mappings: [
         ...autoReply.mappings,
         {

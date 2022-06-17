@@ -18,11 +18,12 @@ import { Scrollbar } from '../common/Srollbar/Scrollbar';
 export const Leftbar = () => {
   const dispatch = useDispatch();
   const { directMessages, selectedChat } = useAppSelector((state) => state.messagesSlice);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
   const { data } = directMessages;
   const socket = io('https://social-sales-helper.herokuapp.com/');
 
   useEffect(() => {
-    dispatch(getAllConversations());
+    dispatch(getAllConversations(pageId));
   }, []);
 
   const onSelectChat = (id: string | number) => {

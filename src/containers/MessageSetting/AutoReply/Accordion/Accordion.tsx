@@ -6,6 +6,7 @@ import { ModalForm } from '../../../../components/common/Modal';
 import { toggleLoading } from '../../../../redux/slice/apiSlice/messagesSlice';
 import { apiMessages } from '../../../../services/api';
 import './Accordion.scss';
+import { useAppSelector } from '../../../../redux';
 
 interface IAccordion {
   autoReply: any;
@@ -18,8 +19,8 @@ const Accordion = ({ autoReply, collectionAutoReply, autoReplies }: IAccordion) 
   const [isHideAddButton, setIsHideAddButton] = useState<boolean>(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
-
   const [clicked, setClicked] = useState<any>(false);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
 
   const toggle = (index: any) => {
     if (clicked === index) {
@@ -37,7 +38,7 @@ const Accordion = ({ autoReply, collectionAutoReply, autoReplies }: IAccordion) 
 
     const payload = {
       _id: collectionAutoReply._id,
-      pageId: '110681441599820',
+      pageId: pageId,
       mappings: selectedAutoReplies,
     };
 

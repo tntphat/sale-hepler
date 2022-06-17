@@ -15,6 +15,7 @@ export const AutoReply = () => {
   const [isOpenAddReplyTitleModal, setIsOpenAddReplyTitleModal] = useState<boolean>(false);
   const [autoReplies, setAutoReplies] = useState<any[]>([]);
   const { loadingSetting } = useAppSelector((state) => state.messagesSlice);
+  const { pageId } = useAppSelector((state) => state.pageSlice);
 
   const {
     register,
@@ -27,7 +28,7 @@ export const AutoReply = () => {
     setIsOpenAddReplyTitleModal(false);
     const { title } = data;
     const payload = {
-      pageId: '110681441599820',
+      pageId: pageId,
       name: title,
       mappings: [],
     };
@@ -43,7 +44,7 @@ export const AutoReply = () => {
 
   useEffect(() => {
     const fetchAutoReplies = async () => {
-      const autoReplies = await apiMessages.getAutoReply(110681441599820);
+      const autoReplies = await apiMessages.getAutoReply(pageId);
       setAutoReplies(autoReplies.data.data);
     };
     fetchAutoReplies();
