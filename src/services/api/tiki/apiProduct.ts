@@ -27,4 +27,8 @@ export const apiTikiProduct = {
     const url = baseUrl + 'request/' + param + '/replay';
     return axiosTiki.post(url);
   },
+  getLinkProduct: (sku: string) => {
+    const url = baseUrl + sku + '/link';
+    return axiosTiki.get(url);
+  },
 };

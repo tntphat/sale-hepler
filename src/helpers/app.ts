@@ -39,3 +39,8 @@ export const convertTemplateToText = (string: string, title?: string, isGenerate
   }
   return newString;
 };
+
+export const handleLinkToFbPost = (id: string) => {
+  const [grId, postId] = id.split('_');
+  window.open(`https://www.facebook.com/groups/${grId}/posts/${postId}`, '_blank');
+};

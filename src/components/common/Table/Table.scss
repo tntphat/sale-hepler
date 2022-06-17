@@ -9,7 +9,7 @@ table {
     th {
       color: #1f4173;
       text-align: left;
-      &:not(:first-child, :nth-child(2)) {
+      &:not(:first-child) {
         padding-left: 10px;
       }
     }
@@ -17,7 +17,7 @@ table {
   tbody {
     td {
       // border-left: 10px solid transparent;
-      &:not(:first-child, :nth-child(2)) {
+      &:not(:first-child) {
         padding: 5px 0 5px 10px;
       }
       vertical-align: middle;

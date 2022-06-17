@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { SvgImage } from '../../assets/svg';
+import { SvgImage, SvgImages } from '../../assets/svg';
 import {
   Box,
   Button,
@@ -64,7 +64,8 @@ export const SellECommerce = () => {
   const refArea = useRef();
   const navigate = useNavigate();
   const refImage = useRef<HTMLInputElement | any>(null);
-  const [images, setImages] = useState<any>([]);
+  const refImageAvatar = useRef<HTMLInputElement | any>(null);
+  // const [images, setImages] = useState<any>([]);
   const [arrAttribute, setArrAttribute] = useState<IAttributeCategory[]>([]);
   const [optionsCategory, setOptionsCategory] = useState<IResOptionCategory[]>([]);
   const [openDropdownCategory, setOpenDropdownCategory] = useState(false);
@@ -81,6 +82,10 @@ export const SellECommerce = () => {
   const handleClickOpenInputImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     refImage.current.click();
+  };
+  const handleClickOpenInputImageAvatar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    refImageAvatar.current.click();
   };
 
   useEffect(() => {
@@ -100,6 +105,7 @@ export const SellECommerce = () => {
       height,
       length,
       images,
+      image,
     } = product;
     setValue('name', name);
     setValue('description', description);
@@ -110,8 +116,9 @@ export const SellECommerce = () => {
     setValue('product_height', height);
     setValue('product_width', width);
     setValue('product_length', length);
+    setValue('images', images);
+    setValue('image', image);
     setValue('product_weight_kg', convertWeightByUnit(weight, weightUnit, 'kg'));
-    setImages(images);
   }, [arrAttribute, product]);
 
   const onSubmit = (data: any) => {
@@ -126,6 +133,8 @@ export const SellECommerce = () => {
       importPrice,
       sku,
       type,
+      image,
+      images,
       ...rest
     } = data;
 
@@ -150,14 +159,15 @@ export const SellECommerce = () => {
     };
 
     apiCommon
-      .getLinkImage({ images: [...images, ...variants.map((variant) => variant.image[0])] })
+      .getLinkImage({ images: [image, ...images, ...variants.map((variant) => variant.image[0])] })
       .then((res) => {
         newForm.image = res.data[0];
-        newForm.images = res.data.slice(0, images.length);
+        newForm.images = res.data.slice(1, images.length);
         newForm.variants = newForm.variants.map((variant, index) => ({
           ...variant,
-          image: res.data[index + images.length],
+          image: res.data[index + images.length + 1],
         }));
+
         for (const key in rest) {
           const item = arrAttribute.find((item) => item.code === key);
           // newForm.attributes[key] = typeof rest[key] === 'string' ? rest[key] : rest[key].value;
@@ -211,13 +221,13 @@ export const SellECommerce = () => {
   useEffect(() => {
     // apiTikiInventory.getAll().then(console.log);
     // apiTikiSeller.getWareHouses({ limit: 10, page: 1 }).then(console.log);
-    apiProducts.getCategories().then(console.log);
+    // apiProducts.getCategories().then(console.log);
     apiCategory
       .getAllCategory()
       .then((res) => {
         return apiCategory.getCategory();
       })
-      .then((res) => setOptionsCategory(res.data));
+      .then((res) => setOptionsCategory(res.data.data));
   }, []);
 
   useEffect(() => {
@@ -387,21 +397,96 @@ export const SellECommerce = () => {
       </Box> */}
 
       <Box title="Quản lý hình ảnh" marginTop={10}>
-        <FileDropzone images={images} setImages={setImages}>
-          <div className="create-product__flex">
-            <p>Hình ảnh</p>
-            <p onClick={handleClickOpenInputImage}>Thêm hình</p>
-          </div>
-          {images.length ? null : (
-            <div
-              onClick={handleClickOpenInputImage}
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <SvgImage />
-            </div>
+        <Controller
+          name="image"
+          control={control}
+          render={({ field: { onChange, value, ref } }) => (
+            <FileDropzone isNotMultiple images={value} setImages={onChange}>
+              <input
+                type="file"
+                hidden
+                ref={refImageAvatar}
+                multiple
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files.length) {
+                    onChange(e.target.files[0]);
+                  }
+                }}
+              />
+              <div className="create-product__flex">
+                <b>Ảnh đại diện sản phẩm</b>
+                <p onClick={handleClickOpenInputImageAvatar}>Thêm hình</p>
+              </div>
+              {value ? (
+                <img
+                  src={typeof value === 'string' ? value : URL.createObjectURL(value)}
+                  style={{
+                    maxHeight: 300,
+                    maxWidth: '100%',
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                />
+              ) : (
+                <div
+                  onClick={handleClickOpenInputImageAvatar}
+                  style={{ display: 'flex', justifyContent: 'center' }}
+                >
+                  <SvgImage />
+                </div>
+              )}
+              {errors?.image?.message ? (
+                <span className="inputs__err">{errors?.image?.message}</span>
+              ) : null}
+            </FileDropzone>
           )}
-          <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
-        </FileDropzone>
+          rules={{
+            required: {
+              value: true,
+              message: 'Vui lòng chọn ảnh đại diện',
+            },
+          }}
+        />
+
+        <Controller
+          name="images"
+          control={control}
+          render={({ field: { onChange, value, ref } }) => {
+            const setImages = (val) => {
+              const newVal = typeof val === 'function' ? val(value) : val;
+              onChange(newVal);
+            };
+            return (
+              <div style={{ marginTop: 20 }}>
+                <FileDropzone images={value || []} setImages={setImages}>
+                  <div className="create-product__flex">
+                    <b>Hình ảnh chi tiết</b>
+                    <p onClick={handleClickOpenInputImage}>Thêm hình</p>
+                  </div>
+                  {value?.length ? null : (
+                    <div
+                      onClick={handleClickOpenInputImage}
+                      style={{ display: 'flex', justifyContent: 'center' }}
+                    >
+                      <SvgImages />
+                    </div>
+                  )}
+                  <HorizontalMedias images={value || []} setImages={setImages} ref={refImage} />
+                </FileDropzone>
+                {errors?.images?.message ? (
+                  <span className="inputs__err">{errors?.images?.message}</span>
+                ) : null}
+              </div>
+            );
+          }}
+          rules={{
+            required: {
+              value: true,
+              message: 'Vui lòng chọn ảnh chi tiết',
+            },
+          }}
+        />
       </Box>
 
       <Box marginTop={10} title="Loại sản phẩm" zIndex={3}>
@@ -565,7 +650,12 @@ export const SellECommerce = () => {
           />
         </div>
       </Box> */}
-      <Button className="submit-button" onClick={handleSubmit(onSubmit)} width={50} marginLeft="auto">
+      <Button
+        className="submit-button"
+        onClick={handleSubmit(onSubmit)}
+        width={50}
+        marginLeft="auto"
+      >
         Lưu
       </Button>
 

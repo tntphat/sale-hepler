@@ -22,4 +22,8 @@ export const apiSendoProduct = {
     const url = baseUrl + 'search';
     return axiosMain.post(url, params);
   },
+  getLinkProduct: (sku: string) => {
+    const url = baseUrl + sku + '/link';
+    return axiosMain.get(url);
+  },
 };

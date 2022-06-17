@@ -16,11 +16,16 @@ const ItemSidebar: React.FC<{ item: any; handleNavToLink: any }> = ({ item, hand
         onClick={(e) => {
           e.stopPropagation();
           setExtended((pre) => !pre);
-          handleNavToLink(item.link);
         }}
       >
         <>{item.icon({ color: '#1f4173' })}</>
-        <span>{item.title}</span>
+        <span
+          onClick={() => {
+            handleNavToLink(item.link);
+          }}
+        >
+          {item.title}
+        </span>
         {item.children ? (
           <>
             <div>

@@ -6,6 +6,7 @@ export * from './CreateProduct/CreateProduct';
 export * from './SellECommerce/SellECommerce';
 export * from './Connect/Connect';
 export * from './DetailPost/DetailPost';
+export * from './DetailPost/DetailMultiPosts';
 export * from './Login/Login';
 export * from './Register/Register';
 export * from './CreateProduct/CreateProduct';

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SvgCheck } from '../../assets/svg';
+import { SvgCheck, SvgNavigate } from '../../assets/svg';
 import { SvgDots } from '../../assets/svg/SvgDots';
 import {
   Box,
@@ -11,10 +11,16 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
-import { dataHeaderTableProduct } from '../../constants';
+import { COLOR, dataHeaderTableProduct, dataHeaderTableProductCore } from '../../constants';
 import { convertTime, formatCurrency } from '../../helpers';
-import { useDebounce } from '../../hooks';
-import { apiCategory, apiProducts, apiTikiSeller } from '../../services/api';
+import { useDebounce, useModalLoading } from '../../hooks';
+import {
+  apiCategory,
+  apiProducts,
+  apiSendoProduct,
+  apiTikiProduct,
+  apiTikiSeller,
+} from '../../services/api';
 import './Product.scss';
 
 export const Product = () => {
@@ -25,6 +31,7 @@ export const Product = () => {
   const [totalPages, setTotalPages] = useState(1);
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
+  const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
   const handleFetchData = () => {
     apiProducts.getProducts({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
@@ -74,6 +81,23 @@ export const Product = () => {
   };
 
   const memoizedDataTable = useMemo(() => {
+    const handleNavigateECommerceLink = (action, site) => {
+      return (sku) => {
+        handleOpenModalLoading();
+        action(sku)
+          .then((res) => {
+            if (res.data.data.link) window.open(res.data.data.link);
+            else {
+              if (site === 'Tiki') {
+                navigate('/product/tiki/' + res.data.data.id);
+              }
+            }
+          })
+          .finally(() => {
+            handleCloseModalLoading();
+          });
+      };
+    };
     return products.map(
       (
         {
@@ -100,6 +124,36 @@ export const Product = () => {
         type,
         stockAvailable?.reduce((prev, cur) => prev + cur.quantity, 0),
         formatCurrency(exportPrice),
+        stockAvailable?.map((site) => {
+          const color = COLOR[site.ecSite.toUpperCase()];
+          let action: any;
+
+          const cb = () => {
+            switch (site.ecSite) {
+              case 'Facebook':
+                navigate('/product/posts/fb/' + id);
+
+                break;
+
+              case 'Tiki':
+                handleNavigateECommerceLink(apiTikiProduct.getLinkProduct, 'Tiki')(sku);
+                break;
+              case 'Sendo':
+                handleNavigateECommerceLink(apiSendoProduct.getLinkProduct, 'Sendo')(sku);
+            }
+          };
+
+          return (
+            <div
+              key={site._id}
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              onClick={cb}
+            >
+              <SvgNavigate color={color} />
+              <p style={{ color }}>{site.ecSite}</p>
+            </div>
+          );
+        }),
         convertTime(createdAt),
         isAllowSell ? 'Đang bán' : 'Ngừng bán',
         <Dropdown
@@ -127,7 +181,7 @@ export const Product = () => {
   }, [products, selected]);
 
   const memoizedDataHeader = useMemo(() => {
-    const cloneArr = JSON.parse(JSON.stringify(dataHeaderTableProduct));
+    const cloneArr = JSON.parse(JSON.stringify(dataHeaderTableProductCore));
     cloneArr.unshift({
       title: (
         <SvgCheck isActive={selected.length === products.length} onClick={handleClickSelectAll} />
@@ -138,7 +192,6 @@ export const Product = () => {
   }, [selected, products]);
   return (
     <Box>
-      <Button onClick={() => navigate('/create-product')}>Tạo sản phẩm</Button>
       <div className="products__row">
         <SearchText
           placeholder="Tìm kiếm sản phẩm"
@@ -146,12 +199,14 @@ export const Product = () => {
           value={searchText}
           className="products__search-input"
         />
-
-        {selected.length ? (
-          <Button onClick={handleDltItems} className="products__btn-dlt">
-            Xoá
-          </Button>
-        ) : null}
+        <div style={{ display: 'flex', marginLeft: 'auto' }}>
+          {selected.length ? (
+            <Button marginRight={15} onClick={handleDltItems} className="products__btn-dlt">
+              Xoá
+            </Button>
+          ) : null}
+          <Button onClick={() => navigate('/create-product')}>Tạo sản phẩm</Button>
+        </div>
       </div>
       <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />

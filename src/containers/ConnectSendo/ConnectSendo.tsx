@@ -8,6 +8,7 @@ import { apiSendoAuth } from '../../services/api';
 type TypeForm = {
   shop_key: string;
   secret_key: string;
+  shopName: string;
 };
 
 export const ConnectSendo = () => {
@@ -31,6 +32,18 @@ export const ConnectSendo = () => {
   return (
     <Box title="Thông tin">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <InputText
+          label="Tên shop"
+          placeholder="Nhập tên shop"
+          className="sell-ecommerce__field"
+          {...register('shopName', {
+            required: {
+              value: true,
+              message: 'Vui lòng nhập tên shop',
+            },
+          })}
+          error={errors.shopName && errors.shopName.message}
+        />
         <InputText
           label="Mã shop"
           placeholder="Nhập mã shop"

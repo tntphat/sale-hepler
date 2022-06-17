@@ -4,4 +4,24 @@
   p {
     white-space: pre-line;
   }
+  &__header {
+    display: flex;
+    align-items: center;
+    .item {
+      width: fit-content;
+    }
+    & > svg {
+      margin: 0 5px;
+    }
+  }
+  &__groups {
+    p {
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
 }

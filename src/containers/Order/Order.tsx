@@ -76,12 +76,22 @@ export const Order = () => {
   const memoizedDataTable = useMemo(() => {
     return products.map(
       (
-        { products, state, type, name, exportPrice, createdAt, total_payment, id }: IProduct,
+        {
+          products,
+          state,
+          type,
+          name,
+          exportPrice,
+          createdAt,
+          total_payment,
+          id,
+          customer_name,
+        }: any,
         index,
       ) => [
-        <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
+        // <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
         id,
-        'Fat To',
+        customer_name || 'Fat To',
         products.map((prod) => <li key={prod._id}>{prod.product.name}</li>),
         'Facebook',
         total_payment,
@@ -137,7 +147,7 @@ export const Order = () => {
           </Button>
         ) : null}
       </div> */}
-      <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
+      <Table dataHeader={dataHeaderTableOrder} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

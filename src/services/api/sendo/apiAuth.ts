@@ -6,4 +6,8 @@ export const apiSendoAuth = {
     const url = baseUrl + 'connection';
     return axiosMain.post(url, params);
   },
+  getConnection: () => {
+    const url = baseUrl + 'connection';
+    return axiosMain.get(url);
+  },
 };

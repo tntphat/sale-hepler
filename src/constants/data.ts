@@ -9,6 +9,13 @@ import {
   SvgTemplate,
 } from '../assets/svg';
 
+export const COLOR = {
+  PRIMARY: '#003ad2',
+  FACEBOOK: '#0a69e1',
+  TIKI: '#1a94ff',
+  SENDO: '#d9292a',
+};
+
 export const dataSidebar = [
   {
     title: 'Đăng bán',
@@ -101,6 +108,57 @@ export const dataSidebar = [
 ];
 
 export const LIMIT_DATA = 15;
+
+export const dataHeaderTableProductCore = [
+  // {
+  //   title: '',
+  //   width: '50px',
+  // },
+  {
+    title: 'Mã sản phẩm',
+    // width: '80px',
+    width: '13%',
+  },
+  {
+    title: 'Tên Sản phẩm',
+    // minWidth: '300px',
+  },
+  {
+    title: 'Loại',
+    // width: '140px',
+    width: '10%',
+  },
+  {
+    title: 'Số lượng',
+    // width: '60px',
+    width: '8%',
+  },
+  {
+    title: 'Giá',
+    // width: '100px',
+    width: '10%',
+  },
+  {
+    title: 'Sàn',
+    // width: '100px',
+    width: '8%',
+  },
+  {
+    title: 'Ngày tạo',
+    // width: '100px',
+    width: '11%',
+  },
+  {
+    title: 'Trạng thái',
+    // width: '120px',
+    width: '11%',
+  },
+  {
+    title: 'Hành động',
+    // width: '80px',
+    width: '8%',
+  },
+];
 
 export const dataHeaderTableProduct = [
   // {

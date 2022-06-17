@@ -1,5 +1,6 @@
 import React from 'react';
-import { convertTime } from '../../../helpers';
+import { SvgTo } from '../../../assets/svg';
+import { convertTime, handleLinkToFbPost } from '../../../helpers';
 import { AvatarUser, Box } from '../../common';
 import './CardPost.scss';
 
@@ -8,15 +9,18 @@ export const CardPost: React.FC<any> = ({ post }) => {
     <Box
       classname="card-post"
       onClick={() => {
-        const [grId, postId] = post.id.split('_');
-        window.open(`https://www.facebook.com/groups/${grId}/posts/${postId}`, '_blank');
+        handleLinkToFbPost(post.id);
       }}
     >
       <div className="card-post__top">
         {/* <img src="https://cdn.pixabay.com/photo/2022/02/20/09/34/animal-7024072__340.png" /> */}
         <AvatarUser img={post?.from?.picture} />
         <div className="card-post__info">
-          <p className="card-post__name">{post?.from?.name}</p>
+          <div className="card-post__from">
+            <p className="card-post__name">{post?.from?.name}</p>
+            <SvgTo />
+            <p>{post.groupInfo.name}</p>
+          </div>
           <span className="card-post__time">{convertTime(post.updated_time)}</span>
         </div>
       </div>

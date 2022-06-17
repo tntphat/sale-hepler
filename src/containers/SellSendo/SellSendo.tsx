@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { SvgImage } from '../../assets/svg';
+import { SvgImage, SvgImages } from '../../assets/svg';
 import {
   Box,
   DatePickerControl,
@@ -258,7 +258,7 @@ export const SellSendo = () => {
               <div style={{ marginTop: 20 }}>
                 <FileDropzone images={value || []} setImages={setImages}>
                   <div className="create-product__flex">
-                    <p>Hình ảnh</p>
+                    <b>Hình ảnh chi tiết</b>
                     <p onClick={handleClickOpenInputImage}>Thêm hình</p>
                   </div>
                   {value?.length ? null : (
@@ -266,7 +266,7 @@ export const SellSendo = () => {
                       onClick={handleClickOpenInputImage}
                       style={{ display: 'flex', justifyContent: 'center' }}
                     >
-                      <SvgImage />
+                      <SvgImages />
                     </div>
                   )}
                   <HorizontalMedias images={value || []} setImages={setImages} ref={refImage} />
@@ -650,38 +650,41 @@ export const SellSendo = () => {
           </>
         ) : null}
 
-        <Controller
-          name="extended_shipping_package"
-          control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <>
-              {dataExtendedShipping.map((item) => (
-                <CheckBoxControl
-                  isRow
-                  key={item.code}
-                  label={item.title}
-                  onChange={(val) =>
-                    onChange(
-                      (() => {
-                        const clone = value ? JSON.parse(JSON.stringify(value)) : {};
-                        // if(pre)
-                        clone[item.code] = val;
-                        return clone;
-                      })(),
-                    )
-                  }
-                  value={value && value[item.code]}
-                />
-              ))}
-            </>
-          )}
-          rules={{
-            required: {
-              value: true,
-              message: 'Vui lòng chọn đơn vị ',
-            },
-          }}
-        />
+        <div className="form-field">
+          <label style={{ fontWeight: '600', marginLeft: 12 }}>Chọn hình thức giao hàng</label>
+          <Controller
+            name="extended_shipping_package"
+            control={control}
+            render={({ field: { onChange, value, ref } }) => (
+              <>
+                {dataExtendedShipping.map((item) => (
+                  <CheckBoxControl
+                    isRow
+                    key={item.code}
+                    label={item.title}
+                    onChange={(val) =>
+                      onChange(
+                        (() => {
+                          const clone = value ? JSON.parse(JSON.stringify(value)) : {};
+                          // if(pre)
+                          clone[item.code] = val;
+                          return clone;
+                        })(),
+                      )
+                    }
+                    value={value && value[item.code]}
+                  />
+                ))}
+              </>
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: 'Vui lòng chọn đơn vị ',
+              },
+            }}
+          />
+        </div>
       </Box>
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>

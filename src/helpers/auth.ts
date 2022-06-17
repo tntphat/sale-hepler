@@ -57,15 +57,13 @@ export const logout = () => {
 };
 
 export const loadScript = () => {
-  // const appId =
-  //   process.env.NODE_ENV === 'development'
-  //     ? process.env.REACT_APP_FB_APP_TEST_ID
-  //     : process.env.REACT_APP_FB_APP_ID;
-  const appId = process.env.REACT_APP_FB_APP_TEST_ID;
-  console.log(appId);
+  // const appId = process.env.REACT_APP_FB_APP_TEST_ID;
+  const appId = '568775388147691';
 
   // Fb
   window.fbAsyncInit = function () {
+    console.log('HIHIHIHI');
+
     window.FB.init({
       appId,
       cookie: true,
@@ -90,7 +88,6 @@ export const loadScript = () => {
 export async function loginFb(callback: any) {
   const authResponse = await new Promise((resolve, reject) =>
     window.FB.login(function (response) {
-      console.log(response, 'res');
       if (response.status === 'connected') {
         FB.api('/me?fields=id,email,name,picture.width(720).height(720)', function (data) {
           resolve({ data, accessToken: response.authResponse.accessToken });
@@ -99,7 +96,6 @@ export async function loginFb(callback: any) {
     }),
   );
   callback(authResponse);
-  // console.log(authResponse);
   if (!authResponse) return;
 }
 
