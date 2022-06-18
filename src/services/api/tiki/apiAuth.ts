@@ -6,4 +6,8 @@ export const apiTikiAuth = {
     const url = baseUrl + 'connection';
     return axiosMain.post(url, { code });
   },
+  getConnection: () => {
+    const url = baseUrl + 'connection';
+    return axiosMain.get(url);
+  },
 };

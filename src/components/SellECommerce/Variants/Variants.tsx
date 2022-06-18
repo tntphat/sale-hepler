@@ -25,10 +25,6 @@ const VariantItem = ({
   };
 
   useEffect(() => {
-    console.log('hahaha', variant.warehouse_stocks);
-  }, [variant.warehouse_stocks]);
-
-  useEffect(() => {
     if (!options?.length) {
       const clone = [...allVariants];
       for (let i = 1; i < 10; ++i) {
@@ -107,20 +103,8 @@ export const Variants: React.FC<any> = ({ options, value, onChange }) => {
       setWarehouses(res.data.data);
     });
   }, []);
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
 
   useEffect(() => {
-    console.log(
-      value?.map((variant) => ({
-        ...variant,
-        inventory_type: inventoryType?.inventory_type,
-        seller_warehouse: sellerWareHouses.map((item) => item.id).join(','),
-        warehouse_stocks: sellerWareHouses.map((item) => ({ ...item, warehouseId: item.id })),
-      })),
-    );
-
     onChange(
       value?.map((variant) => ({
         ...variant,

@@ -27,6 +27,7 @@ import {
   ManagePostSendo,
   SellCommon,
   ReportPost,
+  DetailMultiPost,
 } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
@@ -37,6 +38,7 @@ import { Sell } from '../containers/Sell/Sell';
 import { dataSidebarBuyer } from '../constants';
 import { BuyerHome } from '../containers/Buyer';
 import { Interact } from '../containers/Interact';
+import GA from './GA';
 import { ConnectFacebookPage } from '../containers/ConnectFacebookPage/ConnectFacebookPage';
 
 export const Routers = () => {
@@ -44,6 +46,7 @@ export const Routers = () => {
 
   return (
     <Router>
+      <GA />
       <Routes>
         <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
         <Route path="/auth" element={<PublicRouter component={Login} layout={BlankLayout} />} />
@@ -128,6 +131,10 @@ export const Routers = () => {
         <Route
           path="/post/:id"
           element={<PrivateRouter component={DetailPost} layout={SidebarLayout} />}
+        />
+        <Route
+          path="/product/posts/fb/:id"
+          element={<PrivateRouter component={DetailMultiPost} layout={SidebarLayout} />}
         />
         <Route
           path="/report"

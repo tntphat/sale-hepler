@@ -81,12 +81,12 @@ export const ManagePostFb = () => {
 
   const memoizedDataTable = useMemo(() => {
     return products.map(({ content, createdAt, groups, images, id, product }: any, index) => [
-      <SvgCheck
-        isActive={selected.includes(id)}
-        key={id}
-        // onClick={() => {console.log('oh no')}}
-        onClick={handleSelectItem(id)}
-      />,
+      // <SvgCheck
+      //   isActive={selected.includes(id)}
+      //   key={id}
+      //   // onClick={() => {console.log('oh no')}}
+      //   onClick={handleSelectItem(id)}
+      // />,
       id,
       <p key={id} className="products__content">
         {content}
@@ -143,7 +143,7 @@ export const ManagePostFb = () => {
           </Button>
         ) : null} */}
       </div>
-      <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
+      <Table dataHeader={dataHeaderTableManagePost} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

@@ -98,12 +98,12 @@ export const ManagePostTiki = () => {
         }: any,
         index,
       ) => [
-        <SvgCheck
-          isActive={selected.includes(id)}
-          key={sku}
-          // onClick={() => {console.log('oh no')}}
-          onClick={handleSelectItem(id)}
-        />,
+        // <SvgCheck
+        //   isActive={selected.includes(id)}
+        //   key={sku}
+        //   // onClick={() => {console.log('oh no')}}
+        //   onClick={handleSelectItem(id)}
+        // />,
         id,
         name,
         category_name || 'Loại sản pẩm',
@@ -155,13 +155,13 @@ export const ManagePostTiki = () => {
           className="products__search-input"
         />
 
-        {selected.length ? (
+        {/* {selected.length ? (
           <Button onClick={handleDltItems} className="products__btn-dlt">
             Xoá
           </Button>
-        ) : null}
+        ) : null} */}
       </div>
-      <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
+      <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

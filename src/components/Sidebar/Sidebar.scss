@@ -16,6 +16,9 @@
     padding-right: 20px;
     & > span {
       margin-left: 15px;
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
     & > div {

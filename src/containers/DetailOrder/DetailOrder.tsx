@@ -25,6 +25,7 @@ export const DetailOrder = () => {
     product_total,
     note,
     delivery_total,
+    customer_name,
   } = detailOrder || {};
   if (!detailOrder) return <Loader />;
   return (
@@ -74,11 +75,13 @@ export const DetailOrder = () => {
           </Button>
         </div>
       </Box>
-      <Box marginTop={20} title="Địa chỉ giao hàng">
-        <p>Nguyễn Thanh hải</p>
-        <p>01234567678</p>
-        <p>227 Nguyễn Văn cừ phường 7 quận 05</p>
-      </Box>
+      {customer && (
+        <Box marginTop={20} title="Địa chỉ giao hàng">
+          <p>{customer_name}</p>
+          <p>{customer.phoneNumber}</p>
+          <p>{customer.detailAddress}</p>
+        </Box>
+      )}
     </div>
   );
 };

@@ -12,7 +12,7 @@ import {
 import './CreateProduct.scss';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
-import { SvgImage } from '../../assets/svg';
+import { SvgImage, SvgImages } from '../../assets/svg';
 import { apiProducts } from '../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { dataBranch, dataCategory, dataUnit, dataUnitDimension } from '../../constants';
@@ -512,7 +512,7 @@ export const CreateProduct = () => {
                   <div style={{ marginTop: 20 }}>
                     <FileDropzone images={value || []} setImages={setImages}>
                       <div className="create-product__flex">
-                        <p>Hình ảnh</p>
+                        <b>Hình ảnh chi tiết</b>
                         <p onClick={handleClickOpenInputImage}>Thêm hình</p>
                       </div>
                       {value?.length ? null : (
@@ -520,7 +520,7 @@ export const CreateProduct = () => {
                           onClick={handleClickOpenInputImage}
                           style={{ display: 'flex', justifyContent: 'center' }}
                         >
-                          <SvgImage />
+                          <SvgImages />
                         </div>
                       )}
                       <HorizontalMedias images={value || []} setImages={setImages} ref={refImage} />

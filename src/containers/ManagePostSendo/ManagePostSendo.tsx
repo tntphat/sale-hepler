@@ -102,7 +102,7 @@ export const ManagePostSendo = () => {
         }: any,
         index,
       ) => [
-        <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
+        // <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
         id,
         name,
         category_4_name || 'Loại sản pẩm',
@@ -160,7 +160,7 @@ export const ManagePostSendo = () => {
           </Button>
         ) : null}
       </div>
-      <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
+      <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

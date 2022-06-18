@@ -54,19 +54,19 @@ const DropdownSelectTiki: React.FC<any> = ({
           label={display_name}
           data={options}
           titleProp="value"
-          placeholder={'Chọn loại' + display_name}
+          placeholder={'Chọn loại ' + display_name}
           onChange={onChange}
           value={value}
           error={errors[code]?.message}
           fetchData={fetchData}
         />
       )}
-      // rules={{
-      //   required: {
-      //     value: true,
-      //     message: 'Vui lòng chọn loại thương hiệu',
-      //   },
-      // }}
+      rules={{
+        required: {
+          value: true,
+          message: 'Vui lòng chọn loại ' + display_name,
+        },
+      }}
     />
   );
 };

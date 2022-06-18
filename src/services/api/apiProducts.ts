@@ -31,4 +31,8 @@ export const apiProducts = {
     const url = baseUrl + _id;
     return axiosMain.patch(url, prod);
   },
+  getPostsProduct: (params: string) => {
+    const url = baseUrl + params + '/posts';
+    return axiosMain.get(url);
+  },
 };

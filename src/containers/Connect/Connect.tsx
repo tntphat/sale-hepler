@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SvgStore } from '../../assets/svg';
 import { SvgPlusRound } from '../../assets/svg/SvgPlusRound';
 import { Box } from '../../components/common';
 import { BoxChannel, BoxStatistics } from '../../components/Connect';
 import { loadScript, loginFb } from '../../helpers';
 import { useAppSelector } from '../../redux';
+import { apiSendoAuth } from '../../services/api';
+import { apiTikiAuth } from '../../services/api/tiki/apiAuth';
 import './Connect.scss';
 
 const ID_APP_TIKI = process.env.APP_ID_TIKI;
@@ -22,11 +25,16 @@ const LINK = `https://api.tiki.vn/sc/oauth2/auth?response_type=code&client_id=${
 export const Connect = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.authSlice);
-  const cb = (data: any) => {
-    console.log(data.accessToken);
-  };
+  const [connectedTiki, setConnectedTiki] = useState(false);
+  const [connectedSendo, setConnectedSendo] = useState();
   useEffect(() => {
     loadScript();
+    apiTikiAuth.getConnection().then((res) => {
+      setConnectedTiki(res.data.data);
+    });
+    apiSendoAuth.getConnection().then((res) => {
+      setConnectedSendo(res.data.data);
+    });
   }, []);
 
   const handleLoginTiki = () => {
@@ -66,13 +74,37 @@ export const Connect = () => {
               </>
             ) : null} */}
           </div>
-          <div className="sell-common__text sell-common__text--tiki" onClick={handleLoginTiki}>
-            <SvgPlusRound className="connect__add" />
+          <div
+            className={`sell-common__text sell-common__text--tiki ${
+              connectedTiki ? 'sell-common__text--disabled' : ''
+            }`}
+            onClick={false ? () => false : handleLoginTiki}
+          >
             Tiki
+            {connectedTiki ? (
+              <>
+                <SvgStore color="#1a94ff" />
+                {connectedTiki.shopName}
+              </>
+            ) : (
+              <SvgPlusRound className="connect__add" color="#1a94ff" />
+            )}
           </div>
-          <div className="sell-common__text sell-common__text--sendo" onClick={handleLoginSendo}>
-            <SvgPlusRound className="connect__add" color="#d9292a" />
+          <div
+            className={`sell-common__text sell-common__text--sendo ${
+              connectedSendo ? 'sell-common__text--disabled' : ''
+            }`}
+            onClick={false ? () => false : handleLoginSendo}
+          >
             Sendo
+            {connectedSendo ? (
+              <>
+                <SvgStore color="#d9292a" />
+                {connectedSendo.shopName}
+              </>
+            ) : (
+              <SvgPlusRound className="connect__add" color="#d9292a" />
+            )}
           </div>
         </div>
       </Box>
