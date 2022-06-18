@@ -46,6 +46,8 @@ export * from './SvgTemplate';
 export * from './SvgHome';
 export * from './SvgGroups';
 export * from './SvgMessage';
+export * from './SvgDot';
+export * from './SvgSample';
 export * from './SvgStore';
 export * from './SvgNavigate';
 export * from './SvgTo';

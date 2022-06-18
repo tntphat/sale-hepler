@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '../../../redux';
-import { apiOrder } from '../../../services/api';
+import { apiMessages, apiOrder } from '../../../services/api';
 import { Button, InputText } from '../../common';
 import { ModalForm } from '../../common/Modal';
 import { Product } from '../Product/Product';
@@ -17,12 +17,27 @@ export const Order = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
   const [note, setNote] = useState<string>('');
-
+  const [isHasAddress, setIsHasAddress] = useState<boolean>(true);
   const onChangeNote = (e: any) => {
     setNote(e.target.value);
   };
 
-  const handleSubmit2 = () => {
+  const getUserAddresses = async () => {
+    const info = await apiMessages.getCustomerInfo(selectedChat);
+    const address = info?.data.data.customerInfo.detailAddress;
+    console.log('aaa', address);
+    if (!address) {
+      setIsHasAddress(false);
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    const address = await getUserAddresses();
+    if (!address) {
+      return;
+    }
     const userId = chatUserDetails.id;
     let total_price = 0;
     const productList = selectedProducts.map((item: any) => {
@@ -55,6 +70,37 @@ export const Order = ({
     setIsOpen(false);
   };
 
+  const handleIncrease = (item: any) => {
+    let tmpProducts = [...selectedProducts];
+    tmpProducts = tmpProducts.map((pro) => {
+      return item._id === pro.product._id
+        ? {
+            ...pro,
+            quantity: pro.quantity + 1,
+          }
+        : pro;
+    });
+    setSelectedProducts(tmpProducts);
+  };
+  const handleDecrease = (item: any) => {
+    let tmpProducts = [...selectedProducts];
+    const pro = tmpProducts.find((p) => p.product.id === item.id);
+    if (pro.quantity === 1) {
+      tmpProducts = tmpProducts.filter((p) => p.product.id !== item.id);
+      setSelectedProducts(tmpProducts);
+    } else {
+      tmpProducts = tmpProducts.map((pro) => {
+        return item._id === pro.product._id
+          ? {
+              ...pro,
+              quantity: pro.quantity - 1,
+            }
+          : pro;
+      });
+      setSelectedProducts(tmpProducts);
+    }
+  };
+
   return (
     <>
       <div className="order__product">
@@ -72,13 +118,24 @@ export const Order = ({
         {selectedProducts.length > 0 ? (
           <>
             {selectedProducts.map((item: any, id: any) => {
-              return <Product product={item.product} quantity={item.quantity} key={id} />;
+              return (
+                <Product
+                  product={item.product}
+                  quantity={item.quantity}
+                  key={id}
+                  handleIncrease={handleIncrease}
+                  handleDecrease={handleDecrease}
+                />
+              );
             })}
             <div className="order__note">
               <InputText onChange={onChangeNote} value={note} placeholder="Ghi chú" />
             </div>
+            <p className="order__warning" hidden={isHasAddress}>
+              Vui lòng cập nhật thông tin khách hàng
+            </p>
             <div className="order__button">
-              <Button onClick={handleSubmit2} className="button-right">
+              <Button onClick={handleSubmit} className="button-right">
                 Tạo đơn hàng
               </Button>
             </div>

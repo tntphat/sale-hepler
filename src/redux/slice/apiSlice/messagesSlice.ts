@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { apiMessages } from '../../../services/api';
 
 interface IParamMessageContent {
@@ -7,9 +7,25 @@ interface IParamMessageContent {
   messageAttachment?: any[];
 }
 
+interface ChatState {
+  directMessages: any;
+  selectedChat: any;
+  chatUserDetails: any;
+  myInfo: any;
+  chatUserConversations: any;
+  isOpenUserDetails: boolean;
+  error: any;
+  unSeen: boolean;
+  isMessageSent: boolean;
+  loading: boolean;
+  loadingSetting: boolean;
+  loadingMessage: boolean;
+  loadingConversation: boolean;
+}
+
 export const getAllConversations = createAsyncThunk(
   'chat/getAllConversations',
-  async (pageId: number) => {
+  async (pageId: number | string) => {
     return apiMessages.getAllConversations(pageId);
   },
 );
@@ -28,22 +44,6 @@ export const sendMessage = createAsyncThunk(
   },
 );
 
-interface ChatState {
-  directMessages: any;
-  selectedChat: any;
-  chatUserDetails: any;
-  myInfo: any;
-  chatUserConversations: any;
-  isOpenUserDetails: boolean;
-  error: any;
-  isRead: boolean;
-  isMessageSent: boolean;
-  loading: boolean;
-  loadingSetting: boolean;
-  loadingMessage: boolean;
-  loadingConversation: boolean;
-}
-
 const initialState: ChatState = {
   directMessages: [],
   selectedChat: null,
@@ -52,7 +52,7 @@ const initialState: ChatState = {
   chatUserConversations: {},
   isOpenUserDetails: false,
   error: null,
-  isRead: false,
+  unSeen: false,
   isMessageSent: false,
   loading: false,
   loadingSetting: false,
@@ -66,11 +66,11 @@ const messagesSlice = createSlice({
   reducers: {
     changeSelectedChat: (state, action) => {
       state.selectedChat = action.payload;
-      const selectedConversation = state.directMessages?.data.find(
+      const selectedConversation = state.directMessages?.data?.find(
         (conversation: any) => conversation.id === state.selectedChat,
       );
-      const paticipants = selectedConversation.participants.data;
-      state.chatUserDetails = paticipants.find((paticipant: any) => {
+      const paticipants = selectedConversation?.participants?.data;
+      state.chatUserDetails = paticipants?.find((paticipant: any) => {
         return paticipant.id != state.myInfo.id;
       });
     },
@@ -86,50 +86,23 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllConversations.fulfilled, (state, action) => {
-      console.log('getall done');
-
       state.directMessages = action.payload?.data;
-      state.myInfo = state.directMessages?.data[0].participants?.data[1];
-      if (!state.selectedChat) {
-        state.selectedChat = state.directMessages?.data[0].id;
-        const selectedConversation = state.directMessages?.data.find(
-          (conversation: any) => conversation.id === state.selectedChat,
-        );
-        const paticipants = selectedConversation.participants.data;
-        state.chatUserDetails = paticipants.find((paticipant: any) => {
-          return paticipant.id != state.myInfo.id;
-        });
-        getChatUserConversations(state.directMessages?.data[0].id);
-      }
+      state.myInfo = state.directMessages?.data[0]?.participants?.data[1];
       state.loading = false;
+      state.unSeen = state.directMessages.data.some((directMessage: any) => {
+        directMessage.isRead === false;
+      });
     });
-    // builder.addCase(getAllConversations.rejected, (state, action) => {
-    //   const error = action.error;
-    //   state.error = error;
-    // });
     builder.addCase(getAllConversations.pending, (state, action) => {
-      console.log('get all pending');
-
       state.loading = true;
     });
     builder.addCase(getChatUserConversations.fulfilled, (state, action) => {
-      console.log('user conver done');
-
       state.chatUserConversations = action.payload?.data;
-      // state.loadingConversation = false;
-    });
-    builder.addCase(getChatUserConversations.pending, (state, action) => {
-      console.log('user cnver pending done');
-
-      // state.loadingConversation = true;
     });
     builder.addCase(sendMessage.fulfilled, (state, action) => {
-      console.log('send done');
       state.isMessageSent = true;
     });
     builder.addCase(sendMessage.pending, (state, action) => {
-      console.log('send pending');
-
       state.isMessageSent = false;
     });
   },

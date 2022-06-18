@@ -6,9 +6,11 @@ import './Product.scss';
 interface IProduct {
   product: any;
   quantity: number;
+  handleIncrease: any;
+  handleDecrease: any;
 }
 
-export const Product = ({ product, quantity }: IProduct) => {
+export const Product = ({ product, quantity, handleIncrease, handleDecrease }: IProduct) => {
   return (
     <div className="product">
       <div className="product__image">
@@ -24,9 +26,13 @@ export const Product = ({ product, quantity }: IProduct) => {
       </div>
 
       <div className="product__qty-wrapper">
-        <SvgIncrease />
+        <div onClick={() => handleIncrease(product)}>
+          <SvgIncrease />
+        </div>
         <span className="product__qty">{quantity}</span>
-        <SvgDecrease />
+        <div onClick={() => handleDecrease(product)}>
+          <SvgDecrease />
+        </div>
       </div>
     </div>
   );

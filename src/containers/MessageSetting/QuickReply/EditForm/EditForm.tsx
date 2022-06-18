@@ -45,7 +45,7 @@ export const EditForm = ({
 
   const handleSubmitTag = (e: any): void => {
     if (e.key === 'Enter') {
-      setEditTags((pre: any) => [...pre, inputTagValue]);
+      setEditTags((pre: any) => [...pre, inputTagValue.trim()]);
       setInputTagValue('');
     }
   };

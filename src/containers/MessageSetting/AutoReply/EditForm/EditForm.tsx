@@ -48,7 +48,7 @@ export const EditForm = ({
 
   const handleSubmitTag = (e: any): void => {
     if (e.key === 'Enter') {
-      setEditKeyword((pre: any) => [...pre, inputTagValue]);
+      setEditKeyword((pre: any) => [...pre, inputTagValue.trim()]);
       setInputTagValue('');
     }
   };
@@ -72,7 +72,6 @@ export const EditForm = ({
       pageId: pageId,
       mappings: selectedAutoReplies,
     };
-    console.log(payload);
 
     dispatch(toggleLoading());
     await apiMessages.updateAutoReply(collectionAutoReply._id, payload);
