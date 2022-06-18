@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { dataSidebarBuyer } from '../../../constants';
 import { logout } from '../../../helpers';
 import { useAppSelector } from '../../../redux';
-import { Box } from '../../common';
+import { AvatarUser, Box } from '../../common';
 import './SidebarBuyer.scss';
 
 const ItemSidebar: React.FC<{ item: any; handleNavToLink: any }> = ({ item, handleNavToLink }) => {
@@ -41,7 +41,7 @@ export const SidebarBuyer = () => {
     <div className="sidebar-buyer">
       <Box classname="sidebar-top">
         <p>Facebook Account</p>
-        <img src="https://cdn.pixabay.com/photo/2017/08/07/16/36/cat-2605502__340.jpg" />
+        <AvatarUser img={user?.picture} />
         <p>{user?.name}</p>
         <span onClick={logout}>Log out</span>
       </Box>

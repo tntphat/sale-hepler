@@ -71,6 +71,7 @@ interface ISearchText {
   value?: string;
   className?: string;
   placeholder?: string;
+  onKeyPress?: any;
 }
 
 interface IDivider {

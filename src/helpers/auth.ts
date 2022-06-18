@@ -57,8 +57,7 @@ export const logout = () => {
 };
 
 export const loadScript = () => {
-  // const appId = process.env.REACT_APP_FB_APP_TEST_ID;
-  const appId = '568775388147691';
+  const appId = process.env.REACT_APP_FB_APP_TEST_ID;
 
   // Fb
   window.fbAsyncInit = function () {

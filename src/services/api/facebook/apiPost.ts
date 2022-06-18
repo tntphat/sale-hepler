@@ -7,7 +7,7 @@ export const apiFbPosts = {
     const url = baseUrl + 'all/' + param;
     return axiosMain.get(url);
   },
-  getInterestedPosts: (params: { groupId: string; keyword: string }) => {
+  getInterestedPosts: (params: { groupId?: string; keyword: string }) => {
     const url = baseUrl + 'interested-posts';
     return axiosMain.get(url + objToQuery(params));
   },

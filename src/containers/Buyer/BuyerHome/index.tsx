@@ -24,12 +24,34 @@ export const BuyerHome = () => {
 
   useEffect(() => {
     setIsLoadingNf(true);
-    apiFbPosts
-      .getInterestedPosts({ keyword: listKw.map((kw) => kw.content).join(',') })
-      .then((res) => {
-        setPosts(res.data.data.posts);
-        setIsLoadingNf(false);
+    const controller = new AbortController();
+    const task = new Promise((resolve, reject) => {
+      controller.signal.addEventListener('abort', () => {
+        reject();
       });
+      apiFbPosts
+        .getInterestedPosts({
+          keyword: listKw.map((kw) => kw.content).join(','),
+        })
+        .then((res) => {
+          resolve(res.data.data.posts);
+        });
+    }).then((res) => {
+      setPosts(res);
+      setIsLoadingNf(false);
+    });
+
+    // const pm: any = apiFbPosts.getInterestedPosts({
+    //   keyword: listKw.map((kw) => kw.content).join(','),
+    // })
+    // pm.then((res) => {
+    //   setPosts(res.data.data.posts);
+    //   setIsLoadingNf(false);
+    // });
+
+    return () => {
+      controller.abort();
+    };
   }, [listKw]);
 
   const handleDltKw = (id) => {
@@ -37,7 +59,7 @@ export const BuyerHome = () => {
     apiFavoriteKeywords
       .deleteKeyword(id)
       .then((res) => {
-        const ind = listKw.findIndex((kw) => kw.id === id);
+        const ind = listKw.findIndex((kw) => kw._id === id);
         listKw.splice(ind, 1);
         setListKw([...listKw]);
       })
@@ -45,15 +67,6 @@ export const BuyerHome = () => {
         handleCloseModalLoading();
       });
   };
-
-  useEffect(() => {
-    if (inputText.trim() === '') setInputText('');
-    if (inputText.includes(' ') && inputText.trim() !== '') {
-      handleAddItem(inputText.trim());
-      // setHashtags([...hashtags, currentText.trim()]);
-      setInputText('');
-    }
-  }, [inputText]);
 
   const handleAddItem = (text) => {
     const ind = listKw.findIndex((kw) => kw.content.toLowerCase() === text.toLowerCase());
@@ -71,16 +84,27 @@ export const BuyerHome = () => {
       });
   };
 
+  const onKeyPress = (e) => {
+    if (e.code === 'Enter' && inputText) {
+      handleAddItem(inputText.trim());
+      setInputText('');
+    }
+  };
+
   return (
     <div className="buyer-home">
       <div>
         {isLoadingNf ? <Loader /> : posts.map((post) => <CardPost key={post.id} post={post} />)}
       </div>
       <Box title="Tìm kiếm">
-        <SearchText value={inputText} onChange={(e) => setInputText(e.target.value)} />
+        <SearchText
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          onKeyPress={onKeyPress}
+        />
         <div className="buyer-home__chips-container">
           {listKw.map((kw) => (
-            <Chip text={kw.content} key={kw.id} onClick={() => handleDltKw(kw._id)} />
+            <Chip text={kw.content} key={kw._id} onClick={() => handleDltKw(kw._id)} />
           ))}
         </div>
       </Box>

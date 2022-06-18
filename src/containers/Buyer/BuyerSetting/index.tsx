@@ -9,7 +9,6 @@ export const BuyerSetting = () => {
   const [listKw, setListKw] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isOnNoti, setIsOnNoti] = useState(true);
-  const dbText = useDebounce(inputText, 300);
   const { handleCloseModalLoading, handleOpenModalLoading } = useModalLoading();
 
   useEffect(() => {
@@ -17,15 +16,6 @@ export const BuyerSetting = () => {
       setListKw(res.data.data.keywords);
     });
   }, []);
-
-  useEffect(() => {
-    if (dbText.trim() === '') setInputText('');
-    if (dbText.includes(' ') && dbText.trim() !== '') {
-      handleAddItem(dbText.trim());
-      // setHashtags([...hashtags, currentText.trim()]);
-      setInputText('');
-    }
-  }, [dbText]);
 
   const handleAddItem = (text) => {
     const ind = listKw.findIndex((kw) => kw.content.toLowerCase() === text.toLowerCase());
@@ -57,6 +47,13 @@ export const BuyerSetting = () => {
       });
   };
 
+  const onKeyPress = (e) => {
+    if (e.code === 'Enter' && inputText) {
+      handleAddItem(inputText.trim());
+      setInputText('');
+    }
+  };
+
   return (
     <Box title="Cài đặt" maxWidth={650}>
       <CheckBoxControl
@@ -75,6 +72,7 @@ export const BuyerSetting = () => {
           value={inputText}
           placeholder={listKw.length ? 'Keyword' : 'Nhập Keyword'}
           onChange={(e) => setInputText(e.target.value)}
+          onKeyPress={onKeyPress}
         />
       </div>
     </Box>
