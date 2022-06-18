@@ -14,7 +14,7 @@ export const ConversationUser = () => {
       <UserHead chatUserDetails={chatUserDetails} />
       <Conversation
         chatUserConversations={chatUserConversations}
-        chatUserDetails={chatUserDetails}
+        // chatUserDetails={chatUserDetails}
       />
       <ChatInput chatUserDetails={chatUserDetails} />
     </div>

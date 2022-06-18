@@ -45,3 +45,5 @@ export * from './SvgTemplate';
 export * from './SvgHome';
 export * from './SvgGroups';
 export * from './SvgMessage';
+export * from './SvgDot';
+export * from './SvgSample';

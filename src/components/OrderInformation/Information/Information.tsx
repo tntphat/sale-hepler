@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useLocation } from '../../../hooks';
 import { useAppSelector } from '../../../redux';
 import { apiMessages } from '../../../services/api';
-import { DropdownSelect, InputText } from '../../common';
-import { Modal, ModalForm } from '../../common/Modal';
+import { InputText } from '../../common';
+import { ModalForm } from '../../common/Modal';
 import './Information.scss';
 export const Information = () => {
   const {

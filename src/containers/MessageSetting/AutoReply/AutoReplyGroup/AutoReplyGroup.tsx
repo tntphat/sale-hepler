@@ -65,7 +65,7 @@ export const AutoReplyGroup = ({ autoReplies, autoReply }: IAutoReplyGroup) => {
 
   const handleSubmitTag = (e: any): void => {
     if (e.key === 'Enter') {
-      setTags((pre) => [...pre, inputTagValue]);
+      setTags((pre) => [...pre, inputTagValue.trim()]);
       setInputTagValue('');
     }
   };
@@ -102,8 +102,6 @@ export const AutoReplyGroup = ({ autoReplies, autoReply }: IAutoReplyGroup) => {
     setIsOpenEditModal(false);
     const { title } = data;
     const payload = { ...autoReply, name: title };
-
-    console.log(payload);
 
     dispatch(toggleLoading());
     await apiMessages.updateAutoReply(autoReply._id, payload);

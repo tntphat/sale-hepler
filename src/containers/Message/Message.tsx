@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-
+import React from 'react';
 import { Box } from '../../components/common/Box/Box';
 import { ModalLoading } from '../../components/common/Modal';
 import { Scrollbar } from '../../components/common/Srollbar/Scrollbar';
@@ -10,13 +9,10 @@ import { useAppSelector } from '../../redux';
 import './Message.scss';
 
 export const Message = () => {
-  const { selectedChat, loading, loadingMessage } = useAppSelector((state) => state.messagesSlice);
+  const { selectedChat, loading } = useAppSelector((state) => state.messagesSlice);
 
   return (
     <Box classname="d-flex message-wrapper">
-      {/* {loadingMessage ? (
-        <ModalLoading isSmall={true} isOpen={false} isBlue={true} />
-      ) : ( */}
       <>
         <Leftbar />
         {selectedChat !== null ? (
@@ -29,11 +25,6 @@ export const Message = () => {
 
         <OrderInformation />
       </>
-      {/* )} */}
     </Box>
   );
 };
-
-{
-  /* <ConversationUser /> */
-}

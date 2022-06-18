@@ -28,17 +28,13 @@ export const AutoReply = () => {
     setIsOpenAddReplyTitleModal(false);
     const { title } = data;
     const payload = {
-      pageId: pageId,
+      pageId: 110681441599820,
       name: title,
       mappings: [],
     };
     dispatch(toggleLoading());
-    console.log(loadingSetting);
-
     await apiMessages.addAutoReply(payload);
     dispatch(toggleLoading());
-    console.log(loadingSetting);
-
     reset({ title: '' });
   };
 

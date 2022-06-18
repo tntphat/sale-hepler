@@ -85,6 +85,9 @@ export const OrderDetail = ({ order, stateList, isChanged, setIsChanged }: IProd
             </div>
           );
         })}
+        <div className="order-detail__note">
+          <p>Ghi chú: {order.note}</p>
+        </div>
         <div className="order-detail__action">
           <div>
             <span>Tổng tiền: </span>

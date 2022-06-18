@@ -38,7 +38,7 @@ export const QuickReply = () => {
 
   const handleSubmitTag = (e: any): void => {
     if (e.key === 'Enter') {
-      setTags((pre) => [...pre, inputTagValue]);
+      setTags((pre) => [...pre, inputTagValue.trim()]);
       setInputTagValue('');
     }
   };
@@ -76,6 +76,7 @@ export const QuickReply = () => {
     };
     reset({ name: '', text: '' });
     setTags([]);
+    setInputTagValue('');
   };
 
   useEffect(() => {
@@ -116,16 +117,16 @@ export const QuickReply = () => {
                 id="name"
                 placeholder="Tiêu đề tin nhắn"
                 {...register('name', {
-                  required: {
-                    value: true,
-                    message: 'Nhập tiêu đề tin nhắn mẫu',
-                  },
+                  // required: {
+                  // value: true,
+                  // message: 'Nhập tiêu đề tin nhắn mẫu',
+                  // },
                 })}
                 error={errors.name?.type === 'required' && errors.name.message}
               />
               <InputText
                 id="text"
-                placeholder="Nội dung tin nhắn mẫu"
+                placeholder="Nội dung tin nhắn mẫu (*)"
                 {...register('text', {
                   required: {
                     value: true,

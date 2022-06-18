@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { SvgSearch, SvgSetting } from '../../assets/svg';
+import { SvgDot, SvgSearch, SvgSetting } from '../../assets/svg';
 import { useAppSelector } from '../../redux';
 import { Conversations } from './Conversations/Conversations';
 import {
@@ -14,10 +14,11 @@ import {
 } from '../../redux/slice/apiSlice/messagesSlice';
 import './Leftbar.scss';
 import { Scrollbar } from '../common/Srollbar/Scrollbar';
+import { apiMessages } from '../../services/api';
 
 export const Leftbar = () => {
   const dispatch = useDispatch();
-  const { directMessages, selectedChat } = useAppSelector((state) => state.messagesSlice);
+  const { directMessages, selectedChat, unSeen } = useAppSelector((state) => state.messagesSlice);
   const { pageId } = useAppSelector((state) => state.pageSlice);
   const { data } = directMessages;
   const socket = io('https://social-sales-helper.herokuapp.com/');
@@ -26,12 +27,20 @@ export const Leftbar = () => {
     dispatch(getAllConversations(pageId));
   }, []);
 
+  useEffect(() => {
+    let allConversations: any[] = [];
+    apiMessages.getAllConversations(pageId).then((res) => {
+      allConversations = [...res.data.data];
+      const firstConversation = allConversations[0]?.id;
+      dispatch(changeSelectedChat(firstConversation));
+    });
+  }, []);
+
   const onSelectChat = (id: string | number) => {
     const selectChat = async () => {
       dispatch(changeSelectedChat(id));
       dispatch(toggleLoadingConversation());
       await dispatch(getChatUserConversations(id));
-      console.log(directMessages);
       dispatch(toggleLoadingConversation());
     };
 
@@ -40,15 +49,18 @@ export const Leftbar = () => {
 
   useEffect(() => {
     socket.on('get message', (data) => {
-      dispatch(getAllConversations());
+      dispatch(getAllConversations(pageId));
     });
-  }, [socket]);
+  }, []);
 
   return (
     <div className="left-bar">
       <div className="search-box">
         <div className="search-box__header">
-          <h4 className="search-box__title ">Hộp thư</h4>
+          <div className="search-box__title-wrapper">
+            <h4 className="search-box__title ">Hộp thư</h4>
+            {unSeen ? <SvgDot /> : <></>}
+          </div>
           <Link to="/interact/messenger-setting">
             <SvgSetting />
           </Link>

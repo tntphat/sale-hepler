@@ -23,43 +23,57 @@
   .unread-msg-user {
     font-weight: 600;
   }
-}
 
-.chat-item {
-  display: flex;
-  align-items: center;
-  &__img {
-    align-self: center;
-    padding-left: 4px;
-    margin-right: 2px;
-    position: relative;
+  .chat-item {
     display: flex;
-    // width: 100%;
-
-    .user-status {
-      width: 10px;
-      height: 10px;
-      background-color: rgb(209, 209, 209);
-      border-radius: 50%;
-      border: 2px solid white;
-      position: absolute;
-      right: 0;
-      left: auto;
-      bottom: 0;
+    align-items: center;
+    justify-content: space-between;
+    &__info {
+      display: flex;
+      align-items: center;
     }
-    &.online {
+    &__img {
+      align-self: center;
+      padding-left: 4px;
+      margin-right: 2px;
+      position: relative;
+      display: flex;
+      // width: 100%;
+
       .user-status {
-        background-color: #5ad539;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(209, 209, 209);
+        border-radius: 50%;
+        border: 2px solid white;
+        position: absolute;
+        right: 0;
+        left: auto;
+        bottom: 0;
+      }
+      &.online {
+        .user-status {
+          background-color: #5ad539;
+        }
       }
     }
-  }
-  &__fullname {
-    overflow: hidden;
-    font-size: 0.8rem;
-    & > p {
-      white-space: nowrap;
+    &__fullname {
       overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.8rem;
+      & > p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      &--bold {
+        font-weight: 500;
+      }
+    }
+    &__unread-sign {
+      display: flex;
+      &--hide {
+        display: none;
+      }
     }
   }
 }

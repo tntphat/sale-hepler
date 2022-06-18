@@ -9,7 +9,7 @@ interface IParamMessageContent {
 
 const baseUrl = 'facebook/messages/';
 export const apiMessages = {
-  getAllConversations: (pageId: number) => {
+  getAllConversations: (pageId: number | string) => {
     const url = baseUrl + 'allConversations/' + pageId;
     return axiosMain.get(url);
   },
@@ -35,6 +35,10 @@ export const apiMessages = {
   },
   addQuickReply: (data: any) => {
     const url = 'facebook/quickReplies/addNew';
+    return axiosMain.post(url, data);
+  },
+  sendQuickReply: (data: any) => {
+    const url = 'facebook/quickReplies/sendMessage';
     return axiosMain.post(url, data);
   },
   getAutoReply: (pageId: number | string) => {

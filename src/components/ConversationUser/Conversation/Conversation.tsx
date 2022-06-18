@@ -10,12 +10,12 @@ import { ModalLoading } from '../../common/Modal';
 import './Conversation.scss';
 interface ConversationProps {
   chatUserConversations: any;
-  chatUserDetails: any;
+  // chatUserDetails: any;
 }
 
-export const Conversation = ({ chatUserConversations, chatUserDetails }: ConversationProps) => {
+export const Conversation = ({ chatUserConversations }: ConversationProps) => {
   const dispatch = useDispatch();
-  const { isMessageSent, selectedChat, loadingConversation } = useAppSelector(
+  const { isMessageSent, selectedChat, loadingConversation, chatUserDetails } = useAppSelector(
     (state) => state.messagesSlice,
   );
   const { myInfo } = useAppSelector((state) => state.messagesSlice);
@@ -37,9 +37,11 @@ export const Conversation = ({ chatUserConversations, chatUserDetails }: Convers
 
   useEffect(() => {
     socket.on('get message', (data) => {
-      dispatch(getChatUserConversations(selectedChat));
+      if (data.recipientId === chatUserDetails.id || data.senderId === chatUserDetails.id) {
+        dispatch(getChatUserConversations(selectedChat));
+      }
     });
-  }, [socket]);
+  }, [chatUserDetails.id]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView();

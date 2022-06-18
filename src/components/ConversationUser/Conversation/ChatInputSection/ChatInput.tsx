@@ -1,10 +1,6 @@
-import { IEmojiData } from 'emoji-picker-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../../../redux';
-import { sendMessage } from '../../../../redux/slice/apiSlice/messagesSlice';
+import { IEmojiData } from 'emoji-picker-react';
 import { apiMessages } from '../../../../services/api';
-
 import { EndButtons } from '../EndButton/EndButtons';
 import { InputSection } from '../InputSection/InputSection';
 import { StartButtons } from '../StartButtons/StartButtons';
@@ -17,7 +13,6 @@ interface ChatInputProps {
 export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
   const refText = useRef<HTMLInputElement | any>(null);
   const refImage = useRef<HTMLInputElement | any>(null);
-
   const [text, setText] = useState<string>('');
   const [images, setImages] = useState<any>([]);
   const [cursorPos, setCursorPos] = useState('');
@@ -34,13 +29,6 @@ export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
   };
 
   const handleSend = () => {
-    // dispatch(
-    //   sendMessage({
-    //     receiverId: chatUserDetails.id,
-    //     messageText: text,
-    //     messageAttachment: images,
-    //   }),
-    // );
     setImages([]);
     setText('');
     const payload = {
