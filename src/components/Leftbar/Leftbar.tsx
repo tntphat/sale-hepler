@@ -21,7 +21,9 @@ export const Leftbar = () => {
   const { directMessages, selectedChat, unSeen } = useAppSelector((state) => state.messagesSlice);
   const { pageId } = useAppSelector((state) => state.pageSlice);
   const { data } = directMessages;
-  const socket = io('https://social-sales-helper.herokuapp.com/');
+  const baseURL =
+    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
+  const socket = io(baseURL);
 
   useEffect(() => {
     dispatch(getAllConversations(pageId));

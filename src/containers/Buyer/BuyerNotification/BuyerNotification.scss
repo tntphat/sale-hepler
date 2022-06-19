@@ -1,15 +1,14 @@
 .noti {
   display: flex;
   padding: 4px 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
   &--active {
-    background-color: #bcd9ff;
+    background-color: #d0e4ff;
   }
   img {
     width: 60px;
     height: 60px;
-    border-radius: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
   }
   &__detail {
     margin-left: 10px;
@@ -20,5 +19,18 @@
     b {
       color: #000000;
     }
+  }
+  &__mark-read {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    color: #216fdb;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    background-color: #eaf3fe;
+    cursor: pointer;
   }
 }

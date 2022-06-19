@@ -7,7 +7,10 @@
 
   &__item {
     margin-top: 20px;
+    display: flex;
+    align-items: center;
   }
+
   &__link {
     cursor: pointer;
     display: flex;
@@ -74,6 +77,13 @@
       font-weight: 500;
       color: #0062ff;
       cursor: pointer;
+    }
+  }
+
+  &__unseen {
+    svg {
+      width: 8px;
+      height: 8px;
     }
   }
 }
