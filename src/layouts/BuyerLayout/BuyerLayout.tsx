@@ -28,7 +28,6 @@ export const BuyerLayout: React.FC<ISidebarLayout> = ({ children, header, sideba
   const receiveNotifications = useCallback(() => {
     if (user.id) {
       socket.on('interesting post', (data) => {
-        console.log(data);
         if (data.userId === user.id && data.posts[0]) {
           const noti = data.posts;
           const poster = noti[0].from?.name || '';

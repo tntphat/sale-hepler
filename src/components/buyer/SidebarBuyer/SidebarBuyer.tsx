@@ -19,11 +19,9 @@ const ItemSidebar: React.FC<{ item: any; handleNavToLink: any; noti: any }> = ({
   useEffect(() => {
     apiBuyerNotification.getAllNotifications().then((res) => {
       const notifications = res.data.data.notifications;
-      console.log('noticcc: ', notifications);
       const isUnSeen = notifications.some((notification: any) => {
         return notification.isRead === false;
       });
-      console.log('isUnSeen: ', isUnSeen);
       isUnSeen && setUnSeen(true);
     });
   }, [noti]);
