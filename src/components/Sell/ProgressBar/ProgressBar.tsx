@@ -1,9 +1,14 @@
 import React from 'react';
 import './ProgressBar.scss';
 
-const data = ['Chọn sản phẩm', 'Chọn bài đăng', 'Viết bài đăng'];
+const dataDefault = ['Chọn sản phẩm', 'Chọn nhóm', 'Viết bài đăng'];
 
-export const ProgressBar: React.FC<IProgressBar> = ({ step, setStep, isDisabled }) => {
+export const ProgressBar: React.FC<IProgressBar> = ({
+  step,
+  setStep,
+  isDisabled,
+  data = dataDefault,
+}) => {
   return (
     <div className="progress-bar">
       {data.map((item, index) => {

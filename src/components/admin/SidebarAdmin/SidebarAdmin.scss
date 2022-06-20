@@ -1,0 +1,79 @@
+@import '../../../assets/scss/variables';
+
+.sidebar-admin {
+  width: 250px;
+  color: rgba($color: #1f4173, $alpha: 0.5);
+  font-weight: bold;
+
+  &__item {
+    margin-top: 20px;
+  }
+  &__link {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    padding-left: 20px;
+    padding-right: 20px;
+    & > span {
+      margin-left: 15px;
+    }
+
+    & > div {
+      transition: all 0.1s linear;
+      margin-left: auto;
+      &:hover {
+        path {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+
+  .active {
+    color: $primary-color;
+    position: relative;
+    &::before {
+      position: absolute;
+      content: '';
+      display: block;
+      left: 0;
+      width: 6px;
+      top: 0;
+      bottom: 0;
+      background-color: $primary-color;
+    }
+    svg {
+      path {
+        fill: $primary-color !important;
+      }
+    }
+    svg[isStroke='true'] {
+      path {
+        stroke: $primary-color !important;
+        fill: unset !important;
+      }
+    }
+  }
+
+  .sidebar-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p {
+      text-align: center;
+    }
+    img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 10px 0;
+    }
+    span {
+      font-weight: 500;
+      color: #0062ff;
+      cursor: pointer;
+    }
+  }
+}

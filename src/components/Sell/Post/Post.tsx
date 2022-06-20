@@ -26,10 +26,11 @@ type TypePost = {
   handlePost: (value: { text: string; image: any }) => void;
   selectedGroups: IResGroup[];
   setSelectedGroups: React.Dispatch<React.SetStateAction<Array<IResGroup>>>;
-  handleTest: (value: { text: string; image: any }) => void;
+  product?: any;
+  isBuyer?: boolean;
 };
 
-export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTest, product }) => {
+export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, product, isBuyer }) => {
   const refArea = useRef<HTMLTextAreaElement | any>(null);
   const [value, setValue] = useState('');
   const refImage = useRef<HTMLInputElement | any>(null);
@@ -81,9 +82,11 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
             setValue={setValue}
           />
         </Modal>
-        <Button className="post__btn-template" onClick={() => setOpenTemplates(true)}>
-          Chọn bài đăng mẫu
-        </Button>
+        {!isBuyer && (
+          <Button className="post__btn-template" onClick={() => setOpenTemplates(true)}>
+            Chọn bài đăng mẫu
+          </Button>
+        )}
         <Item image={user.picture} subName={user.name} width={50} />
 
         <TextArea ref={refArea} value={value} onChange={handleChange} />
@@ -103,22 +106,18 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, handleTes
           <div>
             {selectedGroups.map((item) => (
               <Box key={item.id}>
-                <Item
-                  image="https://cdn.pixabay.com/photo/2022/02/14/02/39/animal-7012354__340.jpg"
-                  name={item.name}
-                  isOval
-                />
+                <Item image={item.picture?.data?.url} name={item.name} isOval />
               </Box>
             ))}
           </div>
         </div>
       </Box>
 
-      <Box classname="post__select-group" title="Chọn nhóm">
-        <ListNetWork className="list-favorite-gr" title="Nhóm yêu thích" hideTickAll />
+      <Box classname="post__select-group" title="Đăng bài">
+        {/* <ListNetWork className="list-favorite-gr" title="Nhóm yêu thích" hideTickAll />
 
         <Divider margin="10px -18px 20px" />
-        <ListNetWork className="list-favorite-gr" title="Nhóm yêu thích" hideTickAll />
+        <ListNetWork className="list-favorite-gr" title="Nhóm yêu thích" hideTickAll /> */}
 
         <div className="post__row">
           <Button

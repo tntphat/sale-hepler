@@ -11,6 +11,10 @@
   border-radius: 10px;
   justify-content: center;
   cursor: pointer;
+  &--secondary {
+    background-color: #bbddff;
+    color: #1677d9;
+  }
   &--right {
     margin-left: auto;
     margin-right: 0;

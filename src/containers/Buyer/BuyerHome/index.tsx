@@ -17,6 +17,7 @@ export const BuyerHome = () => {
   const [isLoadingNf, setIsLoadingNf] = useState(false);
 
   useEffect(() => {
+    if (listKw.length) return;
     apiFavoriteKeywords.getListKeyword(1).then((res) => {
       setListKw(res.data.data.keywords);
     });

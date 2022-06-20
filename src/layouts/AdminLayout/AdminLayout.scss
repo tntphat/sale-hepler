@@ -1,0 +1,41 @@
+$height-header: 70px;
+
+.admin-layout {
+  width: 100%;
+  // max-width: $screen-width;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  &__header {
+    height: $height-header;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    background-color: #fff;
+    z-index: 999;
+  }
+
+  &__left {
+    z-index: 2;
+    position: fixed;
+    min-height: 100vh;
+    background-color: white;
+  }
+
+  &__container {
+    background-color: #e5e5e5;
+    display: flex;
+    width: 100%;
+    margin-top: $height-header;
+    flex: 1;
+  }
+  &__center {
+    flex: 1;
+    // margin-left: 24px;
+    background-color: #e5e5e5;
+    padding: 0 20px;
+    margin-left: 250px;
+    margin-top: 20px;
+  }
+}

@@ -38,7 +38,7 @@ export const BuyerSetting = () => {
     apiFavoriteKeywords
       .deleteKeyword(id)
       .then((res) => {
-        const ind = listKw.findIndex((kw) => kw.id === id);
+        const ind = listKw.findIndex((kw) => kw._id === id);
         listKw.splice(ind, 1);
         setListKw([...listKw]);
       })
@@ -64,7 +64,7 @@ export const BuyerSetting = () => {
       />
       <div className="chips-container">
         {listKw.map((kw) => (
-          <Chip text={kw.content} key={kw.id} onClick={() => handleDltKw(kw.id)} />
+          <Chip text={kw.content} key={kw.id} onClick={() => handleDltKw(kw._id)} />
         ))}
         <input
           type="text"

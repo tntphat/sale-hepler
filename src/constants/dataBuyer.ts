@@ -1,5 +1,11 @@
 import { SvgBell, SvgGroups, SvgHome, SvgPost, SvgSetting } from '../assets/svg';
-import { BuyerHome, BuyerNotification, BuyerSetting } from '../containers/Buyer';
+import {
+  BuyerGroups,
+  BuyerHome,
+  BuyerNotification,
+  BuyerPost,
+  BuyerSetting,
+} from '../containers/Buyer';
 
 export const dataSidebarBuyer = [
   {
@@ -24,10 +30,12 @@ export const dataSidebarBuyer = [
     title: 'Quản lý nhóm',
     link: '/groups',
     icon: SvgGroups,
+    cpn: BuyerGroups,
   },
   {
     title: 'Đăng bài',
     link: '/post',
     icon: SvgPost,
+    cpn: BuyerPost,
   },
 ];

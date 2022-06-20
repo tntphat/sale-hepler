@@ -19,6 +19,7 @@ interface IProgressBar {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   className?: string;
   isDisabled?: boolean;
+  data?: string[];
 }
 
 interface IModal {
@@ -26,6 +27,7 @@ interface IModal {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   isSmall?: boolean;
   isBlue?: boolean;
+  className?: string;
 }
 
 interface IModalForm {
@@ -54,16 +56,12 @@ interface IItem extends IAvatar {
 }
 
 interface IButton extends React.CSSProperties {
-  width?: string | number;
-  height?: string | number;
   size?: 's' | 'm' | 'l';
   color?: string;
-  backgroundColor?: string;
-  borderRadius?: string;
-  fontSize?: string | number;
   onClick?: (e?: React.MouseEvent) => void;
   className?: string;
   isDisabled?: boolean;
+  isSecondary?: boolean;
 }
 
 interface ISearchText {

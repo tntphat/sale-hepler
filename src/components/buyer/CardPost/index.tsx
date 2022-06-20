@@ -1,7 +1,13 @@
 import React from 'react';
 import { SvgTo } from '../../../assets/svg';
-import { convertTime, handleLinkToFbPost } from '../../../helpers';
+import {
+  convertFullTime,
+  convertTime,
+  fromNowTranslation,
+  handleLinkToFbPost,
+} from '../../../helpers';
 import { AvatarUser, Box } from '../../common';
+import moment from 'moment';
 import './CardPost.scss';
 
 export const CardPost: React.FC<any> = ({ post }) => {
@@ -21,7 +27,9 @@ export const CardPost: React.FC<any> = ({ post }) => {
             <SvgTo />
             <p>{post.groupInfo.name}</p>
           </div>
-          <span className="card-post__time">{convertTime(post.updated_time)}</span>
+          <span className="card-post__time">
+            {fromNowTranslation(moment(post.updated_time), moment(new Date()))}
+          </span>
         </div>
       </div>
       <p className="card-post__content">{post.message}</p>

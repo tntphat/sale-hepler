@@ -1,0 +1,139 @@
+/*---------------------------------------------*/
+a {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+
+a:focus {
+  outline: none !important;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+button {
+  outline: none !important;
+  border: none;
+  background: transparent;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/*---------------------------------------------*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.login {
+  width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-left: 50px;
+  padding-right: 55px;
+  padding: 65px 55px 54px 50px;
+}
+
+.form {
+  width: 100%;
+  &__title {
+    display: block;
+    font-size: 39px;
+    color: #333333;
+    line-height: 1.2;
+    text-align: center;
+    padding-bottom: 48px;
+  }
+  &__forgot-password {
+    text-align: right;
+    padding-top: 8px;
+    padding-bottom: 31px;
+  }
+  &__button {
+    padding-top: 31px;
+    .wrap-form-btn {
+      width: 100%;
+      display: block;
+      position: relative;
+      z-index: 1;
+      border-radius: 25px;
+      overflow: hidden;
+      margin: 0 auto;
+      box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+    }
+    .form-bgbtn {
+      position: absolute;
+      z-index: -1;
+      width: 300%;
+      height: 100%;
+      background: -webkit-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+      background: linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+      top: 0;
+      left: -100%;
+
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .form-btn {
+      font-size: 16px;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 50px;
+    }
+  }
+  &__selection {
+    padding-top: 31px;
+    padding-bottom: 23px;
+    text-align: center;
+  }
+  &__social-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__item {
+      padding: 0 10px;
+    }
+  }
+}
+
+.warning {
+  font-size: 14px;
+  color: #721c24;
+}

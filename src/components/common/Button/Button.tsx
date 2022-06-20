@@ -7,12 +7,15 @@ export const Button: React.FC<IButton> = ({
   onClick,
   isDisabled,
   className,
+  isSecondary,
   ...props
 }) => {
   return (
     <div
       onClick={isDisabled ? () => false : onClick}
-      className={`button ${isDisabled ? 'button--disabled' : ''} ${className || ''}`}
+      className={`button ${isDisabled ? 'button--disabled' : ''} ${className || ''} ${
+        isSecondary ? 'button--secondary' : ''
+      } ${className || ''}`}
       style={{ ...props }}
     >
       {children}

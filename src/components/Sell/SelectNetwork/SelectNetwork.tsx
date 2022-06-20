@@ -46,7 +46,7 @@ export const ListNetWork: React.FC<IListNetwork> = ({
         {optionsGroups?.map((item) => (
           <Item
             className="network__item"
-            image="https://cdn.pixabay.com/photo/2019/08/19/07/45/dog-4415649__340.jpg"
+            image={item.picture?.data?.url}
             name={item.name}
             //   subName="accountshopee1"
             icon={

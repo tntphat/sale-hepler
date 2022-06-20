@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { formatCurrency } from '../../../helpers';
 import { useDebounce } from '../../../hooks';
 import { apiProducts } from '../../../services/api';
 import { Button, Pagination, SearchText, Table } from '../../common';
@@ -123,7 +124,7 @@ export const TableProduct: React.FC<any> = ({ setProduct, setIsOpen, setStep }) 
         sku,
         name,
         type,
-        exportPrice,
+        formatCurrency(exportPrice),
         <Button
           onClick={() => {
             setIsOpen(false);

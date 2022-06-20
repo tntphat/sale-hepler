@@ -1,3 +1,4 @@
+import moment from 'moment';
 export const getParameterByName = (name: string, url = window.location.href) => {
   name = name.replace(/[\[\]]/g, '\\$&');
   const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -14,7 +15,19 @@ export const convertTime = (time: string) => {
 
 export const convertFullTime = (time: string) => {
   const newTime = new Date(time);
-  return newTime.getHours() +':' + newTime.getMinutes() + ':' + newTime.getSeconds() + " " +  newTime.getDate() + '/' + (newTime.getMonth() + 1) + '/' + newTime.getFullYear();
+  return (
+    newTime.getHours() +
+    ':' +
+    newTime.getMinutes() +
+    ':' +
+    newTime.getSeconds() +
+    ' ' +
+    newTime.getDate() +
+    '/' +
+    (newTime.getMonth() + 1) +
+    '/' +
+    newTime.getFullYear()
+  );
 };
 
 export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: string) => {
@@ -43,7 +56,42 @@ export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: str
   }
 };
 
-export const formatCurrency =(number: any)=>{
+export const formatCurrency = (number: any) => {
   if (!number) return '0';
   return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-}
+};
+
+export const fromNowTranslation = (date = moment().fromNow(), now: any) => {
+  const result = moment(date).from(moment(now));
+
+  let output = date.format('DD/MM/YYYY HH:mm');
+  if (result.indexOf('a few seconds') >= 0 || result.indexOf('in a minute') >= 0) {
+    output = 'Vừa đăng';
+  }
+
+  if (result.indexOf('a minute ago') >= 0) output = result.replace('a minute ago', '1 phút trước');
+
+  if (result.indexOf('minutes ago') >= 0) output = result.replace('minutes ago', 'phút trước');
+
+  if (result.indexOf('an hour ago') >= 0) output = result.replace('an hour ago', '1 giờ trước');
+
+  if (result.indexOf('hours ago') >= 0) output = result.replace('hours ago', 'giờ trước');
+
+  if (result.indexOf('a day ago') >= 0) output = result.replace('a day ago', 'hôm qua');
+
+  // if (result.indexOf('days ago') >= 0) output = result.replace('days ago', 'ngày trước');
+
+  // if (result.indexOf('a month ago') >= 0) output = result.replace('a month ago', '1 tháng trước');
+
+  // if (result.indexOf('months ago') >= 0) output = result.replace('months ago', 'tháng trước');
+
+  // if (result.indexOf('a year ago') >= 0) output = result.replace('a year ago', '1 năm trước');
+
+  // if (result.indexOf('years ago') >= 0) output = result.replace('years ago', 'năm trước');
+
+  return capitalizeFirstLetter(output);
+};
+
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

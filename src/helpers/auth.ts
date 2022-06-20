@@ -5,7 +5,6 @@ export const setCookie = (day: number, value?: string, key?: string, domain?: st
   const time = now.getTime();
   const expireTime = time + day * 86400 * 1000;
   now.setTime(expireTime);
-  console.log('domain: ', domain);
 
   let domainString;
   if (domain) {

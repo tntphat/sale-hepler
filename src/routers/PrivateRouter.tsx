@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, Route } from 'react-router-dom';
-import { LOCAL_TOKEN } from '../constants';
+import { LOCAL_TOKEN, LOCAL_TOKEN_ADMIN } from '../constants';
 import { readCookie } from '../helpers';
 import { doGetUserInfo, getConnectedPage, useAppDispatch } from '../redux';
 import { apiAuth } from '../services/api';
@@ -10,9 +10,10 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   component: Component,
   layout: Layout,
   title,
+  isAdmin,
 }) => {
   const dispatch = useAppDispatch();
-  const token = readCookie(LOCAL_TOKEN);
+  const token = readCookie(isAdmin ? LOCAL_TOKEN_ADMIN : LOCAL_TOKEN);
   useEffect(() => {
     if (token)
       // apiAuth.getUserInfo().then(console.log);
@@ -27,6 +28,6 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
       <Component />
     </Layout>
   ) : (
-    <Navigate to="/auth" />
+    <Navigate to={isAdmin ? '/admin' : '/auth'} />
   );
 };

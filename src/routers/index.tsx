@@ -35,12 +35,13 @@ import { BlankLayout, BuyerLayout, SidebarLayout } from '../layouts';
 import { Sidebar } from '../components/Sidebar/Sidebar';
 import { PublicRouter } from './PublicRouter';
 import { Sell } from '../containers/Sell/Sell';
-import { dataSidebarBuyer } from '../constants';
+import { dataSidebarAdmin, dataSidebarBuyer } from '../constants';
 import { BuyerHome } from '../containers/Buyer';
 import { Interact } from '../containers/Interact';
 import GA from './GA';
 import { ConnectFacebookPage } from '../containers/ConnectFacebookPage/ConnectFacebookPage';
-
+import { AdminLogin } from '../containers/Admin';
+import { AdminLayout } from '../layouts/AdminLayout/AdminLayout';
 export const Routers = () => {
   // const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
 
@@ -246,6 +247,17 @@ export const Routers = () => {
             element={<PrivateRouter component={item.cpn || BuyerHome} layout={BuyerLayout} />}
           />
         ))}
+        {dataSidebarAdmin.map((item) => (
+          <Route
+            key={item.link}
+            path={'/admin' + item.link}
+            element={<PrivateRouter component={item.cpn} layout={AdminLayout} isAdmin />}
+          />
+        ))}
+        <Route
+          path={'/admin'}
+          element={<PublicRouter component={AdminLogin} layout={BlankLayout} isAdmin />}
+        />
       </Routes>
     </Router>
   );
