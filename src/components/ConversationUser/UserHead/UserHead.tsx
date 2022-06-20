@@ -14,7 +14,7 @@ export const UserHead = ({ chatUserDetails }: UserHeadProps) => {
       <div className="chat-header__info">
         <UserInfo chatUserDetails={chatUserDetails} />
       </div>
-      <div className="chat-header__action">
+      {/* <div className="chat-header__action">
         <ul className="chat-header__item-list list-inline user-chat-nav text-end mb-0">
           <li className="chat-header__item">
             <SvgReport />
@@ -29,7 +29,7 @@ export const UserHead = ({ chatUserDetails }: UserHeadProps) => {
             <SvgMarkDone />
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

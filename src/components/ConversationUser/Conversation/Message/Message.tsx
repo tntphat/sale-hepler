@@ -10,7 +10,7 @@ interface MessageProps {
 
 export const Message = ({ message, chatUserDetails, myInfo }: MessageProps) => {
   const isFromMe = message?.from?.id === myInfo?.id;
-  const receiverAvatar = chatUserDetails.data?.url;
+  const receiverAvatar = chatUserDetails?.data?.url;
 
   return (
     <>

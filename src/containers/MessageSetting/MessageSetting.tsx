@@ -13,7 +13,7 @@ export const MessageSetting = () => {
       <Box>
         <div className="message-setting__header">
           <h4>Cài đặt hộp thư</h4>
-          <Link to="/interact/messenger">
+          <Link to="/messenger">
             <SvgMessage />
           </Link>
         </div>

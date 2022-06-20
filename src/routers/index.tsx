@@ -31,13 +31,11 @@ import {
 } from '../containers';
 import { PrivateRouter } from './PrivateRouter';
 // import { PublicRouter } from "./PublicRouter";
-import { BlankLayout, BuyerLayout, SidebarLayout } from '../layouts';
-import { Sidebar } from '../components/Sidebar/Sidebar';
+import { BlankLayout, BuyerLayout, HeaderLayout, SidebarLayout } from '../layouts';
 import { PublicRouter } from './PublicRouter';
 import { Sell } from '../containers/Sell/Sell';
 import { dataSidebarBuyer } from '../constants';
 import { BuyerHome } from '../containers/Buyer';
-import { Interact } from '../containers/Interact';
 import GA from './GA';
 import { ConnectFacebookPage } from '../containers/ConnectFacebookPage/ConnectFacebookPage';
 
@@ -48,7 +46,7 @@ export const Routers = () => {
     <Router>
       <GA />
       <Routes>
-        <Route path="/" element={<PrivateRouter component={Home} layout={SidebarLayout} />} />
+        <Route path="/" element={<PrivateRouter component={Home} layout={HeaderLayout} />} />
         <Route path="/auth" element={<PublicRouter component={Login} layout={BlankLayout} />} />
         <Route
           path="/register"
@@ -201,15 +199,11 @@ export const Routers = () => {
           element={<PrivateRouter component={AuthTiki} layout={BlankLayout} />}
         />
         <Route
-          path="/interact"
-          element={<PrivateRouter component={Interact} layout={SidebarLayout} />}
-        />
-        <Route
-          path="/interact/messenger"
+          path="/messenger"
           element={<PrivateRouter component={Message} layout={SidebarLayout} />}
         />
         <Route
-          path="/interact/messenger-setting"
+          path="/messenger-setting"
           element={<PrivateRouter component={MessageSetting} layout={SidebarLayout} />}
         />
         <Route

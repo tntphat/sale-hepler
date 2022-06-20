@@ -13,6 +13,9 @@ export const BuyerLayout: React.FC<ISidebarLayout> = ({ children, header, sideba
   const sidebars = sidebar ?? <SidebarBuyer noti={noti} />;
   const headers = header ?? <Header />;
   let toastProperties: any = null;
+  const baseURL =
+    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
+  const socket = io(baseURL);
 
   const showToast = (title: string, description: string) => {
     toastProperties = {
@@ -22,9 +25,7 @@ export const BuyerLayout: React.FC<ISidebarLayout> = ({ children, header, sideba
     };
     setList((pre) => [...pre, toastProperties]);
   };
-  const baseURL =
-    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
-  const socket = io(baseURL);
+
   const receiveNotifications = useCallback(() => {
     if (user.id) {
       socket.on('interesting post', (data) => {
@@ -38,6 +39,9 @@ export const BuyerLayout: React.FC<ISidebarLayout> = ({ children, header, sideba
           setNoti(data);
         }
       });
+      return () => {
+        socket.off('interesting post');
+      };
     }
   }, [user.id]);
 

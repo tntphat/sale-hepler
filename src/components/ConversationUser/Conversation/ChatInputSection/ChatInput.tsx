@@ -32,7 +32,7 @@ export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
     setImages([]);
     setText('');
     const payload = {
-      receiverId: chatUserDetails.id,
+      receiverId: chatUserDetails?.id,
       messageText: text,
       messageAttachment: images,
     };
@@ -45,17 +45,17 @@ export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
 
   return (
     <div className="chat-input">
-      <form
-        className="chat-input__form"
-        onSubmit={(e: any) => {
-          e.preventDefault();
-          handleSend();
-        }}
-      >
-        <div className="chat-input__content row g-0 align-items-center">
-          <div className="col-auto">
-            <StartButtons refImage={refImage} refText={refText} onClickEmoji={handleClickEmoji} />
-          </div>
+      <div className="chat-input__content row g-0 align-items-center">
+        <div className="col-auto">
+          <StartButtons refImage={refImage} refText={refText} onClickEmoji={handleClickEmoji} />
+        </div>
+        <form
+          className="chat-input__form"
+          onSubmit={(e: any) => {
+            e.preventDefault();
+            handleSend();
+          }}
+        >
           <div className="chat-input__input col">
             <InputSection
               refImage={refImage}
@@ -69,8 +69,8 @@ export const ChatInput = ({ chatUserDetails }: ChatInputProps) => {
           <div className="chat-input__button col-auto">
             <EndButtons />
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

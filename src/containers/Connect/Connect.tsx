@@ -4,9 +4,9 @@ import { SvgStore } from '../../assets/svg';
 import { SvgPlusRound } from '../../assets/svg/SvgPlusRound';
 import { Box } from '../../components/common';
 import { BoxChannel, BoxStatistics } from '../../components/Connect';
-import { loadScript, loginFb } from '../../helpers';
+import { loadScript, login, loginFb } from '../../helpers';
 import { useAppSelector } from '../../redux';
-import { apiSendoAuth } from '../../services/api';
+import { apiFbAuth, apiSendoAuth } from '../../services/api';
 import { apiTikiAuth } from '../../services/api/tiki/apiAuth';
 import './Connect.scss';
 
@@ -37,6 +37,13 @@ export const Connect = () => {
     });
   }, []);
 
+  const cb = (data: any) => {
+    apiFbAuth.login(data.accessToken).then((res) => {
+      login(res.data.data.token);
+      window.location.reload();
+    });
+  };
+
   const handleLoginTiki = () => {
     window.location.href = LINK;
   };
@@ -49,8 +56,10 @@ export const Connect = () => {
   };
 
   const handleConnectPage = () => {
-    loginFb(cb);
     if (user?.fbId) {
+      navigate('/connect/facebook-page');
+    } else {
+      loginFb(cb);
       navigate('/connect/facebook-page');
     }
   };

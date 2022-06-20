@@ -37,19 +37,9 @@ export const dataSidebar = [
     ],
   },
   {
-    title: 'Tương tác',
-    link: '/interact',
+    title: 'Tin nhắn',
+    link: '/messenger',
     icon: SvgInteract,
-    children: [
-      {
-        title: 'Tin nhắn',
-        link: '/messenger',
-      },
-      {
-        title: 'Bình luận',
-        link: '/comment',
-      },
-    ],
   },
   {
     title: 'Báo cáo',
