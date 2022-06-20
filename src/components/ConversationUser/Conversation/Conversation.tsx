@@ -18,10 +18,13 @@ export const Conversation = ({ chatUserConversations }: ConversationProps) => {
   const { isMessageSent, selectedChat, loadingConversation, chatUserDetails } = useAppSelector(
     (state) => state.messagesSlice,
   );
+  const { pageId } = useAppSelector((state) => state.pageSlice);
   const { myInfo } = useAppSelector((state) => state.messagesSlice);
   const [messages, setMessages] = useState<any>([]);
   const scrollRef = useRef<HTMLDivElement | any>(null);
-  const socket = io('https://social-sales-helper.herokuapp.com/');
+  const baseURL =
+    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
+  const socket = io(baseURL);
 
   useEffect(() => {
     dispatch(getChatUserConversations(selectedChat));
@@ -36,12 +39,20 @@ export const Conversation = ({ chatUserConversations }: ConversationProps) => {
   }, [chatUserConversations.data]);
 
   useEffect(() => {
-    socket.on('get message', (data) => {
-      if (data.recipientId === chatUserDetails.id || data.senderId === chatUserDetails.id) {
-        dispatch(getChatUserConversations(selectedChat));
-      }
-    });
-  }, [chatUserDetails.id]);
+    if (pageId) {
+      socket.on('get message', (data) => {
+        if (
+          (data.recipientId === pageId && data.senderId === chatUserDetails?.id) ||
+          data.recipientId === chatUserDetails?.id
+        ) {
+          dispatch(getChatUserConversations(selectedChat));
+        }
+      });
+      return () => {
+        socket.off('get message');
+      };
+    }
+  }, [chatUserDetails?.id, pageId]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView();

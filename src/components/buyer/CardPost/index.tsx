@@ -19,7 +19,6 @@ export const CardPost: React.FC<any> = ({ post }) => {
       }}
     >
       <div className="card-post__top">
-        {/* <img src="https://cdn.pixabay.com/photo/2022/02/20/09/34/animal-7024072__340.png" /> */}
         <AvatarUser img={post?.from?.picture} />
         <div className="card-post__info">
           <div className="card-post__from">
@@ -33,11 +32,17 @@ export const CardPost: React.FC<any> = ({ post }) => {
         </div>
       </div>
       <p className="card-post__content">{post.message}</p>
-      {post.link ? <img src={post.link} /> : null}
+      {/* {post.link ? <img src={post.link} /> : null} */}
+      {post.media.length === 1 ? (
+        <img src={post.media[0].src} />
+      ) : post.media.length > 1 ? (
+        <div className="card-post__photo">
+          <img className="photo" src={post.media[0].src} />
+          <p>+{post.media.length - 1}</p>
+        </div>
+      ) : null}
       <div className="card-post__actions">
-        <p>Like</p>
-        <p>Comment</p>
-        <p>Share</p>
+        <p>Xem chi tiết</p>
       </div>
     </Box>
   );

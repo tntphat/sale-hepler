@@ -32,7 +32,7 @@ export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
       apiOrder.getOrders().then((response) => {
         let orders = response.data.data;
         orders = orders.filter((order: any) => {
-          return order.customer_fb_id === chatUserDetails.id;
+          return order.customer_fb_id === chatUserDetails?.id;
         });
         setOrderList(orders.reverse());
       });

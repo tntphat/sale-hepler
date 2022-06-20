@@ -1,0 +1,30 @@
+.notification {
+  &__box {
+    position: fixed;
+    z-index: 999;
+    width: 250px;
+    bottom: 44px;
+    left: 20px;
+    background-color: #e7f3ff;
+    p {
+      display: -webkit-box;
+      width: 230px;
+      -webkit-line-clamp: 4;
+      height: 70px;
+      -webkit-box-orient: vertical;
+      padding-right: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+    }
+    svg {
+      margin-bottom: 2px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__close {
+    float: right;
+  }
+}

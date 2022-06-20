@@ -25,7 +25,6 @@ export const Order = ({
   const getUserAddresses = async () => {
     const info = await apiMessages.getCustomerInfo(selectedChat);
     const address = info?.data.data.customerInfo.detailAddress;
-    console.log('aaa', address);
     if (!address) {
       setIsHasAddress(false);
       return false;

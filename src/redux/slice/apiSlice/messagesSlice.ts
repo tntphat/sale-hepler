@@ -33,16 +33,17 @@ export const getAllConversations = createAsyncThunk(
 export const getChatUserConversations = createAsyncThunk(
   'chat/getChatUserConversations',
   async (threadId: number | string) => {
-    return apiMessages.getConversationDetail(threadId);
+    const conversations = await apiMessages.getConversationDetail(threadId);
+    return {
+      data: conversations,
+      param: threadId,
+    };
   },
 );
 
-export const sendMessage = createAsyncThunk(
-  'chat/sendMessage',
-  async (params: IParamMessageContent) => {
-    return apiMessages.sendMessage(params);
-  },
-);
+export const sendMessage = createAsyncThunk('chat/sendMessage', async (params: any) => {
+  return apiMessages.sendMessage(params);
+});
 
 const initialState: ChatState = {
   directMessages: [],
@@ -66,7 +67,7 @@ const messagesSlice = createSlice({
   reducers: {
     changeSelectedChat: (state, action) => {
       state.selectedChat = action.payload;
-      const selectedConversation = state.directMessages?.data?.find(
+      const selectedConversation = state.directMessages?.find(
         (conversation: any) => conversation.id === state.selectedChat,
       );
       const paticipants = selectedConversation?.participants?.data;
@@ -86,18 +87,38 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllConversations.fulfilled, (state, action) => {
-      state.directMessages = action.payload?.data;
-      state.myInfo = state.directMessages?.data[0]?.participants?.data[1];
+      state.directMessages = action.payload?.data.data;
+      state.myInfo = state.directMessages[0]?.participants?.data[1];
       state.loading = false;
-      state.unSeen = state.directMessages.data.some((directMessage: any) => {
-        directMessage.isRead === false;
+      state.unSeen = state.directMessages.some((directMessage: any) => {
+        return directMessage.isRead === false;
       });
     });
     builder.addCase(getAllConversations.pending, (state, action) => {
       state.loading = true;
     });
     builder.addCase(getChatUserConversations.fulfilled, (state, action) => {
-      state.chatUserConversations = action.payload?.data;
+      const threadId = action.payload.param;
+      let unReadConversations = state.directMessages.filter((item: any) => {
+        return item.isRead === false;
+      });
+      unReadConversations = unReadConversations.map((item: any) => {
+        return item.id;
+      });
+      const isReadUnseen = unReadConversations.includes(threadId);
+      if (isReadUnseen) {
+        const tmpDirectMessages = state.directMessages.map((message: any) => {
+          return message.id === threadId
+            ? {
+                ...message,
+                isRead: true,
+              }
+            : message;
+        });
+        state.directMessages = tmpDirectMessages;
+        state.unSeen = false;
+      }
+      state.chatUserConversations = action.payload?.data.data;
     });
     builder.addCase(sendMessage.fulfilled, (state, action) => {
       state.isMessageSent = true;

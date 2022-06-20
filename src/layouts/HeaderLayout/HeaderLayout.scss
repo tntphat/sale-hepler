@@ -1,8 +1,7 @@
 $height-header: 70px;
 
-.buyer-layout {
+.header-layout {
   width: 100%;
-  // max-width: $screen-width;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,29 +17,17 @@ $height-header: 70px;
 
   &__left {
     z-index: 2;
-    background-color: #e5e5e5;
-    position: fixed;
-    left: 20px;
   }
 
   &__container {
-    background-color: #e5e5e5;
     display: flex;
     width: 100%;
     margin-top: $height-header;
-    padding-top: 30px;
     flex: 1;
   }
   &__center {
     flex: 1;
-    // margin-left: 24px;
     background-color: #e5e5e5;
     padding: 40px 20px;
-    margin-left: 300px;
   }
-}
-
-button {
-  background-color: aliceblue;
-  padding: 4px;
 }

@@ -15,7 +15,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(-36.1396 81.0551 27.5675)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <circle
         cx="27.5675"
@@ -23,7 +23,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(-36.1396 27.5675 66.628)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <circle
         cx="27.5675"
@@ -31,7 +31,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(-36.1396 27.5675 66.628)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <rect
         x="33.3931"
@@ -47,7 +47,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(-36.1396 81.1127 106.372)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <circle
         cx="27.6251"
@@ -55,7 +55,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(-36.1396 27.6251 145.432)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <circle
         cx="27.6251"
@@ -63,7 +63,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(-36.1396 27.6251 145.432)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <rect
         x="33.4507"
@@ -79,7 +79,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(36.86 80.6692 106.696)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <circle
         cx="27.677"
@@ -87,7 +87,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(36.86 27.677 66.9666)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <circle
         cx="27.677"
@@ -95,7 +95,7 @@ export const SvgLogo = () => {
         r="13.7286"
         transform="rotate(36.86 27.677 66.9666)"
         stroke="black"
-        stroke-width="12"
+        strokeWidth="12"
       />
       <rect
         x="40.0563"

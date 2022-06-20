@@ -63,7 +63,6 @@ export const Setting = () => {
     };
     fetchGreeting();
   }, [loadingSetting]);
-  // console.log(greeting?.greeting);
 
   return (
     <div className="setting">

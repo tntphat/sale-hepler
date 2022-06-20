@@ -20,8 +20,11 @@ export const Leftbar = () => {
   const dispatch = useDispatch();
   const { directMessages, selectedChat, unSeen } = useAppSelector((state) => state.messagesSlice);
   const { pageId } = useAppSelector((state) => state.pageSlice);
-  const { data } = directMessages;
-  const socket = io('https://social-sales-helper.herokuapp.com/');
+  // const pageId = '110681441599820';
+  const data = directMessages;
+  const baseURL =
+    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
+  const socket = io(baseURL);
 
   useEffect(() => {
     dispatch(getAllConversations(pageId));
@@ -48,10 +51,17 @@ export const Leftbar = () => {
   };
 
   useEffect(() => {
-    socket.on('get message', (data) => {
-      dispatch(getAllConversations(pageId));
-    });
-  }, []);
+    if (pageId) {
+      socket.on('get message', (data) => {
+        if (data.recipientId === pageId) {
+          dispatch(getAllConversations(pageId));
+        }
+      });
+      return () => {
+        socket.off('get message');
+      };
+    }
+  }, [pageId]);
 
   return (
     <div className="left-bar">
@@ -61,7 +71,7 @@ export const Leftbar = () => {
             <h4 className="search-box__title ">Hộp thư</h4>
             {unSeen ? <SvgDot /> : <></>}
           </div>
-          <Link to="/interact/messenger-setting">
+          <Link to="/messenger-setting">
             <SvgSetting />
           </Link>
         </div>
