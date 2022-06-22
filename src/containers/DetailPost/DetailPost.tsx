@@ -41,21 +41,22 @@ export const DetailPost = ({ post: postProp }) => {
           ))}
         </div>
       </div>
-
-      <p>{post?.content}</p>
-      <ScrollHorizontal ref={refScroll} className={'horizontal-medias'}>
-        {post?.images.map((image) => (
-          <div key={image} onClick={() => handleOpenMedia(image)}>
-            <img
-              src={image}
-              // style={{ maxWidth: '100%', maxHeight: '200px' }}
-            />
-            {/* <div className="close-wrapper" onClick={() => handleRemoveImage(ind)}>
+      <div className="detail-post__content">
+        <p>{post?.content}</p>
+        <ScrollHorizontal ref={refScroll} className={'horizontal-medias detail-post__photo'}>
+          {post?.images.map((image) => (
+            <div key={image} onClick={() => handleOpenMedia(image)}>
+              <img
+                src={image}
+                // style={{ maxWidth: '100%', maxHeight: '200px' }}
+              />
+              {/* <div className="close-wrapper" onClick={() => handleRemoveImage(ind)}>
                 <SvgClose />
               </div> */}
-          </div>
-        ))}
-      </ScrollHorizontal>
+            </div>
+          ))}
+        </ScrollHorizontal>
+      </div>
     </Box>
   );
 };

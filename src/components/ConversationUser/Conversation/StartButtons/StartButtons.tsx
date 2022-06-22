@@ -65,6 +65,9 @@ export const StartButtons = ({ onClickEmoji, refImage, refText }: StartButtonsPr
         </div>
       </div>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <div className="setting-selection__modal-title">
+          <h4>Chọn tin nhắn soạn sẵn</h4>
+        </div>
         {quickReplies.map((quickReply, id) => {
           return (
             <QuickReplyItem

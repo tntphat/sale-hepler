@@ -69,7 +69,9 @@ export const ConnectSendo = () => {
           type="password"
           error={errors.secret_key && errors.secret_key.message}
         />
-        <Button onClick={handleSubmit(onSubmit)}>Xác nhận</Button>
+        <Button className="submit-button" onClick={handleSubmit(onSubmit)}>
+          Xác nhận
+        </Button>
       </form>
     </Box>
   );

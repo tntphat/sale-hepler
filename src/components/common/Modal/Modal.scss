@@ -19,7 +19,7 @@
     height: inherit;
     position: relative;
   }
-  
+
   &--message {
     justify-content: center;
     align-items: center;
@@ -67,6 +67,7 @@
       // color: #5d5d5d;
       color: #0a7cff;
       margin-right: 10px;
+      border-radius: 6px;
     }
     &--ok {
       color: white;

@@ -12,7 +12,7 @@ import {
   Table,
 } from '../../components/common';
 import { dataHeaderTableOrder, dataHeaderTableProduct } from '../../constants';
-import { convertTime } from '../../helpers';
+import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
 import { apiCategory, apiOrder, apiProducts, apiTikiSeller } from '../../services/api';
 import './Order.scss';
@@ -28,6 +28,7 @@ export const Order = () => {
   const handleFetchData = () => {
     apiOrder.getAllOrders(page).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
+      console.log('data: ', res.data.data.orders);
       setProducts(res.data.data.orders);
     });
   };
@@ -94,18 +95,18 @@ export const Order = () => {
         customer_name || 'Fat To',
         products.map((prod) => <li key={prod._id}>{prod.product.name}</li>),
         'Facebook',
-        total_payment,
-        convertTime(createdAt),
+        formatCurrency(total_payment),
+        convertFullTime(createdAt),
         state,
         <Dropdown
           key={id}
           options={[
-            {
-              text: 'Chỉnh sửa',
-              cb: () => {
-                navigate(`/order/${id}`);
-              },
-            },
+            // {
+            //   text: 'Chỉnh sửa',
+            //   cb: () => {
+            //     navigate(`/order/${id}`);
+            //   },
+            // },
             { text: 'Xoá', cb: handleDltItem(id) },
             {
               text: 'Chi tiết',

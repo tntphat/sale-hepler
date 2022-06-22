@@ -28,13 +28,13 @@ export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
   }, []);
 
   useEffect(() => {
-    const fetchUserOrders = async () => {
+    const fetchUserOrders = () => {
       apiOrder.getOrders().then((response) => {
         let orders = response.data.data;
         orders = orders.filter((order: any) => {
           return order.customer_fb_id === chatUserDetails?.id;
         });
-        setOrderList(orders.reverse());
+        setOrderList(orders);
       });
     };
     fetchUserOrders();
@@ -64,17 +64,21 @@ export const OrderedList = ({ isAddNewOrder }: { isAddNewOrder: boolean }) => {
           <></>
         ) : (
           <div className="order-info__order-list">
-            {orderList.map((item: any, index: number) => {
-              return (
-                <OrderDetail
-                  key={index}
-                  order={item}
-                  stateList={stateList}
-                  isChanged={isChanged}
-                  setIsChanged={setIsChanged}
-                />
-              );
-            })}
+            {orderList.length === 0 ? (
+              <span>Không có đơn hàng nào.</span>
+            ) : (
+              orderList.map((item: any, index: number) => {
+                return (
+                  <OrderDetail
+                    key={index}
+                    order={item}
+                    stateList={stateList}
+                    isChanged={isChanged}
+                    setIsChanged={setIsChanged}
+                  />
+                );
+              })
+            )}
           </div>
         )}
       </div>

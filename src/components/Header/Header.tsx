@@ -16,13 +16,13 @@ export const Header = () => {
         <img src={ImageLogo} />
       </div>
       <div className="header__right">
-        <div className="header__search">
+        {/* <div className="header__search">
           <SvgSearch />
           <input placeholder="Tim kiem..." />
         </div>
         <div className="header__bell">
           <SvgBell />
-        </div>
+        </div> */}
         {/* <div onClick={logout}>Log out</div> */}
         <div className="header__user">
           <AvatarUser img={user.picture} />

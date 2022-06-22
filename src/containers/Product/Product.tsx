@@ -12,7 +12,7 @@ import {
   Table,
 } from '../../components/common';
 import { COLOR, dataHeaderTableProduct, dataHeaderTableProductCore } from '../../constants';
-import { convertTime, formatCurrency } from '../../helpers';
+import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce, useModalLoading } from '../../hooks';
 import {
   apiCategory,
@@ -154,17 +154,17 @@ export const Product = () => {
             </div>
           );
         }),
-        convertTime(createdAt),
+        convertFullTime(createdAt),
         isAllowSell ? 'Đang bán' : 'Ngừng bán',
         <Dropdown
           key={sku}
           options={[
-            {
-              text: 'Chỉnh sửa',
-              cb: () => {
-                navigate(`/product/${id}`);
-              },
-            },
+            // {
+            //   text: 'Chỉnh sửa',
+            //   cb: () => {
+            //     navigate(`/product/${id}`);
+            //   },
+            // },
             { text: 'Xoá', cb: handleDltItem(id) },
             {
               text: 'Chi tiết',

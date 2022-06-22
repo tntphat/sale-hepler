@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { SvgCheck } from '../../../assets/svg';
+import { formatCurrency } from '../../../helpers';
 import { useDebounce } from '../../../hooks';
 import { apiProducts } from '../../../services/api';
 import { Pagination, SearchText } from '../../common';
@@ -103,7 +104,7 @@ export const TableProduct: React.FC<any> = ({
       return [
         name,
         type,
-        exportPrice,
+        formatCurrency(exportPrice),
         <div className="table__select-box">
           <SvgCheck onClick={handleSelectItem(id)} isActive={selected.includes(id)} />
         </div>,
@@ -114,7 +115,11 @@ export const TableProduct: React.FC<any> = ({
   return (
     <div className="sell__modal">
       <h3>Chọn sản phẩm</h3>
-      <SearchText placeholder="Tìm kiếm sản phẩm" className="sell__modal-search" />
+      <SearchText
+        onChange={(e: any) => setSearchText(e.target.value)}
+        placeholder="Tìm kiếm sản phẩm"
+        className="sell__modal-search"
+      />
       <Table dataHeader={dataHeader} dataTable={memoizedDataTable} minWidth={0} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>

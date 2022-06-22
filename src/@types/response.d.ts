@@ -58,7 +58,7 @@ interface IProduct {
   type: string;
   branch: string;
   isAllowSell: boolean;
-  id?: string;
+  _id?: string;
   createdAt?: string;
   isSelect?: boolean;
 }

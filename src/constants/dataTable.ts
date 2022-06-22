@@ -33,7 +33,7 @@ export const dataHeaderTableProductCore = [
     width: '8%',
   },
   {
-    title: 'Ngày tạo',
+    title: 'Thời gian tạo',
     // width: '100px',
     width: '11%',
   },
@@ -79,7 +79,7 @@ export const dataHeaderTableProduct = [
     width: '12%',
   },
   {
-    title: 'Ngày tạo',
+    title: 'Thời gian tạo',
     // width: '100px',
     width: '11%',
   },
@@ -102,11 +102,11 @@ export const dataHeaderTableOrder = [
   // },
   {
     title: 'Mã đơn hàng',
-    width: '10%',
+    width: '5%',
   },
   {
     title: 'Tên Khách hàng',
-    width: '12%',
+    width: '15%',
   },
   {
     title: 'Sản phẩm',
@@ -120,7 +120,7 @@ export const dataHeaderTableOrder = [
     width: '12%',
   },
   {
-    title: 'Ngày đặt',
+    title: 'Thời gian đặt',
     width: '11%',
   },
   {
@@ -138,10 +138,10 @@ export const dataHeaderTableManagePost = [
   //   title: '',
   //   width: '50px',
   // },
-  {
-    title: 'Mã bài đăng',
-    width: '10%',
-  },
+  // {
+  //   title: 'Mã bài đăng',
+  //   width: '3%',
+  // },
   {
     title: 'Bài đăng',
   },
@@ -151,11 +151,11 @@ export const dataHeaderTableManagePost = [
   },
   {
     title: 'Nhóm đăng',
-    width: '13%',
+    width: '20%',
   },
   {
-    title: 'Ngày đăng',
-    width: '10%',
+    title: 'Thời gian đăng',
+    width: '15%',
   },
   {
     title: 'Hành động',

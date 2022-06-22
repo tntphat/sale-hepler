@@ -16,9 +16,15 @@
   }
   &__groups {
     p {
+      color: #1b74e4;
       font-weight: 600;
       cursor: pointer;
     }
+  }
+
+  &__content,
+  &__photo {
+    margin-top: 12px;
   }
 
   &:not(:first-child) {

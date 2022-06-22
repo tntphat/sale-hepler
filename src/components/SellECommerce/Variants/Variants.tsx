@@ -36,8 +36,8 @@ const VariantItem = ({
   return (
     <div className="variant-container">
       <InputText
-        label={'Mã sku'}
-        placeholder={'Nhập Mã sku'}
+        label={'Mã SKU'}
+        placeholder={'Nhập Mã SKU'}
         onChange={(e) => handleChangeProp('sku', e.target.value)}
         value={variant.sku || ''}
       />
@@ -48,7 +48,7 @@ const VariantItem = ({
         value={variant.min_code || ''}
       />
       <InputText
-        label={'giá'}
+        label={'Giá'}
         placeholder={'Nhập giá'}
         onChange={(e) => handleChangeProp('price', e.target.value)}
         value={variant.price || ''}
@@ -82,14 +82,19 @@ const VariantItem = ({
             />
           ))
         : null}
-
-      <FileDropzone clickOpen setImages={(value) => handleChangeProp('image', value)} isNotMultiple>
-        {variant.image && variant.image[0] ? (
-          <img src={URL.createObjectURL(variant.image[0])} />
-        ) : (
-          <SvgImage />
-        )}
-      </FileDropzone>
+      <div className="variant-container__file-dropzone">
+        <FileDropzone
+          clickOpen
+          setImages={(value) => handleChangeProp('image', value)}
+          isNotMultiple
+        >
+          {variant.image && variant.image[0] ? (
+            <img src={URL.createObjectURL(variant.image[0])} />
+          ) : (
+            <SvgImage />
+          )}
+        </FileDropzone>
+      </div>
     </div>
   );
 };

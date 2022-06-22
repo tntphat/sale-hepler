@@ -6,10 +6,12 @@
     grid-template-columns: repeat(auto-fit, 300px);
     grid-auto-rows: 1fr;
     grid-gap: 10px;
+    margin-top: 12px;
   }
   &__item {
     padding: 10px;
-    background-color: white;
+    // background-color: white;
+    background-color: #e8e8e8;
     border-radius: 20px;
     white-space: pre-line;
     position: relative;
