@@ -55,7 +55,7 @@ export const BuyerSetting = () => {
   };
 
   return (
-    <Box title="Cài đặt" maxWidth={650}>
+    <Box title="Cài đặt" maxWidth={650} classname="buyer-setting">
       <CheckBoxControl
         label={'Thông báo khi có bài đăng mới'}
         value={isOnNoti}

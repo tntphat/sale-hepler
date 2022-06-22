@@ -67,10 +67,10 @@ export const SidebarBuyer = ({ noti }: { noti: any }) => {
   return (
     <div className="sidebar-buyer">
       <Box classname="sidebar-top">
-        <p>Facebook Account</p>
+        <p>Tài khoản Facebook</p>
         <AvatarUser img={user?.picture} />
         <p>{user?.name}</p>
-        <span onClick={logout}>Log out</span>
+        <span onClick={logout}>Đăng xuất</span>
       </Box>
       <Box marginTop={20}>
         {dataSidebarBuyer.map((item, ind) => (

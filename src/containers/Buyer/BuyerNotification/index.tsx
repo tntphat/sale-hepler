@@ -59,7 +59,7 @@ export const BuyerNotification = () => {
   };
 
   return (
-    <Box title="Thông báo" maxWidth={650}>
+    <Box title="Thông báo" maxWidth={650} classname="noti__wrapper">
       {notifications.length === 0 ? (
         <p>Không có thông báo</p>
       ) : (
