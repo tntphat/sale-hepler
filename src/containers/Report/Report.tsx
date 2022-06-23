@@ -52,7 +52,7 @@ export const Report = () => {
     <div className="report">
       <div className="report__grid-4">
         <BoxStatisticsReport
-          title="Sản phẩm hết hàng"
+          title="Sản phẩm tồn kho"
           count={dataReport?.outOfStocks}
           color="#FA582E"
         />
@@ -62,7 +62,7 @@ export const Report = () => {
           color="#0163DE"
         />
         <BoxStatisticsReport
-          title="Sản phẩm tồn kho"
+          title="Sản phẩm hết hàng"
           count={dataReport?.inventories}
           color="#0FBB59"
         />
@@ -111,7 +111,7 @@ export const Report = () => {
 
       {dataReport ? (
         <div className="report__grid-2">
-          <Box title="Sản phẩm tồn kho">
+          <Box title="Sản phẩm hết hàng">
             <Table
               minWidth="50%"
               dataHeader={dataHeader}
@@ -122,7 +122,7 @@ export const Report = () => {
               ])}
             />
           </Box>
-          <Box title="Sản phẩm hết hàng">
+          <Box title="Sản phẩm tồn kho">
             <Table
               minWidth="50%"
               dataHeader={dataHeader}
