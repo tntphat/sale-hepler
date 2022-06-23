@@ -200,4 +200,5 @@ interface ITable {
   dataTable: any[];
   className?: string;
   minWidth?: any;
+  maxWidth?: any;
 }

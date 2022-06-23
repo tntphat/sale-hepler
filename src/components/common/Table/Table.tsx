@@ -2,9 +2,15 @@ import React from 'react';
 import { Button } from '../Button/Button';
 import './Table.scss';
 
-export const Table: React.FC<ITable> = ({ dataHeader, dataTable, className, minWidth }) => {
+export const Table: React.FC<ITable> = ({
+  dataHeader,
+  dataTable,
+  className,
+  minWidth,
+  maxWidth,
+}) => {
   return (
-    <table className={className || ''} style={{ minWidth: minWidth ?? '1400px' }}>
+    <table className={className || ''} style={{ minWidth: minWidth ?? '1400px', maxWidth }}>
       <thead>
         <tr>
           {dataHeader?.map(({ title, minWidth, width }, ind) => (

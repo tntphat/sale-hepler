@@ -162,21 +162,31 @@ export const dataHeaderTableManagePost = [
     width: '10%',
   },
 ];
-export const dataHeaderTableAdminUsers = [
+export const dataHeaderTableAdminUsersSite = [
+  {
+    title: 'Email/ Họ tên',
+    // width: '10%',
+  },
   // {
-  //   title: '',
-  //   width: '50px',
+  //   title: 'Họ tên',
   // },
   {
-    title: 'Email',
+    title: 'Sàn kết nối',
+    width: '20%',
+  },
+  {
+    title: 'Trạng thái',
+    width: '15%',
+  },
+  {
+    title: 'Hành động',
     width: '10%',
   },
+];
+export const dataHeaderTableAdminUsersAnalysis = [
   {
-    title: 'Họ tên',
-  },
-  {
-    title: 'Sàn kết nối',
-    width: '13%',
+    title: 'Email/ Họ tên',
+    // width: '10%',
   },
   {
     title: 'Bài đăng',

@@ -1,11 +1,17 @@
-import { SvgGroups } from '../assets/svg';
-import { AdminUsers } from '../containers/Admin';
+import { SvgAnalysis, SvgGroups } from '../assets/svg';
+import { AdminAnalysis, AdminUsers } from '../containers/Admin';
 
 export const dataSidebarAdmin = [
   {
-    title: 'Người dùng',
+    title: 'Kết nối sàn',
     link: '/users',
     icon: SvgGroups,
     cpn: AdminUsers,
+  },
+  {
+    title: 'Thống kê',
+    link: '/analysis',
+    icon: SvgAnalysis,
+    cpn: AdminAnalysis,
   },
 ];
