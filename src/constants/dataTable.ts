@@ -172,15 +172,15 @@ export const dataHeaderTableAdminUsersSite = [
   // },
   {
     title: 'Sàn kết nối',
-    width: '20%',
+    width: '25%',
   },
   {
     title: 'Trạng thái',
-    width: '15%',
+    width: '20%',
   },
   {
     title: 'Hành động',
-    width: '10%',
+    width: '15%',
   },
 ];
 export const dataHeaderTableAdminUsersAnalysis = [
@@ -190,22 +190,22 @@ export const dataHeaderTableAdminUsersAnalysis = [
   },
   {
     title: 'Bài đăng',
-    width: '12%',
+    width: '15%',
   },
   {
     title: 'Sản phẩm',
-    width: '10%',
+    width: '15%',
   },
   {
     title: 'Đơn hàng',
-    width: '10%',
+    width: '15%',
   },
   {
     title: 'Trạng thái',
-    width: '10%',
+    width: '14%',
   },
   {
     title: 'Hành động',
-    width: '10%',
+    width: '14%',
   },
 ];

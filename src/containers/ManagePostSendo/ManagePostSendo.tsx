@@ -11,6 +11,7 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
+import { Loader } from '../../components/common/Loader/Loader';
 import { dataHeaderTableProduct } from '../../constants';
 import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce, useModalLoading } from '../../hooks';
@@ -29,13 +30,16 @@ export const ManagePostSendo = () => {
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
   const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFetchData = () => {
+    setIsLoading(true);
     apiSendoProduct.getProducts({ page_size: 12, product_name: dbValue, token }).then((res) => {
       setTotalPages(Math.ceil(res.data.data.total_records / 12));
       setPreviousToken(res.data.data.previous_token);
       setNextToken(res.data.data.next_token);
       setProducts(res.data.data.data);
+      setIsLoading(false);
     });
   };
   useEffect(() => {
@@ -146,7 +150,11 @@ export const ManagePostSendo = () => {
           </Button>
         ) : null}
       </div>
-      <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
+      )}
       <div className="pagination">
         <span
           className={!previousToken ? 'disable' : 'active'}

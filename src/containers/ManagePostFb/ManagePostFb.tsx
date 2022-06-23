@@ -11,6 +11,7 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
+import { Loader } from '../../components/common/Loader/Loader';
 import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
 import { convertFullTime } from '../../helpers';
 import { useDebounce } from '../../hooks';
@@ -25,12 +26,15 @@ export const ManagePostFb = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const dbValue = useDebounce(searchText, 400);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleFetchData = () => {
+    setIsLoading(true);
     apiPosts.getAll({ page }).then((res) => {
       const { posts, pagination } = res.data.data;
       setTotalPages(pagination.totalPages);
       setProducts(posts);
+      setIsLoading(false);
     });
     // apiProducts.getProducts({ page, name: dbValue }).then((res) => {
     //   setTotalPages(res.data.data.pagination.totalPages);
@@ -143,7 +147,11 @@ export const ManagePostFb = () => {
           </Button>
         ) : null} */}
       </div>
-      <Table dataHeader={dataHeaderTableManagePost} dataTable={memoizedDataTable} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Table dataHeader={dataHeaderTableManagePost} dataTable={memoizedDataTable} />
+      )}
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

@@ -11,6 +11,7 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
+import { Loader } from '../../components/common/Loader/Loader';
 import { COLOR, dataHeaderTableProduct, dataHeaderTableProductCore } from '../../constants';
 import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce, useModalLoading } from '../../hooks';
@@ -32,6 +33,7 @@ export const Product = () => {
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
   const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
+  const [isLoading, setIsLoading] = useState(false);
   const handleFetchData = () => {
     apiProducts.getProducts({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
@@ -208,7 +210,11 @@ export const Product = () => {
           <Button onClick={() => navigate('/create-product')}>Tạo sản phẩm</Button>
         </div>
       </div>
-      <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />
+      )}
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

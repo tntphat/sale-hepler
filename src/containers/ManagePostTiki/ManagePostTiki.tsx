@@ -23,6 +23,7 @@ export const ManagePostTiki = () => {
   const [searchText, setSearchText] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
 
@@ -31,9 +32,11 @@ export const ManagePostTiki = () => {
   }, []);
 
   const handleFetchData = () => {
+    setIsLoading(true);
     apiTikiProduct.getProducts({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
       setProducts(res.data.data.products);
+      setIsLoading(false);
     });
   };
   useEffect(() => {
@@ -161,7 +164,9 @@ export const ManagePostTiki = () => {
           </Button>
         ) : null} */}
       </div>
-      <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
+      {isLoading ? (
+        <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
+      ) : null}
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

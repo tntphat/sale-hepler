@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SvgCheck, SvgNavigate } from '../../../assets/svg';
 import { SvgDots } from '../../../assets/svg/SvgDots';
 import { Box, Dropdown, Pagination, SearchText, Table, Button } from '../../../components/common';
+import { Loader } from '../../../components/common/Loader/Loader';
 import { COLOR, dataHeaderTableAdminUsersSite } from '../../../constants';
 import { convertTime, formatCurrency } from '../../../helpers';
 import { useDebounce, useModalLoading } from '../../../hooks';
@@ -17,12 +18,15 @@ export const AdminUsers = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const dbValue = useDebounce(searchText, 400);
+  const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
-  // const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
+  const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
   const handleFetchData = () => {
+    setIsLoading(true);
     apiAdminUsers.getAllUsers({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
       setProducts(res.data.data.users);
+      setIsLoading(false);
     });
   };
   useEffect(() => {
@@ -35,9 +39,11 @@ export const AdminUsers = () => {
 
   const handleDltItem = (index: string, isBlocked: boolean) => {
     return () => {
+      handleOpenModalLoading();
       const action = !isBlocked ? apiAdminUsers.blockUser : apiAdminUsers.unBlockUser;
 
       action(index).then(() => {
+        handleCloseModalLoading();
         handleFetchData();
       });
     };
@@ -46,7 +52,7 @@ export const AdminUsers = () => {
   const memoizedDataTable = useMemo(() => {
     return products.map(
       ({ userInfo: { name, picture, email, id, isBlocked }, connectedECSite }: any, index) => [
-        email | name,
+        email || name,
         // name,
         <React.Fragment key={id}>
           {Object.keys(connectedECSite).map((site) => {
@@ -91,7 +97,7 @@ export const AdminUsers = () => {
   }, [products, selected]);
 
   return (
-    <Box>
+    <Box maxWidth={1000} title="Danh sách liên kết sàn">
       <div className="products__row">
         <SearchText
           placeholder="Tìm kiếm người dùng"
@@ -107,12 +113,16 @@ export const AdminUsers = () => {
           ) : null} */}
         </div>
       </div>
-      <Table
-        dataHeader={dataHeaderTableAdminUsersSite}
-        dataTable={memoizedDataTable}
-        minWidth={0}
-        maxWidth={1000}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Table
+          dataHeader={dataHeaderTableAdminUsersSite}
+          dataTable={memoizedDataTable}
+          minWidth={0}
+          maxWidth={1000}
+        />
+      )}
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );
