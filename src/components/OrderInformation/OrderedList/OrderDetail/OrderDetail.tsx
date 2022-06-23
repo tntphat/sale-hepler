@@ -72,14 +72,14 @@ export const OrderDetail = ({ order, stateList, isChanged, setIsChanged }: IProd
           return (
             <div className="product" key={id}>
               <div className="product__image">
-                <img className="product__img" src={it.product.images[0]}></img>
+                <img className="product__img" src={it?.product?.images[0] || ''}></img>
               </div>
 
               <div className="product__info">
-                <p className="product__name">{it.product.name}</p>
+                <p className="product__name">{it?.product?.name || ''}</p>
                 <p className="product__price">
-                  {formatCurrency(it.product.exportPrice)}
-                  <sup>đ</sup> x {it.quantity}
+                  {formatCurrency(it?.product?.exportPrice) || ''}
+                  <sup>đ</sup> x {it?.quantity || ''}
                 </p>
               </div>
             </div>

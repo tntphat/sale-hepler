@@ -50,7 +50,7 @@ export const AutoReply = () => {
     <div className="auto-reply">
       <div className="auto-reply__begining">
         <div className="message-setting__title">
-          <p>Câu hỏi thường gặp</p>
+          <p>Tin nhắn tự động</p>
         </div>
 
         {autoReplies.map((autoReply: any, id: any) => {

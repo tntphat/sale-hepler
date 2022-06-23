@@ -90,7 +90,7 @@ export const QuickReply = () => {
   return (
     <div className="quick-reply">
       <div className="message-setting__title">
-        <p>Tin nhắn soạn sẵn</p>
+        <p>Tin nhắn mẫu</p>
       </div>
       {quickReplies.map((quickReply, id) => {
         return <QuickReplyItem key={id} quickReply={quickReply} />;
