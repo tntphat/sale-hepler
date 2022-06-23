@@ -9,4 +9,10 @@ export const apiAdminUsers = {
   getUsersByUser: (userId: number) => {
     return axiosAdmin.get('users/' + userId);
   },
+  blockUser: (userId: string) => {
+    return axiosAdmin.post('users/block', { userId });
+  },
+  unBlockUser: (userId: string) => {
+    return axiosAdmin.post('users/unBlock', { userId });
+  },
 };

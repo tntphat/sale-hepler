@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { SvgCheck, SvgNavigate } from '../../../assets/svg';
 import { SvgDots } from '../../../assets/svg/SvgDots';
 import { Box, Dropdown, Pagination, SearchText, Table, Button } from '../../../components/common';
-import { COLOR, dataHeaderTableAdminUsersSite } from '../../../constants';
+import {
+  COLOR,
+  dataHeaderTableAdminUsersAnalysis,
+  dataHeaderTableAdminUsersSite,
+} from '../../../constants';
 import { convertTime, formatCurrency } from '../../../helpers';
 import { useDebounce, useModalLoading } from '../../../hooks';
 import { apiProducts, apiSendoProduct, apiTikiProduct } from '../../../services/api';
 import { apiAdminAnalysis } from '../../../services/api/admin';
 import { apiAdminUsers } from '../../../services/api/admin/apiUsers';
 
-export const AdminUsers = () => {
+export const AdminAnalysis = () => {
   const [selected, setSelected] = useState<number[]>([]);
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -20,9 +24,9 @@ export const AdminUsers = () => {
   // const navigate = useNavigate();
   // const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
   const handleFetchData = () => {
-    apiAdminUsers.getAllUsers({ page, name: dbValue }).then((res) => {
+    apiAdminAnalysis.getAllAnalysis({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
-      setProducts(res.data.data.users);
+      setProducts(res.data.data.analysis);
     });
   };
   useEffect(() => {
@@ -45,25 +49,45 @@ export const AdminUsers = () => {
 
   const memoizedDataTable = useMemo(() => {
     return products.map(
-      ({ userInfo: { name, picture, email, id, isBlocked }, connectedECSite }: any, index) => [
-        email | name,
-        // name,
+      (
+        {
+          userInfo: { name, picture, email, id, isBlocked },
+          numberOrders,
+          numberPosts,
+          numberProducts,
+        }: any,
+        index,
+      ) => [
+        email || name,
         <React.Fragment key={id}>
-          {Object.keys(connectedECSite).map((site) => {
-            const color = COLOR[site.toUpperCase()];
-            return (
-              <div
-                key={site}
-                style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                //   onClick={cb}
-              >
-                <SvgNavigate color={color} />
-                <p style={{ color }}>{site}</p>
-              </div>
-            );
-          })}
+          {numberPosts.facebookCount ? (
+            <div
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              //   onClick={cb}
+            >
+              <p style={{ color: COLOR.FACEBOOK }}>Facebook: {numberPosts.facebookCount}</p>
+            </div>
+          ) : null}
+          {numberPosts.sendoCount ? (
+            <div
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              //   onClick={cb}
+            >
+              <p style={{ color: COLOR.SENDO }}>Sendo: {numberPosts.sendoCount}</p>
+            </div>
+          ) : null}
+          {numberPosts.tikiCount ? (
+            <div
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              //   onClick={cb}
+            >
+              <p style={{ color: COLOR.TIKI }}>TIki: {numberPosts.tikiCount}</p>
+            </div>
+          ) : null}
         </React.Fragment>,
-
+        // name,
+        numberProducts,
+        numberOrders,
         <p
           key={id}
           style={{
@@ -108,7 +132,7 @@ export const AdminUsers = () => {
         </div>
       </div>
       <Table
-        dataHeader={dataHeaderTableAdminUsersSite}
+        dataHeader={dataHeaderTableAdminUsersAnalysis}
         dataTable={memoizedDataTable}
         minWidth={0}
         maxWidth={1000}

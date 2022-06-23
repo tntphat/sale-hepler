@@ -52,3 +52,4 @@ export * from './SvgStore';
 export * from './SvgNavigate';
 export * from './SvgTo';
 export * from './SvgCart';
+export * from './SvgAnalysis';
