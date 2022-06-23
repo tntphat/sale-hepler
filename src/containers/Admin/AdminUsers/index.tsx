@@ -7,6 +7,7 @@ import { COLOR, dataHeaderTableAdminUsers } from '../../../constants';
 import { convertTime, formatCurrency } from '../../../helpers';
 import { useDebounce, useModalLoading } from '../../../hooks';
 import { apiProducts, apiSendoProduct, apiTikiProduct } from '../../../services/api';
+import { apiAdminUsers } from '../../../services/api/admin/apiUsers';
 
 export const AdminUsers = () => {
   const [selected, setSelected] = useState<number[]>([]);
@@ -18,6 +19,7 @@ export const AdminUsers = () => {
   const navigate = useNavigate();
   const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
   const handleFetchData = () => {
+    apiAdminUsers.getAllUsers();
     apiProducts.getProducts({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
       setProducts(res.data.data.products);
@@ -126,23 +128,23 @@ export const AdminUsers = () => {
         10,
         10,
         13,
-        'Đang hoạt động',
+        <p
+          key={id}
+          style={{
+            color: '#27ae60',
+            // '#d63031'
+          }}
+        >
+          Đang hoạt động
+        </p>,
         <Dropdown
           key={sku}
           options={[
             {
-              text: 'Chỉnh sửa',
-              cb: () => {
-                navigate(`/product/${id}`);
-              },
+              text: 'Khóa',
+              cb: () => {},
             },
-            { text: 'Xoá', cb: handleDltItem(id) },
-            {
-              text: 'Chi tiết',
-              cb: () => {
-                navigate(`/product/${id}`);
-              },
-            },
+            { text: 'Gỡ khóa', cb: handleDltItem(id) },
           ]}
         >
           <SvgDots />
@@ -172,11 +174,10 @@ export const AdminUsers = () => {
         />
         <div style={{ display: 'flex', marginLeft: 'auto' }}>
           {selected.length ? (
-            <Button marginRight={15} onClick={handleDltItems} className="products__btn-dlt">
+            <Button onClick={handleDltItems} className="products__btn-dlt">
               Xoá
             </Button>
           ) : null}
-          <Button onClick={() => navigate('/create-product')}>Tạo sản phẩm</Button>
         </div>
       </div>
       <Table dataHeader={memoizedDataHeader} dataTable={memoizedDataTable} />

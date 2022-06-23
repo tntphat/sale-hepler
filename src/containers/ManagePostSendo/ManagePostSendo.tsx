@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SvgCheck } from '../../assets/svg';
+import { SvgAngle, SvgCheck } from '../../assets/svg';
 import { SvgDots } from '../../assets/svg/SvgDots';
 import {
   Box,
@@ -29,6 +29,9 @@ export const ManagePostSendo = () => {
   const [searchText, setSearchText] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [token, setToken] = useState('');
+  const [previousToken, setPreviousToken] = useState();
+  const [nextToken, setNextToken] = useState();
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
 
@@ -37,19 +40,19 @@ export const ManagePostSendo = () => {
   }, []);
 
   const handleFetchData = () => {
-    apiSendoProduct.getProducts({ page, name: dbValue }).then((res) => {
+    apiSendoProduct.getProducts({ page_size: 12, product_name: dbValue, token }).then((res) => {
       setTotalPages(Math.ceil(res.data.data.total_records / 12));
-      console.log(res.data.data, 'haha');
-
+      setPreviousToken(res.data.data.previous_token);
+      setNextToken(res.data.data.next_token);
       setProducts(res.data.data.data);
     });
   };
   useEffect(() => {
     handleFetchData();
-  }, [page, dbValue]);
+  }, [token, dbValue]);
 
   useEffect(() => {
-    setPage(1);
+    setToken('');
   }, [dbValue]);
 
   const handleSelectItem = (index: string) => {
@@ -161,7 +164,21 @@ export const ManagePostSendo = () => {
         ) : null}
       </div>
       <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
-      <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+      <div className="pagination">
+        <span
+          className={!previousToken ? 'disable' : 'active'}
+          onClick={() => previousToken && setToken(previousToken)}
+        >
+          <SvgAngle />
+        </span>
+
+        <span
+          className={!nextToken ? 'disable' : 'active'}
+          onClick={() => nextToken && setToken(nextToken)}
+        >
+          <SvgAngle />
+        </span>
+      </div>
     </Box>
   );
 };

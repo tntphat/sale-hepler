@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { SidebarAdmin } from '../../components/admin';
+import { HeaderAdmin, SidebarAdmin } from '../../components/admin';
 import { Header } from '../../components/Header/Header';
 import './AdminLayout.scss';
 
 export const AdminLayout: React.FC<ISidebarLayout> = ({ children, header, sidebar }) => {
   const sidebars = sidebar ?? <SidebarAdmin />;
-  const headers = header ?? <Header />;
+  const headers = header ?? <HeaderAdmin />;
   return (
     <div className="admin-layout">
       <div className="admin-layout__header">{headers}</div>

@@ -155,6 +155,7 @@ export const SellSendo = () => {
       description,
       price: +price,
       stock_quantity: +stock_quantity,
+      availableQuantity: +stock_quantity,
       height: +height,
       length: +length,
       width: +width,

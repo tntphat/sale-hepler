@@ -74,12 +74,15 @@ export const CreateProduct = () => {
         switch (stock.ecSite) {
           case 'Tiki':
             setValue('quantityTiki', stock.quantity);
+            setValue('availableQuantityTiki', stock.availableQuantity ?? stock.quantity);
             break;
           case 'Sendo':
             setValue('quantitySendo', stock.quantity);
+            setValue('availableQuantitySendo', stock.availableQuantity ?? stock.quantity);
             break;
           default:
             setValue('quantity', stock.quantity);
+            setValue('availableQuantity', stock.availableQuantity ?? stock.quantity);
         }
       });
       // resetField('branch', {
@@ -92,7 +95,17 @@ export const CreateProduct = () => {
   const onSubmit = (data: TypeForm) => {
     handleOpenModalLoading();
     // console.log(data);
-    const { quantity, quantityTiki, quantitySendo, image, images, ...rest } = data;
+    const {
+      quantity,
+      quantityTiki,
+      quantitySendo,
+      image,
+      images,
+      availableQuantity,
+      availableQuantityTiki,
+      availableQuantitySendo,
+      ...rest
+    } = data;
     const newForm = { ...rest };
     for (let key in newForm) {
       if (typeof newForm[key] === 'object') {
@@ -101,12 +114,27 @@ export const CreateProduct = () => {
     }
     if (id) {
       newForm.stockAvailable = [];
-      quantity >= 0 && newForm.stockAvailable.push({ ecSite: 'Facebook', quantity });
+      quantity >= 0 &&
+        newForm.stockAvailable.push({
+          ecSite: 'Facebook',
+          quantity,
+          availableQuantity: availableQuantity,
+        });
       quantitySendo >= 0 &&
-        newForm.stockAvailable.push({ ecSite: 'Sendo', quantity: quantitySendo });
-      quantityTiki >= 0 && newForm.stockAvailable.push({ ecSite: 'Tiki', quantity: quantityTiki });
+        newForm.stockAvailable.push({
+          ecSite: 'Sendo',
+          quantity: quantitySendo,
+          availableQuantity: availableQuantitySendo ?? quantitySendo,
+        });
+      quantityTiki >= 0 &&
+        newForm.stockAvailable.push({
+          ecSite: 'Tiki',
+          quantity: quantityTiki,
+          availableQuantity: availableQuantityTiki ?? quantityTiki,
+        });
     } else {
       newForm.quantity = quantity;
+      newForm.availableQuantity = quantity;
     }
     const action = id ? apiProducts.updateProduct : apiProducts.createProduct;
     // apiProducts.createProduct({...data,inventoryNumber:2,isAllowSell:true,images:['https://cdn.pixabay.com/photo/2022/04/23/20/51/nature-7152461__340.jpg','https://cdn.pixabay.com/photo/2021/08/25/05/01/boat-6572384__340.jpg']})
@@ -198,37 +226,103 @@ export const CreateProduct = () => {
             error={errors.quantity && errors.quantity.message}
           />
           <div className="create-product__row">
-            {watch('quantitySendo') >= 0 ? (
+            <InputText
+              label="Số lượng tồn kho "
+              placeholder="Nhập số lượng tồn kho "
+              className="create-product__field"
+              {...register('quantity', {
+                required: {
+                  value: true,
+                  message: 'Vui lòng nhập số lượng tồn kho ',
+                },
+              })}
+              type="number"
+              error={errors.quantity && errors.quantity.message}
+            />
+            {id && (
               <InputText
-                label="Tồn kho Sendo"
-                placeholder="Nhập tồn kho Sendo"
+                label="Số lượng có sẵn "
+                placeholder="Nhập số lượng có sẵn "
                 className="create-product__field"
-                type="number"
-                {...register('quantitySendo', {
+                {...register('availableQuantity', {
                   required: {
                     value: true,
-                    message: 'Vui lòng nhập tồn kho Sendo ',
+                    message: 'Vui lòng nhập số lượng có sẵn ',
                   },
                 })}
-                error={errors.quantitySendo && errors.quantitySendo.message}
-                disabled
+                type="number"
+                error={errors.availableQuantity && errors.availableQuantity.message}
+                marginTop={0}
               />
+            )}
+          </div>
+          <div className="create-product__row">
+            {watch('quantitySendo') >= 0 ? (
+              <>
+                <InputText
+                  label="Tồn kho Sendo"
+                  placeholder="Nhập tồn kho Sendo"
+                  className="create-product__field"
+                  type="number"
+                  {...register('quantitySendo', {
+                    required: {
+                      value: true,
+                      message: 'Vui lòng nhập tồn kho Sendo ',
+                    },
+                  })}
+                  error={errors.quantitySendo && errors.quantitySendo.message}
+                  disabled
+                  marginTop={15}
+                />
+
+                <InputText
+                  label="Số lượng có sẵn Sendo"
+                  placeholder="Nhập số lượng có sẵn Sendo"
+                  className="create-product__field"
+                  type="number"
+                  {...register('availableQuantitySendo', {
+                    required: {
+                      value: true,
+                      message: 'Vui lòng nhập số lượng có sẵn Sendo ',
+                    },
+                  })}
+                  error={errors.availableQuantitySendo && errors.availableQuantitySendo.message}
+                  disabled
+                />
+              </>
             ) : null}
             {watch('quantityTiki') >= 0 ? (
-              <InputText
-                label="Tồn kho Tiki"
-                placeholder="Nhập tồn kho Tiki"
-                className="create-product__field"
-                type="number"
-                {...register('quantityTiki', {
-                  required: {
-                    value: true,
-                    message: 'Vui lòng nhập tồn kho Tiki ',
-                  },
-                })}
-                error={errors.quantityTiki && errors.quantityTiki.message}
-                disabled
-              />
+              <>
+                <InputText
+                  label="Tồn kho Tiki"
+                  placeholder="Nhập tồn kho Tiki"
+                  className="create-product__field"
+                  type="number"
+                  {...register('quantityTiki', {
+                    required: {
+                      value: true,
+                      message: 'Vui lòng nhập tồn kho Tiki ',
+                    },
+                  })}
+                  error={errors.quantityTiki && errors.quantityTiki.message}
+                  disabled
+                  marginTop={15}
+                />
+                <InputText
+                  label="Số lượng có sẵn Tiki"
+                  placeholder="Nhập số lượng có sẵn Tiki"
+                  className="create-product__field"
+                  type="number"
+                  {...register('availableQuantityTiki', {
+                    required: {
+                      value: true,
+                      message: 'Vui lòng nhập số lượng có sẵn Tiki ',
+                    },
+                  })}
+                  error={errors.availableQuantityTiki && errors.availableQuantityTiki.message}
+                  disabled
+                />
+              </>
             ) : null}
           </div>
           <div className="create-product__row">

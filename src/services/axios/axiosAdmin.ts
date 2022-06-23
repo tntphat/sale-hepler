@@ -1,20 +1,21 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { LOCAL_TOKEN } from '../../constants';
+import { LOCAL_TOKEN, LOCAL_TOKEN_ADMIN } from '../../constants';
 import { readCookie } from '../../helpers';
 
 const baseURL =
-  (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) +
-  'api/';
-const token = readCookie(LOCAL_TOKEN);
+  (process.env.NODE_ENV === 'development'
+    ? process.env.URL_ADMIN_API_LOCAL
+    : process.env.URL_ADMIN_API) + 'api/';
+const token = readCookie(LOCAL_TOKEN_ADMIN);
 
-const axiosMain = axios.create({
+const axiosAdmin = axios.create({
   baseURL: baseURL,
   headers: {
     'content-type': 'application/json',
     Authorization: 'Bearer ' + token,
   },
 });
-axiosMain.interceptors.response.use(
+axiosAdmin.interceptors.response.use(
   (res: AxiosResponse<{ content: any; message: string; result: number }>) => {
     // if (res.data.meta === false) {
     // }
@@ -26,4 +27,4 @@ axiosMain.interceptors.response.use(
     throw err;
   },
 );
-export { axiosMain };
+export { axiosAdmin };

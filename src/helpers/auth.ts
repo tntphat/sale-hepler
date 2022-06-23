@@ -60,8 +60,6 @@ export const loadScript = () => {
 
   // Fb
   window.fbAsyncInit = function () {
-    console.log('HIHIHIHI');
-
     window.FB.init({
       appId,
       cookie: true,
@@ -84,7 +82,7 @@ export const loadScript = () => {
 };
 
 export async function loginFb(callback: any) {
-  const authResponse = await new Promise((resolve, reject) =>
+  const authResponse = await new Promise((resolve) =>
     window.FB.login(function (response) {
       if (response.status === 'connected') {
         FB.api('/me?fields=id,email,name,picture.width(720).height(720)', function (data) {

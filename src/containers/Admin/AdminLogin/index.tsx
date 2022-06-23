@@ -7,6 +7,7 @@ import background from '../../../assets/img/bg-01.jpg';
 import { InputText } from '../../../components/common';
 import { setCookie } from '../../../helpers';
 import { LOCAL_TOKEN_ADMIN } from '../../../constants';
+import { apiAdminAuth } from '../../../services/api/admin/apiAuth';
 
 export const AdminLogin = (props: any) => {
   const navigate = useNavigate();
@@ -20,14 +21,24 @@ export const AdminLogin = (props: any) => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    const { email, password } = data;
     setLoading(true);
-    if (email === 'admin' && password === 'admin') {
-      setCookie(365, 'admin', LOCAL_TOKEN_ADMIN);
-      navigate('/admin/users');
-    } else {
-      setMessage('Sai mật khẩu hoặc email');
-    }
+    apiAdminAuth
+      .signIn(data)
+      .then((res) => {
+        setCookie(365, res.data.data.token, LOCAL_TOKEN_ADMIN);
+        window.location.reload();
+      })
+      .catch((e) => {
+        setMessage('Sai mật khẩu hoặc tên đăng nhập');
+        setLoading(false);
+      });
+    // setLoading(true);
+    // if (email === 'admin' && password === 'admin') {
+    //   setCookie(365, 'admin', LOCAL_TOKEN_ADMIN);
+    //   navigate('/admin/users');
+    // } else {
+    //   setMessage('Sai mật khẩu hoặc email');
+    // }
   };
 
   return (
@@ -40,7 +51,7 @@ export const AdminLogin = (props: any) => {
               error={errors.email?.type === 'required' && errors.email.message}
               id="email"
               label="Email"
-              {...register('email', {
+              {...register('username', {
                 required: {
                   value: true,
                   message: 'Nhập Email',
