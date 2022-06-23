@@ -47,7 +47,7 @@ export const OrderDetail = ({ order, stateList, isChanged, setIsChanged }: IProd
               render={({ field: { onChange, value } }) => (
                 <DropdownSelect
                   classNameInput="dropdown-select__res--small"
-                  className="dropdown-select--small"
+                  className="dropdown-select--small form-field--mt-0"
                   data={stateList}
                   placeholder="Chọn trạng thái"
                   onChange={(e: any) => {

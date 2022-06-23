@@ -7,7 +7,7 @@ import { usePagination } from '../../hooks';
 import { SvgPlus } from '../../assets/svg';
 import { useNavigate } from 'react-router-dom';
 import { SvgDots } from '../../assets/svg/SvgDots';
-// import './Templates.scss';
+import './Template.scss';
 
 const TemplateItem = ({ template, title, id, setPage, product, setOpenTemplates, setValue }) => {
   const ref = useRef();
@@ -60,7 +60,7 @@ export const Template: React.FC<any> = ({ setOpenTemplates, setValue, product, i
   //   });
   // }, []);
   return (
-    <Box title="Chọn bài đăng mẫu">
+    <Box>
       {!isHideAdd && (
         <div className="templates__add" onClick={() => navigate('create')}>
           <SvgPlus />

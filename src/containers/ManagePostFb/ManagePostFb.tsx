@@ -12,9 +12,9 @@ import {
   Table,
 } from '../../components/common';
 import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
-import { convertTime } from '../../helpers';
+import { convertFullTime } from '../../helpers';
 import { useDebounce } from '../../hooks';
-import { apiCategory, apiProducts, apiTikiSeller } from '../../services/api';
+import { apiProducts } from '../../services/api';
 import { apiPosts } from '../../services/api/apiPost';
 import './ManagePostFb.scss';
 
@@ -28,9 +28,9 @@ export const ManagePostFb = () => {
   const navigate = useNavigate();
   const handleFetchData = () => {
     apiPosts.getAll({ page }).then((res) => {
-      const { docs, ...rest } = res.data.data.posts;
-      setTotalPages(rest.totalPages);
-      setProducts(docs);
+      const { posts, pagination } = res.data.data;
+      setTotalPages(pagination.totalPages);
+      setProducts(posts);
     });
     // apiProducts.getProducts({ page, name: dbValue }).then((res) => {
     //   setTotalPages(res.data.data.pagination.totalPages);
@@ -87,27 +87,27 @@ export const ManagePostFb = () => {
       //   // onClick={() => {console.log('oh no')}}
       //   onClick={handleSelectItem(id)}
       // />,
-      id,
+      // id,
       <p key={id} className="products__content">
         {content}
       </p>,
       product?.name || 'Tên sản phẩm',
       groups?.map((gr) => <li key={gr.id}>{gr.name}</li>),
-      convertTime(createdAt),
+      convertFullTime(createdAt),
       <Dropdown
         key={id}
         options={[
-          {
-            text: 'Chỉnh sửa',
-            cb: () => {
-              navigate(`/post/${id}`);
-            },
-          },
+          // {
+          //   text: 'Chỉnh sửa',
+          //   cb: () => {
+          //     navigate(`/product/${id}`);
+          //   },
+          // },
           // { text: 'Xoá', cb: handleDltItem(id) },
           {
             text: 'Chi tiết',
             cb: () => {
-              navigate(`/product/${id}`);
+              navigate(`/post/${id}`);
             },
           },
         ]}

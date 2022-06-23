@@ -24,4 +24,9 @@
     display: flex;
     flex-wrap: wrap;
   }
+  &__search {
+    z-index: 2;
+    position: fixed;
+    right: 20px;
+  }
 }

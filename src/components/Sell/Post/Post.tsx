@@ -75,6 +75,9 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, product, 
           className="post__modal-templates"
         >
           {/* <TableProduct setProduct={setProduct} setIsOpen={setOpenTemplates} /> */}
+          <div className="post__modal-title">
+            <h4>Chọn bài đăng mẫu</h4>
+          </div>
           <Template
             isHideAdd
             setOpenTemplates={setOpenTemplates}

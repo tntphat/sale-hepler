@@ -37,7 +37,6 @@ export const Sell = () => {
     schedulePostTime: number;
   }) => {
     handleOpenModalLoading();
-    console.log(images);
     apiCommon
       .getLinkImage({ images })
       .then((res) => {
@@ -50,10 +49,9 @@ export const Sell = () => {
           is_seller: true,
         });
       })
-
       .finally(() => {
         handleCloseModalLoading();
-        navigate('/');
+        navigate('/sell');
       });
   };
 

@@ -144,7 +144,10 @@ export const TableProduct: React.FC<any> = ({ setProduct, setIsOpen, setStep }) 
     <div className="sell__modal">
       <h3>Chọn sản phẩm</h3>
       <div style={{ margin: '10px 0' }}>
-        <SearchText placeholder="Tìm kiếm sản phẩm" />
+        <SearchText
+          onChange={(e) => setSearchText(e.target.value)}
+          placeholder="Tìm kiếm sản phẩm"
+        />
       </div>
       <Table dataHeader={dataHeader} dataTable={memoizedDataTable} minWidth={0} />
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />

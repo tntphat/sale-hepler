@@ -4,6 +4,10 @@
   &--active {
     background-color: #d0e4ff;
   }
+
+  &__wrapper {
+    margin: 0 auto 30px;
+  }
   img {
     width: 60px;
     height: 60px;
@@ -30,7 +34,7 @@
     }
   }
   &:hover {
-    background-color: #eaf3fe;
+    // background-color: #eaf3fe;
     cursor: pointer;
   }
 }

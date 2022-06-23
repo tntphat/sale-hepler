@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { SvgList } from '../../../assets/svg';
-import { Modal } from '../../../components/common';
-import { Post, Select, SelectNetwork, TableProduct } from '../../../components/Sell';
+import { Post, SelectNetwork } from '../../../components/Sell';
 import { ProgressBar } from '../../../components/Sell/ProgressBar/ProgressBar';
-// import './Sell.scss';
 import { useAppDispatch, doGetAllGroups, useAppSelector } from '../../../redux';
 import { useModalLoading } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { apiFbPosts } from '../../../services/api';
 import { apiCommon } from '../../../services/api/apiCommon';
+import './BuyerPost.scss';
 
 export const BuyerPost = () => {
   const [step, setStep] = useState<number>(0);
@@ -49,27 +47,17 @@ export const BuyerPost = () => {
           //   is_seller: true,
         });
       })
-
       .finally(() => {
         handleCloseModalLoading();
-        navigate('/');
+        navigate('/buyer');
       });
   };
 
   return (
-    <div className="sell">
+    <div className="buyer-post">
       <div className="sell__progress-bar">
         <ProgressBar setStep={setStep} step={step} data={['Chọn nhóm', 'Viết bài đăng']} />
       </div>
-
-      {/* {step === 0 && (
-        <Select
-          onClickSelect1={() => {
-            setIsOpen(true);
-          }}
-          svg1={<SvgList />}
-        />
-      )} */}
       {step === 0 && (
         <SelectNetwork
           optionsGroups={dataListGroup}

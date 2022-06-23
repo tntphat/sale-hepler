@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,16 +19,21 @@ import { apiMessages } from '../../services/api';
 export const Leftbar = () => {
   const dispatch = useDispatch();
   const { directMessages, selectedChat, unSeen } = useAppSelector((state) => state.messagesSlice);
-  const { pageId } = useAppSelector((state) => state.pageSlice);
-  // const pageId = '110681441599820';
-  const data = directMessages;
+  // const { pageId } = useAppSelector((state) => state.pageSlice);
+  const pageId = '110681441599820';
+  const [inputSearch, setInputSearch] = useState<string>('');
   const baseURL =
     (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
   const socket = io(baseURL);
+  const [conversations, setConversations] = useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getAllConversations(pageId));
   }, []);
+
+  useEffect(() => {
+    setConversations(directMessages);
+  }, [directMessages]);
 
   useEffect(() => {
     let allConversations: any[] = [];
@@ -63,6 +68,14 @@ export const Leftbar = () => {
     }
   }, [pageId]);
 
+  const handleSearchChange = (e: any) => {
+    setInputSearch(e.target.value);
+    const data = directMessages.filter((data: any) =>
+      data.participants.data[0].name.toLowerCase().includes(e.target.value.toLowerCase()),
+    );
+    setConversations(data);
+  };
+
   return (
     <div className="left-bar">
       <div className="search-box">
@@ -75,17 +88,15 @@ export const Leftbar = () => {
             <SvgSetting />
           </Link>
         </div>
-        <form>
-          <div className="search-box__input">
-            <SvgSearch />
-            <input placeholder="Tìm kiếm..." />
-          </div>
-        </form>
+        <div className="search-box__input">
+          <SvgSearch />
+          <input onChange={handleSearchChange} value={inputSearch} placeholder="Tìm kiếm..." />
+        </div>
       </div>
 
       <Scrollbar classname="scrollbar__chat-list chat-room-list">
         <Conversations
-          conversations={data}
+          conversations={conversations}
           selectedChat={selectedChat}
           onSelectChat={onSelectChat}
         />

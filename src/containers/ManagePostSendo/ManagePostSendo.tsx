@@ -11,16 +11,10 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
-import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
-import { convertTime, formatCurrency } from '../../helpers';
-import { useDebounce } from '../../hooks';
-import {
-  apiCategory,
-  apiProducts,
-  apiSendoProduct,
-  apiTikiProduct,
-  apiTikiSeller,
-} from '../../services/api';
+import { dataHeaderTableProduct } from '../../constants';
+import { convertFullTime, formatCurrency } from '../../helpers';
+import { useDebounce, useModalLoading } from '../../hooks';
+import { apiProducts, apiSendoProduct } from '../../services/api';
 import './ManagePostTiki.scss';
 
 export const ManagePostSendo = () => {
@@ -34,10 +28,7 @@ export const ManagePostSendo = () => {
   const [nextToken, setNextToken] = useState();
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // apiTikiProduct.getProducts().then(console.log);
-  }, []);
+  const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
 
   const handleFetchData = () => {
     apiSendoProduct.getProducts({ page_size: 12, product_name: dbValue, token }).then((res) => {
@@ -55,26 +46,6 @@ export const ManagePostSendo = () => {
     setToken('');
   }, [dbValue]);
 
-  const handleSelectItem = (index: string) => {
-    return () => {
-      const ind = selected.indexOf(index);
-      if (ind > -1) {
-        selected.splice(ind, 1);
-      } else {
-        selected.push(index);
-      }
-      setSelected([...selected]);
-    };
-  };
-
-  const handleDltItem = (index: string) => {
-    return () => {
-      // apiProducts.deleteProduct(index).then(() => {
-      //   handleFetchData();
-      // });
-    };
-  };
-
   const handleClickSelectAll = () => {
     if (selected.length === products.length) {
       setSelected([]);
@@ -87,6 +58,24 @@ export const ManagePostSendo = () => {
     apiProducts.deleteProducts(selected).then(() => {
       handleFetchData();
     });
+  };
+
+  const handleNavigateECommerceLink = (action: any, site: any) => {
+    return (sku: string) => {
+      handleOpenModalLoading();
+      action(sku)
+        .then((res: any) => {
+          if (res.data.data.link) window.open(res.data.data.link);
+          else {
+            if (site === 'Tiki') {
+              navigate('/product/tiki/' + res.data.data.id);
+            }
+          }
+        })
+        .finally(() => {
+          handleCloseModalLoading();
+        });
+    };
   };
 
   const memoizedDataTable = useMemo(() => {
@@ -102,31 +91,25 @@ export const ManagePostSendo = () => {
           stock,
           final_price_min,
           updated_at_timestamp,
+          sku,
         }: any,
         index,
       ) => [
-        // <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
         id,
         name,
         category_4_name || 'Loại sản pẩm',
         stock_quantity,
         formatCurrency(price || final_price_min),
-        convertTime(updated_at_timestamp * 1000),
+        convertFullTime(updated_at_timestamp * 1000),
         stock ? 'Đang bán' : 'Ngừng bán',
         <Dropdown
           key={id}
           options={[
             {
-              text: 'Chỉnh sửa',
-              cb: () => {
-                navigate(`/product/tiki/${id}`);
-              },
-            },
-            // { text: 'Xoá', cb: handleDltItem(id) },
-            {
               text: 'Chi tiết',
               cb: () => {
-                navigate(`/product/tiki/${id}`);
+                // navigate(`/product/tiki/${id}`);
+                handleNavigateECommerceLink(apiSendoProduct.getLinkProduct, 'Sendo')(sku);
               },
             },
           ]}

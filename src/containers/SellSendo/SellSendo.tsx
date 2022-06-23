@@ -617,7 +617,7 @@ export const SellSendo = () => {
           type="number"
         />
         <InputText
-          label="Gía khuyến mãi(nếu có)"
+          label="Giá khuyến mãi(nếu có)"
           placeholder="Nhập giá khuyến mãi"
           {...register('special_price')}
           error={errors.special_price && errors.special_price.message}

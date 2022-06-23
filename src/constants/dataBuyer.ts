@@ -26,12 +26,12 @@ export const dataSidebarBuyer = [
     icon: SvgSetting,
     cpn: BuyerSetting,
   },
-  {
-    title: 'Quản lý nhóm',
-    link: '/groups',
-    icon: SvgGroups,
-    cpn: BuyerGroups,
-  },
+  // {
+  //   title: 'Quản lý nhóm',
+  //   link: '/groups',
+  //   icon: SvgGroups,
+  //   cpn: BuyerGroups,
+  // },
   {
     title: 'Đăng bài',
     link: '/post',

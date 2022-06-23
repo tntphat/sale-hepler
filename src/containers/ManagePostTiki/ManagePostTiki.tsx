@@ -12,7 +12,7 @@ import {
   Table,
 } from '../../components/common';
 import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
-import { convertTime, formatCurrency } from '../../helpers';
+import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
 import { apiCategory, apiProducts, apiTikiProduct, apiTikiSeller } from '../../services/api';
 import './ManagePostTiki.scss';
@@ -109,17 +109,17 @@ export const ManagePostTiki = () => {
         category_name || 'Loại sản pẩm',
         10,
         formatCurrency(market_price),
-        convertTime(createdAt),
+        convertFullTime(createdAt),
         state_description,
         <Dropdown
           key={sku}
           options={[
-            {
-              text: 'Chỉnh sửa',
-              cb: () => {
-                navigate(`/product/tiki/${id}`);
-              },
-            },
+            // {
+            //   text: 'Chỉnh sửa',
+            //   cb: () => {
+            //     navigate(`/product/tiki/${id}`);
+            //   },
+            // },
             { text: 'Xoá', cb: handleDltItem(id) },
             {
               text: 'Chi tiết',

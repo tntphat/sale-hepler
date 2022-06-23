@@ -5,15 +5,13 @@ import { Chip } from '../../../components/common/Chip';
 import { Loader } from '../../../components/common/Loader/Loader';
 import { useModalLoading } from '../../../hooks';
 import { apiFbPosts } from '../../../services/api';
-import { apiPosts } from '../../../services/api/apiPost';
 import { apiFavoriteKeywords } from '../../../services/api/facebook/apiFavoriteKeywords';
 import './BuyerHome.scss';
 
 export const BuyerHome = () => {
-  const [posts, setPosts] = useState([]);
-  const [listKw, setListKw] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [listKw, setListKw] = useState<any[]>([]);
   const [inputText, setInputText] = useState('');
-  const { handleCloseModalLoading, handleOpenModalLoading } = useModalLoading();
   const [isLoadingNf, setIsLoadingNf] = useState(false);
 
   useEffect(() => {
@@ -32,60 +30,35 @@ export const BuyerHome = () => {
       });
       apiFbPosts
         .getInterestedPosts({
-          keyword: listKw.map((kw) => kw.content).join(','),
+          keyword: listKw.map((kw: any) => kw.content).join(','),
         })
         .then((res) => {
           resolve(res.data.data.posts);
         });
-    }).then((res) => {
+    }).then((res: any) => {
       setPosts(res);
       setIsLoadingNf(false);
     });
-
-    // const pm: any = apiFbPosts.getInterestedPosts({
-    //   keyword: listKw.map((kw) => kw.content).join(','),
-    // })
-    // pm.then((res) => {
-    //   setPosts(res.data.data.posts);
-    //   setIsLoadingNf(false);
-    // });
-
     return () => {
       controller.abort();
     };
   }, [listKw]);
 
-  const handleDltKw = (id) => {
-    handleOpenModalLoading();
-    apiFavoriteKeywords
-      .deleteKeyword(id)
-      .then((res) => {
-        const ind = listKw.findIndex((kw) => kw._id === id);
-        listKw.splice(ind, 1);
-        setListKw([...listKw]);
-      })
-      .finally(() => {
-        handleCloseModalLoading();
-      });
+  const handleDltKw = (id: string | number) => {
+    const ind = listKw.findIndex((kw: any) => kw._id === id);
+    listKw.splice(ind, 1);
+    setListKw([...listKw]);
   };
 
-  const handleAddItem = (text) => {
-    const ind = listKw.findIndex((kw) => kw.content.toLowerCase() === text.toLowerCase());
+  const handleAddItem = (text: string) => {
+    const ind = listKw.findIndex((kw: any) => kw.content.toLowerCase() === text.toLowerCase());
     if (ind > -1) {
       return;
     }
-    handleOpenModalLoading();
-    apiFavoriteKeywords
-      .createKeyword(text)
-      .then((res) => {
-        setListKw((pre) => [...pre, res.data.data.keyword]);
-      })
-      .finally(() => {
-        handleCloseModalLoading();
-      });
+    setListKw((pre) => [...pre, { content: text }]);
   };
 
-  const onKeyPress = (e) => {
+  const onKeyPress = (e: any) => {
     if (e.code === 'Enter' && inputText) {
       handleAddItem(inputText.trim());
       setInputText('');
@@ -95,17 +68,21 @@ export const BuyerHome = () => {
   return (
     <div className="buyer-home">
       <div>
-        {isLoadingNf ? <Loader /> : posts.map((post) => <CardPost key={post.id} post={post} />)}
+        {isLoadingNf ? (
+          <Loader />
+        ) : (
+          posts.map((post: any) => <CardPost key={post.id} post={post} />)
+        )}
       </div>
-      <Box title="Tìm kiếm">
+      <Box title="Tìm kiếm" classname="buyer-home__search">
         <SearchText
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyPress={onKeyPress}
         />
         <div className="buyer-home__chips-container">
-          {listKw.map((kw) => (
-            <Chip text={kw.content} key={kw._id} onClick={() => handleDltKw(kw._id)} />
+          {listKw.map((kw: any, index: number) => (
+            <Chip text={kw.content} key={index} onClick={() => handleDltKw(kw._id)} />
           ))}
         </div>
       </Box>
