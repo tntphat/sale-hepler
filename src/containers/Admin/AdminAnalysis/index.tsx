@@ -121,7 +121,7 @@ export const AdminAnalysis = () => {
   }, [products, selected]);
 
   return (
-    <Box maxWidth={1000} title="Danh sách thống kê">
+    <Box maxWidth={1000} title="Thống kê">
       <div className="products__row">
         <SearchText
           placeholder="Tìm kiếm người dùng"

@@ -131,9 +131,21 @@ button:hover {
       padding: 0 10px;
     }
   }
+  &__link {
+    color: blue;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .warning {
   font-size: 14px;
   color: #721c24;
+}
+
+.form__social-login__item {
+  :hover {
+    cursor: pointer;
+  }
 }

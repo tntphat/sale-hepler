@@ -135,9 +135,9 @@ export const Register = () => {
             <div className="form__social-login__item">
               <SvgFacebook />
             </div>
-            <div className="form__social-login__item">
+            {/* <div className="form__social-login__item">
               <SvgGoogle />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

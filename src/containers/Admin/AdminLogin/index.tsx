@@ -8,6 +8,7 @@ import { InputText } from '../../../components/common';
 import { setCookie } from '../../../helpers';
 import { LOCAL_TOKEN_ADMIN } from '../../../constants';
 import { apiAdminAuth } from '../../../services/api/admin/apiAuth';
+import './Login.scss';
 
 export const AdminLogin = (props: any) => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ export const AdminLogin = (props: any) => {
             <div className="form__button">
               <div className="wrap-form-btn">
                 <div className="form-bgbtn"></div>
-                <button type="submit" disabled={loading} className="form-btn">
+                <button type="submit" disabled={loading} className="form-btn login-btn">
                   Đăng nhập
                 </button>
               </div>

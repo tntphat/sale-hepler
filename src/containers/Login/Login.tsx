@@ -88,9 +88,9 @@ export const Login = (props: any) => {
                 },
               })}
             />
-            <div className="form__forgot-password">
+            {/* <div className="form__forgot-password">
               <a href="#">Quên mật khẩu?</a>
-            </div>
+            </div> */}
 
             {message && <span className="warning">{error}</span>}
 
@@ -105,7 +105,7 @@ export const Login = (props: any) => {
           </form>
 
           <div className="form__selection" onClick={() => navigate('/register')}>
-            <span>Đăng ký</span>
+            <span className="form__link">Đăng ký</span>
           </div>
 
           <div className="form__selection">
@@ -113,12 +113,12 @@ export const Login = (props: any) => {
           </div>
 
           <div className="form__social-login">
-            <div className="form__social-login__item" onClick={() => loginFb(cbLoginFb)}>
+            <div className="form__social-login__item " onClick={() => loginFb(cbLoginFb)}>
               <SvgFacebook />
             </div>
-            <div className="form__social-login__item">
+            {/* <div className="form__social-login__item">
               <SvgGoogle />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
