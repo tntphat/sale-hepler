@@ -16,15 +16,15 @@ export const convertTime = (time: string) => {
 export const convertFullTime = (time: string) => {
   const newTime = new Date(time);
   return (
-    newTime.getHours() +
+    newTime.getHours().toString().padStart(2, '0') +
     ':' +
-    newTime.getMinutes() +
+    newTime.getMinutes().toString().padStart(2, '0') +
     ':' +
-    newTime.getSeconds() +
+    newTime.getSeconds().toString().padStart(2, '0') +
     ' ' +
-    newTime.getDate() +
+    newTime.getDate().toString().padStart(2, '0') +
     '/' +
-    (newTime.getMonth() + 1) +
+    (newTime.getMonth() + 1).toString().padStart(2, '0') +
     '/' +
     newTime.getFullYear()
   );
