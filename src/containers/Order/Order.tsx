@@ -97,7 +97,7 @@ export const Order = () => {
         // <SvgCheck isActive={selected.includes(id)} key={id} onClick={handleSelectItem(id)} />,
         id,
         customer_name || 'Fat To',
-        products.map((prod) => <li key={prod._id}>{prod.product.name}</li>),
+        products.map((prod) => <li key={prod._id}>{prod.product?.name}</li>),
         'Facebook',
         formatCurrency(total_payment),
         convertFullTime(createdAt),
