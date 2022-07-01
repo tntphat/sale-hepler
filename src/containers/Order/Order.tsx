@@ -11,6 +11,7 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
+import { Loader } from '../../components/common/Loader/Loader';
 import { dataHeaderTableOrder, dataHeaderTableProduct } from '../../constants';
 import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
@@ -24,11 +25,14 @@ export const Order = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   // const dbValue = useDebounce(searchText, 400);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleFetchData = () => {
+    setIsLoading(true);
     apiOrder.getAllOrders(page).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
-      console.log('data: ', res.data.data.orders);
+      setIsLoading(false);
+
       setProducts(res.data.data.orders);
     });
   };
@@ -148,7 +152,11 @@ export const Order = () => {
           </Button>
         ) : null}
       </div> */}
-      <Table dataHeader={dataHeaderTableOrder} dataTable={memoizedDataTable} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Table dataHeader={dataHeaderTableOrder} dataTable={memoizedDataTable} />
+      )}
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );

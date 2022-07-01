@@ -35,9 +35,11 @@ export const Product = () => {
   const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
   const [isLoading, setIsLoading] = useState(false);
   const handleFetchData = () => {
+    setIsLoading(true);
     apiProducts.getProducts({ page, name: dbValue }).then((res) => {
       setTotalPages(res.data.data.pagination.totalPages);
       setProducts(res.data.data.products);
+      setIsLoading(false);
     });
   };
   useEffect(() => {

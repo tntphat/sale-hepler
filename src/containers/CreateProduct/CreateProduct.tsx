@@ -635,7 +635,7 @@ export const CreateProduct = () => {
           </Box>
         </div>
       </GridLayoutTwoCol>
-      <Button className="submit-button" onClick={handleSubmit(onSubmit)}>
+      <Button fontSize={20} className="submit-button" onClick={handleSubmit(onSubmit)}>
         Lưu
       </Button>
     </div>

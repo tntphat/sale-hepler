@@ -11,6 +11,7 @@ import {
   SearchText,
   Table,
 } from '../../components/common';
+import { Loader } from '../../components/common/Loader/Loader';
 import { dataHeaderTableManagePost, dataHeaderTableProduct } from '../../constants';
 import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce } from '../../hooks';
@@ -136,18 +137,8 @@ export const ManagePostTiki = () => {
         </Dropdown>,
       ],
     );
-  }, [products, selected]);
+  }, [products]);
 
-  const memoizedDataHeader = useMemo(() => {
-    const cloneArr = JSON.parse(JSON.stringify(dataHeaderTableProduct));
-    cloneArr.unshift({
-      title: (
-        <SvgCheck isActive={selected.length === products.length} onClick={handleClickSelectAll} />
-      ),
-      width: '50px',
-    });
-    return cloneArr;
-  }, [selected, products]);
   return (
     <Box>
       <div className="products__row">
@@ -164,9 +155,11 @@ export const ManagePostTiki = () => {
           </Button>
         ) : null} */}
       </div>
-      {isLoading ? (
+      {!isLoading ? (
         <Table dataHeader={dataHeaderTableProduct} dataTable={memoizedDataTable} />
-      ) : null}
+      ) : (
+        <Loader />
+      )}
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </Box>
   );
