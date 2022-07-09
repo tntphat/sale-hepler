@@ -13,6 +13,7 @@ import {
 } from '../../components/common';
 import { Loader } from '../../components/common/Loader/Loader';
 import { COLOR, dataHeaderTableProduct, dataHeaderTableProductCore } from '../../constants';
+import { ImageLogoFacebook, ImageLogoShopee, ImageLogoTiki, LOGO } from '../../constants/images';
 import { convertFullTime, formatCurrency } from '../../helpers';
 import { useDebounce, useModalLoading } from '../../hooks';
 import {
@@ -130,8 +131,7 @@ export const Product = () => {
         formatCurrency(exportPrice),
         stockAvailable?.map((site) => {
           const color = COLOR[site.ecSite.toUpperCase()];
-          let action: any;
-
+          let image = LOGO[site.ecSite];
           const cb = () => {
             switch (site.ecSite) {
               case 'Facebook':
@@ -141,6 +141,7 @@ export const Product = () => {
 
               case 'Tiki':
                 handleNavigateECommerceLink(apiTikiProduct.getLinkProduct, 'Tiki')(sku);
+
                 break;
               case 'Sendo':
                 handleNavigateECommerceLink(apiSendoProduct.getLinkProduct, 'Sendo')(sku);
@@ -148,14 +149,20 @@ export const Product = () => {
           };
 
           return (
-            <div
+            <img
+              src={image}
               key={site._id}
-              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
               onClick={cb}
-            >
-              <SvgNavigate color={color} />
-              <p style={{ color }}>{site.ecSite}</p>
-            </div>
+              style={{ width: 30, height: 30, cursor: 'pointer', marginRight: 5 }}
+            />
+            // <div
+            //   key={site._id}
+            //   style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            //   onClick={cb}
+            // >
+            //   <SvgNavigate color={color} />
+            //   <p style={{ color }}>{site.ecSite}</p>
+            // </div>
           );
         }),
         convertFullTime(createdAt),

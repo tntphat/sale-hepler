@@ -9,11 +9,13 @@ import { setCookie } from '../../../helpers';
 import { LOCAL_TOKEN_ADMIN } from '../../../constants';
 import { apiAdminAuth } from '../../../services/api/admin/apiAuth';
 import './Login.scss';
+import { useModalLoading } from '../../../hooks';
 
 export const AdminLogin = (props: any) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const { handleCloseModalLoading, handleOpenModalLoading } = useModalLoading();
 
   const {
     register,
@@ -23,6 +25,7 @@ export const AdminLogin = (props: any) => {
 
   const onSubmit = (data: any) => {
     setLoading(true);
+    handleOpenModalLoading();
     apiAdminAuth
       .signIn(data)
       .then((res) => {
@@ -32,6 +35,9 @@ export const AdminLogin = (props: any) => {
       .catch((e) => {
         setMessage('Sai mật khẩu hoặc tên đăng nhập');
         setLoading(false);
+      })
+      .finally(() => {
+        handleCloseModalLoading();
       });
     // setLoading(true);
     // if (email === 'admin' && password === 'admin') {

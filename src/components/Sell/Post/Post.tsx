@@ -92,11 +92,15 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, product, 
         )}
         <Item image={user.picture} subName={user.name} width={50} />
 
-        <TextArea ref={refArea} value={value} onChange={handleChange} />
-
-        <HorizontalMedias images={images} setImages={setImages} ref={refImage} />
-
+        <TextArea className="post__textarea" ref={refArea} value={value} onChange={handleChange} />
         <EmojiPicker onClickEmoji={handleClickEmoji} refArea={refArea} />
+
+        <HorizontalMedias
+          images={images}
+          setImages={setImages}
+          ref={refImage}
+          className="post__medias"
+        />
 
         <div className="post__add">
           <span>Chèn vào bài viết</span>
@@ -104,7 +108,7 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, product, 
             <SvgImg />
           </div>
         </div>
-        <div className="post__selected-gr">
+        {/* <div className="post__selected-gr">
           <p>Nhóm đã chọn ({selectedGroups.length}):</p>
           <div>
             {selectedGroups.map((item) => (
@@ -113,7 +117,7 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, product, 
               </Box>
             ))}
           </div>
-        </div>
+        </div> */}
       </Box>
 
       <Box classname="post__select-group" title="Đăng bài">
@@ -121,7 +125,16 @@ export const Post: React.FC<TypePost> = ({ handlePost, selectedGroups, product, 
 
         <Divider margin="10px -18px 20px" />
         <ListNetWork className="list-favorite-gr" title="Nhóm yêu thích" hideTickAll /> */}
-
+        <div className="post__selected-gr">
+          <p>Nhóm đã chọn ({selectedGroups.length}):</p>
+          <div>
+            {selectedGroups.map((item) => (
+              <Box key={item.id}>
+                <Item image={item.picture?.data?.url} subName={item.name} isOval />
+              </Box>
+            ))}
+          </div>
+        </div>
         <div className="post__row">
           <Button
             onClick={() =>

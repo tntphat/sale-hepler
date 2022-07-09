@@ -1,4 +1,8 @@
 table {
+  svg {
+    cursor: pointer;
+  }
+  padding-left: 10px;
   border-collapse: collapse;
   border-spacing: 0;
   //   border-style: hidden;
@@ -6,28 +10,43 @@ table {
   // background-color: white;
   // min-width: 1400px;
   thead {
+    background-color: #dfe6e9;
+    border: 2px solid #b2bec3;
+    border-left: none;
+    border-right: none;
     th {
+      padding: 5px 10px;
       color: #1f4173;
       text-align: left;
-      &:not(:first-child) {
-        padding-left: 10px;
+      // &:not(:first-child) {
+      //   padding-left: 10px;
+      // }
+
+      &:first-child {
+        padding-left: 15px;
       }
     }
   }
   tbody {
     td {
+      font-weight: 450;
       // border-left: 10px solid transparent;
-      &:not(:first-child) {
-        padding: 5px 0 5px 10px;
+      padding: 10px;
+      // padding-left: 15px;
+      // &:not(:first-child) {
+      //   padding: 5px 0 5px 10px;
+      // }
+      // vertical-align: middle;
+      &:first-child {
+        padding-left: 15px;
       }
-      vertical-align: middle;
     }
     tr {
       height: 40px;
       // color: #003ad2;
       &:not(:first-child) {
         td {
-          border-top: 1px solid rgba($color: #0a69e1, $alpha: 0.4) !important;
+          border-top: 1px solid #b2bec3 !important;
         }
       }
     }

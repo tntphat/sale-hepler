@@ -12,6 +12,7 @@ import { SvgFacebook, SvgGoogle } from '../../assets/svg';
 import { InputText } from '../../components/common';
 import { loadScript, login as loginHelper, loginFb } from '../../helpers';
 import { apiFbAuth } from '../../services/api';
+import { useModalLoading } from '../../hooks';
 
 export const Login = (props: any) => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export const Login = (props: any) => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
+  const { handleOpenModalLoading, handleCloseModalLoading } = useModalLoading();
 
   useEffect(() => {
     loadScript();
@@ -52,7 +54,9 @@ export const Login = (props: any) => {
   };
 
   const cbLoginFb = (data: any) => {
+    handleOpenModalLoading();
     apiFbAuth.login(data.accessToken).then((res) => {
+      handleCloseModalLoading();
       loginHelper(res.data.data.token);
       window.location.reload();
     });

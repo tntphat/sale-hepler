@@ -212,7 +212,7 @@ export const CreateProduct = () => {
             })}
             error={errors.sku && errors.sku.message}
           />
-          <InputText
+          {/* <InputText
             label="Số lượng tồn kho "
             placeholder="Nhập số lượng tồn kho "
             className="create-product__field"
@@ -224,7 +224,7 @@ export const CreateProduct = () => {
             })}
             type="number"
             error={errors.quantity && errors.quantity.message}
-          />
+          /> */}
           <div className="create-product__row">
             <InputText
               label="Số lượng tồn kho "
