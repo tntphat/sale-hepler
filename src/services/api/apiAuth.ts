@@ -8,16 +8,25 @@ export const apiAuth = {
   },
 
   login: async (params: IParamsSignIn) => {
-    await axiosMain.post('auth/sign-in', params).then((response: any) => {
-      if (response?.data) {
-        const token = response.data.data.token;
-        // setCookie(60, token, LOCAL_TOKEN);
-        login(token);
-        return response.data.user;
-      } else {
-        return null;
-      }
-    });
+    await axiosMain
+      .post('auth/sign-in', params)
+      .then((response: any) => {
+        if (response?.data) {
+          const token = response.data.data.token;
+          // setCookie(60, token, LOCAL_TOKEN);
+          login(token);
+          return response.data.user;
+        } else {
+          return null;
+        }
+      })
+      .catch((e) => {
+        if (e.response?.data?.meta?.ok === false) {
+          throw new Error('Tài khoản đã bị khóa');
+        } else {
+          throw new Error('Tên đăng nhập hoặc mật khẩu sai');
+        }
+      });
   },
 
   getUserInfo: () => {

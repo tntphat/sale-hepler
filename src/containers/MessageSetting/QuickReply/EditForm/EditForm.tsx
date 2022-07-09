@@ -92,12 +92,12 @@ export const EditForm = ({
             <InputText
               id="name"
               {...register('name', {
-                required: {
-                  value: true,
-                  message: 'Nhập tiêu đề tin nhắn mẫu',
-                },
+                // required: {
+                //   value: true,
+                //   message: 'Nhập tiêu đề tin nhắn mẫu',
+                // },
               })}
-              error={errors.name?.type === 'required' && errors.name.message}
+              // error={errors.name?.type === 'required' && errors.name.message}
             />
             <InputText
               id="text"

@@ -56,12 +56,13 @@ export const BuyerSetting = () => {
 
   return (
     <Box title="Cài đặt" maxWidth={650} classname="buyer-setting">
-      <CheckBoxControl
+      {/* <CheckBoxControl
         label={'Thông báo khi có bài đăng mới'}
         value={isOnNoti}
         onChange={setIsOnNoti}
         isRow
-      />
+      /> */}
+      <p>Các từ khóa quan tâm</p>
       <div className="chips-container">
         {listKw.map((kw) => (
           <Chip text={kw.content} key={kw.id} onClick={() => handleDltKw(kw._id)} />

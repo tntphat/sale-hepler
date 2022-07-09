@@ -27,9 +27,7 @@ export const login = createAsyncThunk(
       const data = await apiAuth.login(params);
       return { user: data };
     } catch (error: any) {
-      const message = error?.response?.data?.message || error.message || error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
+      thunkAPI.dispatch(setMessage(error.message));
     }
   },
 );
@@ -59,7 +57,7 @@ const authSlice = createSlice({
 
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoggedIn = true;
-      state.user = payload.user;
+      state.user = payload?.user;
     });
 
     builder.addCase(login.rejected, (state, action) => {
