@@ -96,7 +96,7 @@ export const Login = (props: any) => {
               <a href="#">Quên mật khẩu?</a>
             </div> */}
 
-            {message && <span className="warning">{error}</span>}
+            {message && <span className="warning">{message || error}</span>}
 
             <div className="form__button">
               <div className="wrap-form-btn">

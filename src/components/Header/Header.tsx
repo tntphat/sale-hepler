@@ -25,8 +25,8 @@ export const Header = () => {
         </div> */}
         {/* <div onClick={logout}>Log out</div> */}
         <div className="header__user">
-          <AvatarUser img={user.picture} />
           <Dropdown options={[{ text: 'Đăng xuất', cb: logout }, { text: 'Hồ sơ' }]}>
+            <AvatarUser img={user.picture} />
             <p>{user?.name}</p>
           </Dropdown>
         </div>

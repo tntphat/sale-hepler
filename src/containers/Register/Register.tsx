@@ -11,6 +11,8 @@ import { clearMessage } from '../../redux/slice';
 import { InputText } from '../../components/common';
 import { SvgFacebook } from '../../assets/svg/SvgFacebook';
 import { SvgGoogle } from '../../assets/svg/SvgGoogle';
+import { apiFbAuth } from '../../services/api';
+import { loadScript, login as loginHelper, loginFb } from '../../helpers';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ export const Register = () => {
 
   useEffect(() => {
     dispatch(clearMessage());
+    loadScript();
   }, []);
 
   const {
@@ -38,12 +41,19 @@ export const Register = () => {
     appDispatch(signup({ name, email, password, confirm_password }))
       .unwrap()
       .then(() => {
-        navigate('/login');
+        navigate('/auth');
         setSuccessful(true);
       })
       .catch(() => {
         setSuccessful(false);
       });
+  };
+
+  const cbLoginFb = (data: any) => {
+    apiFbAuth.login(data.accessToken).then((res) => {
+      loginHelper(res.data.data.token);
+      window.location.reload();
+    });
   };
 
   return (
@@ -116,6 +126,7 @@ export const Register = () => {
                   },
                 })}
               />
+              {message && <span className="warning">Đăng ký không thành công.</span>}
 
               <div className="form__button">
                 <div className="wrap-form-btn">
@@ -132,7 +143,7 @@ export const Register = () => {
           </div>
 
           <div className="form__social-login">
-            <div className="form__social-login__item">
+            <div className="form__social-login__item" onClick={() => loginFb(cbLoginFb)}>
               <SvgFacebook />
             </div>
             {/* <div className="form__social-login__item">
@@ -141,7 +152,6 @@ export const Register = () => {
           </div>
         </div>
       </div>
-      {message && <span className="warning">Đăng ký không thành công.</span>}
     </div>
   );
 };

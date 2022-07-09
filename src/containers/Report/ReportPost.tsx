@@ -30,8 +30,8 @@ export const ReportPost = () => {
       .sort((a, b) => (hasMonth ? a._id - b._id : a._id.month - b._id.month))
       .map((data) => ({
         name: hasMonth ? 'Ngày' + new Date(data._id).getDate() : 'Tháng ' + data._id.month,
-        value: data.interactions,
-        value2: data.noOfPosts,
+        value: data.noOfPosts,
+        value2: data.interactions,
       }));
   }, [dataReport]);
   return (
@@ -60,7 +60,7 @@ export const ReportPost = () => {
       </div>
       <Box marginTop={20}>
         <div className="row">
-          <p className="box__title">Doanh số bán hàng</p>
+          {/* <p className="box__title">Doanh số bán hàng</p> */}
           <div style={{ display: 'flex' }}>
             <Button
               width="fit-content"
@@ -68,7 +68,7 @@ export const ReportPost = () => {
               cursor={hasMonth ? 'default' : ''}
               onClick={() => setHasMonth(true)}
             >
-              Theo tháng, năm
+              Theo tháng
             </Button>
             <Button
               margin="0 10px"

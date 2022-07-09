@@ -40,11 +40,36 @@ export const Report = () => {
   }, [startDate, hasMonth]);
 
   const memoizedChartData = useMemo(() => {
+    const dataReport = {
+      chartData: [
+        {
+          _id: {
+            year: 2022,
+            month: 5,
+          },
+          arrivedProducts: 2,
+        },
+        {
+          _id: {
+            year: 2022,
+            month: 6,
+          },
+          arrivedProducts: 3,
+        },
+        {
+          _id: {
+            year: 2022,
+            month: 7,
+          },
+          arrivedProducts: 1,
+        },
+      ],
+    };
     if (!dataReport) return null;
     return dataReport.chartData
       .sort((a, b) => (hasMonth ? a._id - b._id : a._id.month - b._id.month))
       .map((data) => ({
-        name: hasMonth ? 'Ngày' + new Date(data._id).getDate() : 'Tháng ' + data._id.month,
+        name: hasMonth ? 'Ngày ' + new Date(data._id).getDate() : 'Tháng ' + data._id.month,
         value: data.arrivedProducts,
       }));
   }, [dataReport]);
@@ -82,7 +107,7 @@ export const Report = () => {
               cursor={hasMonth ? 'default' : ''}
               onClick={() => setHasMonth(true)}
             >
-              Theo tháng, năm
+              Theo tháng
             </Button>
             <Button
               margin="0 10px"
