@@ -1,7 +1,7 @@
 import { axiosMain } from '..';
 import { objToQuery } from '../../helpers/api';
 
-const baseUrl = 'products/';
+const baseUrl = 'sales/products/';
 export const apiProducts = {
   createProduct: (params: any) => {
     const url = baseUrl;

@@ -1,6 +1,6 @@
 import { axiosMain } from '..';
 
-const baseUrl = 'report/';
+const baseUrl = 'sales/report/';
 export const apiReport = {
   getReportSales: (params: IParamReportSales) => {
     const url = baseUrl + 'reportSales';

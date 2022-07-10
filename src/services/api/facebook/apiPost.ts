@@ -1,7 +1,7 @@
 import { axiosMain } from '../../';
 import { objToFormData, objToQuery } from '../../../helpers/api';
 
-const baseUrl = '/facebook/posts/';
+const baseUrl = 'facebook/posts/';
 export const apiFbPosts = {
   getAll: (param: number) => {
     const url = baseUrl + 'all/' + param;
