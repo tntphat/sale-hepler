@@ -1,6 +1,6 @@
 import { axiosMain } from '../../';
 
-const baseUrl = '/facebook/pages/';
+const baseUrl = '/message/pages/';
 export const apiPages = {
   getAll: () => {
     const url = baseUrl + 'all';
