@@ -22,8 +22,7 @@ export const Leftbar = () => {
   // const { pageId } = useAppSelector((state) => state.pageSlice);
   const pageId = '110681441599820';
   const [inputSearch, setInputSearch] = useState<string>('');
-  const baseURL =
-    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
+  const baseURL = process.env.URL_MESSAGE + '';
   const socket = io(baseURL);
   const [conversations, setConversations] = useState<any[]>([]);
 
