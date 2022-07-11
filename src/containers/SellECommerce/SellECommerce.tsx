@@ -219,9 +219,6 @@ export const SellECommerce = () => {
   };
 
   useEffect(() => {
-    // apiTikiInventory.getAll().then(console.log);
-    // apiTikiSeller.getWareHouses({ limit: 10, page: 1 }).then(console.log);
-    // apiProducts.getCategories().then(console.log);
     apiCategory
       .getAllCategory()
       .then((res) => {
@@ -236,18 +233,6 @@ export const SellECommerce = () => {
     apiCategory.getAttributesOfCategory(watch('category').id).then((res) => {
       const arr = res.data.data;
       setArrAttribute(arr.filter((item: IAttributeCategory) => item.is_required));
-
-      // const obj = {};
-      // arr.forEach((ele) => {
-      //   if (!obj[ele.input_type]) {
-      //     obj[ele.input_type] = [ele.data_type];
-      //   } else if (!obj[ele.input_type].includes(ele.data_type)) {
-      //     obj[ele.input_type].push(ele.data_type);
-      //   }
-      // });
-      // console.log(
-      //   arr.map(({ code, description, is_required }) => ({ code, description, is_required })),
-      // );
     });
   }, [watch('category')?.id]);
 

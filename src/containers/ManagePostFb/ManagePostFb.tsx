@@ -88,7 +88,6 @@ export const ManagePostFb = () => {
       // <SvgCheck
       //   isActive={selected.includes(id)}
       //   key={id}
-      //   // onClick={() => {console.log('oh no')}}
       //   onClick={handleSelectItem(id)}
       // />,
       // id,

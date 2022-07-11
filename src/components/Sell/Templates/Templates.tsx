@@ -13,7 +13,6 @@ const TemplateItem = ({ template, setOpenTemplates, setValue, product }) => {
     <div
       onClick={() => {
         setOpenTemplates(false);
-        console.log(product);
 
         setValue(template(product));
       }}
@@ -24,9 +23,6 @@ const TemplateItem = ({ template, setOpenTemplates, setValue, product }) => {
 };
 
 export const Templates = ({ setOpenTemplates, setValue, product }) => {
-  useEffect(() => {
-    apiFbPostTemplates.getListTemplate().then(console.log);
-  }, []);
   return (
     <Box title="Chọn bài đăng mẫu">
       <SearchText placeholder="Tìm kiếm bài đăng mẫu" />

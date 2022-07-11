@@ -15,9 +15,7 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   const dispatch = useAppDispatch();
   const token = readCookie(isAdmin ? LOCAL_TOKEN_ADMIN : LOCAL_TOKEN);
   useEffect(() => {
-    if (token)
-      // apiAuth.getUserInfo().then(console.log);
-      dispatch(doGetUserInfo());
+    if (token) dispatch(doGetUserInfo());
   }, []);
   useEffect(() => {
     dispatch(getConnectedPage());

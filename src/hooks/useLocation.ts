@@ -80,7 +80,6 @@ export const useLocation = () => {
   }, [selectedDistrict]);
 
   function onSelectCity(option: any) {
-    console.log(option);
     if (option?.id !== selectedCity?.id) {
       setState({
         ...state,

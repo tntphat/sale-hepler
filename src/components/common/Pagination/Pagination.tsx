@@ -20,8 +20,6 @@ export const calcArrPagination = (
   return pagination;
 };
 
-console.log(calcArrPagination(1, 5, 32));
-
 export const Pagination: React.FC<any> = ({ page, totalPages, setPage }) => {
   const memoizedPaginations = useMemo(() => {
     return calcArrPagination(page, 5, totalPages);

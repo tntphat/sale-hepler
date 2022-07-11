@@ -12,7 +12,6 @@ export const setCookie = (day: number, value?: string, key?: string, domain?: st
   } else {
     domainString = '';
   }
-  console.log('domainString: ', domainString);
   document.cookie = `${key}=${value};expires=${now.toUTCString()};path=/`;
 };
 
@@ -96,9 +95,7 @@ export async function loginFb(callback: any) {
 }
 
 export const checkStt = () => {
-  FB.getLoginStatus(function (response) {
-    console.log(response);
-  });
+  FB.getLoginStatus(function (response) {});
 };
 
 export const publishFeed = () => {

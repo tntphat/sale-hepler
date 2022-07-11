@@ -71,8 +71,6 @@ export const DropdownSelectMultipleSearch: React.FC<IDropdownSelect> = ({
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry: any) => {
         if (entry.isIntersecting) {
-          console.log('IN VIEW');
-
           if (refHasMore.current) fetchMoreData();
         }
       });
@@ -105,8 +103,6 @@ export const DropdownSelectMultipleSearch: React.FC<IDropdownSelect> = ({
   useEffect(() => {
     if (data?.length) {
       const list = ref.current.querySelectorAll('.dropdown-select__select');
-      console.log('OBSERVING: ', list[data.length - 1]);
-
       myObserver?.observe(list[data.length - 1]);
     }
   }, [data, myObserver]);

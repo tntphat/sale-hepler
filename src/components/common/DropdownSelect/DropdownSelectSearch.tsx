@@ -63,8 +63,6 @@ export const DropdownSelectSearch: React.FC<IDropdownSelect> = ({
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry: any) => {
         if (entry.isIntersecting) {
-          console.log('IN VIEW');
-
           if (refHasMore.current) fetchMoreData();
         }
       });

@@ -27,8 +27,6 @@ export const ProductTiki = () => {
   const navigate = useNavigate();
   const handleFetchData = () => {
     apiProducts.getProducts({ page, name: dbValue }).then((res) => {
-      console.log('res.data.data.pagination.totalPages', res.data.data.pagination.totalPages);
-
       setTotalPages(res.data.data.pagination.totalPages);
       setProducts(res.data.data.products);
     });
@@ -78,12 +76,7 @@ export const ProductTiki = () => {
   const memoizedDataTable = useMemo(() => {
     return products.map(
       ({ branch, sku, type, name, exportPrice, createdAt, isAllowSell, id }: IProduct, index) => [
-        <SvgCheck
-          isActive={selected.includes(id)}
-          key={sku}
-          // onClick={() => {console.log('oh no')}}
-          onClick={handleSelectItem(id)}
-        />,
+        <SvgCheck isActive={selected.includes(id)} key={sku} onClick={handleSelectItem(id)} />,
         sku,
         name,
         type,

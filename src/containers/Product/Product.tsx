@@ -118,12 +118,7 @@ export const Product = () => {
         }: IProduct,
         index,
       ) => [
-        <SvgCheck
-          isActive={selected.includes(id)}
-          key={sku}
-          // onClick={() => {console.log('oh no')}}
-          onClick={handleSelectItem(id)}
-        />,
+        <SvgCheck isActive={selected.includes(id)} key={sku} onClick={handleSelectItem(id)} />,
         sku,
         name,
         type,

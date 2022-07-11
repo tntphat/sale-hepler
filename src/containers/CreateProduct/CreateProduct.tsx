@@ -94,7 +94,6 @@ export const CreateProduct = () => {
   }, [id]);
   const onSubmit = (data: TypeForm) => {
     handleOpenModalLoading();
-    // console.log(data);
     const {
       quantity,
       quantityTiki,

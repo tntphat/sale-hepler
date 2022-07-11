@@ -72,7 +72,6 @@ const authSlice = createSlice({
 
     builder.addCase(doGetUserInfo.fulfilled, (state, action) => {
       state.isLoggedIn = true;
-      // console.log(action.payload);
       state.user = action.payload.data.user;
     });
 
