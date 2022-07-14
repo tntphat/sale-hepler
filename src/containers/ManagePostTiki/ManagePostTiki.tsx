@@ -28,10 +28,6 @@ export const ManagePostTiki = () => {
   const dbValue = useDebounce(searchText, 400);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // apiTikiProduct.getProducts().then(console.log);
-  }, []);
-
   const handleFetchData = () => {
     setIsLoading(true);
     apiTikiProduct.getProducts({ page, name: dbValue }).then((res) => {
@@ -105,7 +101,6 @@ export const ManagePostTiki = () => {
         // <SvgCheck
         //   isActive={selected.includes(id)}
         //   key={sku}
-        //   // onClick={() => {console.log('oh no')}}
         //   onClick={handleSelectItem(id)}
         // />,
         id,

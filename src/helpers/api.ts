@@ -1,7 +1,6 @@
 export const objToFormData = (object: any): FormData => {
   const fd = new FormData();
   for (const key in object) {
-    console.log(key, '1');
     if (object.hasOwnProperty(key)) {
       if (Array.isArray(object[key])) {
         object[key].forEach((file) => {
@@ -9,10 +8,6 @@ export const objToFormData = (object: any): FormData => {
         });
       } else fd.append(key, object[key]);
     }
-  }
-  //   console.log(fd, 'FD NEKK');
-  for (var key of fd.entries()) {
-    console.log(key[0] + ', ' + key[1]);
   }
   return fd;
 };

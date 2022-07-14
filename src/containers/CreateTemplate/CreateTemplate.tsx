@@ -59,10 +59,6 @@ export const CreateTemplate = () => {
     });
   };
 
-  //   const handleKeyPress = (e) => {
-  //     //   if(e.which === 18 )
-  //     console.log(e.code, e.which, e);
-  //   };
   const handleSubmit = () => {
     const obj = { content: convertTextToTemplate(value), title };
     const action = id

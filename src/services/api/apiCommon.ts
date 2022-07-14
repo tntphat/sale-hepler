@@ -1,7 +1,7 @@
 import { axiosMain } from '..';
 import { objToFormData } from '../../helpers/api';
 
-const baseUrl = 'common/';
+const baseUrl = 'sales/common/';
 export const apiCommon = {
   getLinkImage: (params: any) => {
     const url = baseUrl + 'getLinkImage';

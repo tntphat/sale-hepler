@@ -3,9 +3,8 @@ import { LOCAL_TOKEN, LOCAL_TOKEN_ADMIN } from '../../constants';
 import { readCookie } from '../../helpers';
 
 const baseURL =
-  (process.env.NODE_ENV === 'development'
-    ? process.env.URL_ADMIN_API_LOCAL
-    : process.env.URL_ADMIN_API) + 'api/';
+  (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) +
+  'api/admin/';
 const token = readCookie(LOCAL_TOKEN_ADMIN);
 
 const axiosAdmin = axios.create({

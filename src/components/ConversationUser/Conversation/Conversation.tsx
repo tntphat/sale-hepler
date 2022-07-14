@@ -22,8 +22,7 @@ export const Conversation = ({ chatUserConversations }: ConversationProps) => {
   const { myInfo } = useAppSelector((state) => state.messagesSlice);
   const [messages, setMessages] = useState<any>([]);
   const scrollRef = useRef<HTMLDivElement | any>(null);
-  const baseURL =
-    (process.env.NODE_ENV === 'development' ? process.env.URL_API_LOCAL : process.env.URL_API) + '';
+  const baseURL = process.env.URL_MESSAGE + '';
   const socket = io(baseURL);
 
   useEffect(() => {

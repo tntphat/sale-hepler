@@ -1,6 +1,6 @@
 import { axiosMain } from '../..';
 
-const baseUrl = 'notifications/';
+const baseUrl = 'facebook/site/notifications/';
 export const apiBuyerNotification = {
   getAllNotifications: () => {
     return axiosMain.get(baseUrl);

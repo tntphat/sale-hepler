@@ -31,8 +31,6 @@ export const convertFullTime = (time: string) => {
 };
 
 export const convertWeightByUnit = (value: number, unitFrom: string, unitTo: string) => {
-  console.log(value, unitFrom, unitTo);
-
   if (unitFrom === unitTo) return value;
   let gamValue;
   switch (unitFrom) {
